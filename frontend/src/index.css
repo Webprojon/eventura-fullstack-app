@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+html {
+	overflow-x: hidden;
+}
+
+html::-webkit-scrollbar {
+	width: 3px;
+	background-color: #030712;
+}
+
+html::-webkit-scrollbar-thumb {
+	background-color: #0c4164;
+	border-radius: 1px;
+}
+
+.small-scroll::-webkit-scrollbar {
+	width: 1px;
+	background-color: #030712;
+}
+
+.small-scroll::-webkit-scrollbar-thumb {
+	background-color: #0c4164;
+	border-radius: 1px;
+}
+
+.placeholder-color::placeholder {
+	@apply text-slate-400;
+}
+
+.textare-size {
+	resize: none;
+}
+
+/* BUTTON */
+
+.btn {
+	@apply font-semibold rounded-md cursor-pointer border border-sky-300 text-sky-300 bg-[#032236] hover:bg-[#032236c1];
+}
+
+/* BORDERS */
+.border,
+.border-b,
+.border-r,
+.border-l {
+	@apply border-gray-800;
+}
+
+.border {
+	@apply border;
+}
+
+.border-b {
+	@apply border-b;
+}
+
+.border-r {
+	@apply border-r;
+}
+
+.border-l {
+	@apply border-l;
+}
+
+/* CALENDAR */
+
+.p-datepicker {
+	background-color: #10141e;
+	border: none;
+}
+
+.p-datepicker td {
+	padding: 0.1rem;
+}
+
+.p-datepicker-header {
+	background-color: #1c2029;
+	border-bottom: none;
+	border-radius: 4px;
+}
