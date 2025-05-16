@@ -4,20 +4,45 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 
 export default function PhotoSection() {
 	const [userImage, setUserImage] = useState<File | null>(null);
-	const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+	const [preview, setPreview] = useState<string | null>(null);
 
 	const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (file) {
 			setUserImage(file);
 
+			// Preview uchun
 			const reader = new FileReader();
-			reader.onload = (event) => {
-				if (event.target) {
-					setUploadedImage(event.target.result as string);
-				}
+			reader.onload = () => {
+				setPreview(reader.result as string);
 			};
 			reader.readAsDataURL(file);
+		}
+	};
+
+	const handleUpload = async () => {
+		if (!userImage) {
+			alert("Please select an image first");
+			return;
+		}
+
+		const formData = new FormData();
+		formData.append("userImg", userImage);
+
+		try {
+			const response = await fetch("http://localhost:5500/api/v1/users/upload", {
+				method: "POST",
+				body: formData,
+			});
+
+			if (!response.ok) {
+				throw new Error("Upload failed");
+			}
+
+			const data = await response.json();
+			console.log(data);
+		} catch (error) {
+			console.error("Error uploading image:", error);
 		}
 	};
 
@@ -28,11 +53,15 @@ export default function PhotoSection() {
 					<FaUser className="size-5" />
 					<h1 className="text-xl leading-none">Photo</h1>
 				</div>
-				{userImage && <button className="py-[5px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">Save photo</button>}
+				{userImage && (
+					<button onClick={handleUpload} className="py-[5px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">
+						Save photo
+					</button>
+				)}
 			</div>
 
 			<div className="flex flex-col gap-y-3 w-[140px] items-start relative gap-x-4 mt-6">
-				{uploadedImage && <img alt="Uploaded" src={uploadedImage} className="w-[150px] h-[150px] object-cover border rounded" />}
+				{preview && <img alt="Uploaded" src={preview} className="w-[150px] h-[150px] object-cover border rounded" />}
 				<input
 					required
 					type="file"

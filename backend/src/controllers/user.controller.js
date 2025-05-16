@@ -69,3 +69,17 @@ export const updateUser = async (req, res) => {
 		res.status(500).json({ message: error.message });
 	}
 };
+
+// Add user's img
+export const uploadImage = (req, res) => {
+	try {
+		if (!req.file) {
+			return res.status(400).json({ error: "No file uploaded" });
+		}
+		const imagePath = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+		res.status(200).json({ imagePath });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Server error" });
+	}
+};

@@ -39,7 +39,7 @@ const LINKS = [
 
 export default function MyAccount() {
 	const { user } = useUser();
-	const [activeTab, setActiveTab] = useState("about");
+	const [activeTab, setActiveTab] = useState("photos");
 
 	if (!user) return <div className="h-[calc(100vh-9rem)] flex justify-center items-center text-xl">Loading...</div>;
 
