@@ -39,7 +39,7 @@ const LINKS = [
 
 export default function MyAccount() {
 	const { user } = useUser();
-	const [activeTab, setActiveTab] = useState("photos");
+	const [activeTab, setActiveTab] = useState("about");
 
 	if (!user) return <div className="h-[calc(100vh-9rem)] flex justify-center items-center text-xl">Loading...</div>;
 
@@ -54,9 +54,9 @@ export default function MyAccount() {
 			variants={smoothOpacity}
 			className="flex flex-col items-start gap-6 mt-5 select-none sm:mt-9 max-w-[1350px] min-h-[100vh] mx-auto pb-10 px-2 xl:px-0"
 		>
-			<div className="flex items-center justify-between w-full p-3 sm:p-5 rounded-md border bg-[#10141E]">
-				<div className="flex items-center gap-x-5">
-					<img src={user.userImg || NO_AVATAR} alt="user img" className="w-[60px] h-[60px] sm:w-[140px] sm:h-[140px] rounded-full border object-cover" />
+			<div className="flex flex-col sm:flex-row gap-y-6 items-center justify-between w-full p-3 sm:p-5 rounded-md border bg-[#10141E]">
+				<div className="flex flex-col sm:flex-row items-center gap-4">
+					<img src={user.userImg || NO_AVATAR} alt="user img" className="w-[100px] h-[100px] sm:w-[140px] sm:h-[140px] rounded-full border object-cover" />
 					<span className="sm:text-xl">{user.name}</span>
 				</div>
 				<div className="flex items-center gap-x-6">

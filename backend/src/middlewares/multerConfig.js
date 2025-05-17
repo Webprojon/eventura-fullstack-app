@@ -1,16 +1,15 @@
 import multer from "multer";
-import path from "path";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "../config/cloudinary.config.js";
 
-const uploadPath = path.join(process.cwd(), "src", "uploads");
-
-const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, uploadPath);
-	},
-	filename: function (req, file, cb) {
-		const ext = path.extname(file.originalname);
-		cb(null, Date.now() + "-" + file.fieldname + ext);
+const storage = new CloudinaryStorage({
+	cloudinary,
+	params: {
+		folder: "EventuraUsers",
+		allowed_formats: ["jpg", "jpeg", "png"],
 	},
 });
 
-export const upload = multer({ storage });
+const upload = multer({ storage });
+
+export default upload;
