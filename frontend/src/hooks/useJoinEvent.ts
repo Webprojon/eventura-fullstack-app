@@ -20,6 +20,7 @@ export function useJoinEvent(eventId: string | undefined) {
 			});
 			return res.data;
 		},
+		
 		onSuccess: (data) => {
 			toast.success(data.message || "Joined the event successfully");
 			queryClient.invalidateQueries({ queryKey: ["events"] });

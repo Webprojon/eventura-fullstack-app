@@ -37,7 +37,7 @@ export default function Dropdown() {
 			{isOpen && <div onClick={handleMenu} className="fixed top-0 left-0 w-full h-full bg-black/50 z-[300]"></div>}
 			<div onClick={handleMenu} className="flex items-center gap-x-3 cursor-pointer select-none">
 				<div className="rounded-full bg-[#1C2029]">
-					<img src={user?.img || NO_AVATAR} alt="user img" className="w-9 h-9 rounded-full border object-cover" />
+					<img src={user?.userImg || NO_AVATAR} alt="user img" className="w-9 h-9 rounded-full border object-cover" />
 				</div>
 				<span>{user?.name}</span>
 				<div className="hidden sm:block">{isOpen ? <FaCaretUp /> : <FaCaretDown />}</div>

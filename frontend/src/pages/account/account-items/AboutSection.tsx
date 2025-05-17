@@ -36,7 +36,7 @@ export default function AboutSection({ user }: AboutSectionProps) {
 					<h1 className="text-xl">About {user.name}</h1>
 				</div>
 				<div className="flex gap-x-3">
-					<button onClick={handleUpdateModal} className="py-[3px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">
+					<button onClick={handleUpdateModal} className="py-[3px] px-2 sm:px-3 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">
 						<MdOutlineEdit className="size-4" />
 					</button>
 					{textValue && <button className="py-[3px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">Save</button>}
@@ -71,7 +71,7 @@ export default function AboutSection({ user }: AboutSectionProps) {
 			</div>
 
 			<div className="flex gap-x-4 mt-4">
-				<button onClick={handleDeleteModal} className="py-1 px-3 font-extralight text-sm cursor-pointer rounded-sm border-1 text-red-500">
+				<button onClick={handleDeleteModal} className="py-2 sm:py-1 px-3 font-extralight text-sm cursor-pointer rounded-sm border-1 text-red-500">
 					Delete Account
 				</button>
 			</div>

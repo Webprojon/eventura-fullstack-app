@@ -1,25 +1,19 @@
-export interface ParticipantType {
-	_id: string;
-	img: string;
-	name: string;
-}
-
-interface UserType {
+export interface UserType {
 	_id: string;
 	name: string;
 	email: string;
+	userImg: string;
 }
 
 export interface EventTypes {
 	_id: string;
-	organiserImg: string;
 	eventTitle: string;
 	name: string;
 	eventDate: string;
 	eventTime: string;
 	eventCity: string;
 	eventAvenue: string;
-	eventParticipants: ParticipantType[];
+	eventParticipants: UserType[];
 	eventDescription: string;
 	user: UserType;
 }

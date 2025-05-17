@@ -56,7 +56,7 @@ export default function MyAccount() {
 		>
 			<div className="flex items-center justify-between w-full p-3 sm:p-5 rounded-md border bg-[#10141E]">
 				<div className="flex items-center gap-x-5">
-					<img src={user.img || NO_AVATAR} alt="user img" className="w-[60px] h-[60px] sm:w-[140px] sm:h-[140px] rounded-full border object-cover" />
+					<img src={user.userImg || NO_AVATAR} alt="user img" className="w-[60px] h-[60px] sm:w-[140px] sm:h-[140px] rounded-full border object-cover" />
 					<span className="sm:text-xl">{user.name}</span>
 				</div>
 				<div className="flex items-center gap-x-6">
@@ -71,9 +71,9 @@ export default function MyAccount() {
 				</div>
 			</div>
 			<div className="flex flex-col-reverse sm:flex-row w-full gap-6">
-				<div className="flex-[2.9] px-5 py-4 rounded-md border bg-[#10141E]">
+				<div className="flex-[2.9] p-3 sm:px-5 sm:py-4 rounded-md border bg-[#10141E]">
 					{activeTab === "about" && <AboutSection user={user} />}
-					{activeTab === "photos" && <PhotoSection />}
+					{activeTab === "photos" && <PhotoSection user={user} />}
 					{activeTab === "event" && <EventSection />}
 					{activeTab === "followers" && <FollowerSection />}
 					{activeTab === "following" && <FollowingSection />}

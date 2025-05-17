@@ -71,13 +71,29 @@ export const updateUser = async (req, res) => {
 };
 
 // Add user's img
-export const uploadImage = (req, res) => {
+export const uploadImage = async (req, res) => {
 	try {
 		if (!req.file) {
 			return res.status(400).json({ error: "No file uploaded" });
 		}
+
 		const imagePath = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
-		res.status(200).json({ imagePath });
+		const { userId } = req.body;
+
+		if (!userId) {
+			return res.status(400).json({ error: "User id is required" });
+		}
+
+		const user = await User.findByIdAndUpdate(userId, { userImg: imagePath }, { new: true });
+
+		if (!user) {
+			return res.status(404).json({ error: "User not found" });
+		}
+
+		res.status(200).json({
+			message: "Image uploaded and user updated",
+			user,
+		});
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: "Server error" });

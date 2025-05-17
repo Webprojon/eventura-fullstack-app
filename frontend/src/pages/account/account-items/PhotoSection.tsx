@@ -1,17 +1,21 @@
 import { ChangeEvent, useState } from "react";
 import { FaUser } from "react-icons/fa6";
 import { FaCloudUploadAlt } from "react-icons/fa";
+import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { BASE_URL } from "../../../lib/data";
 
-export default function PhotoSection() {
+export default function PhotoSection({ user }: { user: { _id: string } }) {
 	const [userImage, setUserImage] = useState<File | null>(null);
 	const [preview, setPreview] = useState<string | null>(null);
+	const queryClient = useQueryClient();
 
 	const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (file) {
 			setUserImage(file);
 
-			// Preview uchun
 			const reader = new FileReader();
 			reader.onload = () => {
 				setPreview(reader.result as string);
@@ -20,30 +24,29 @@ export default function PhotoSection() {
 		}
 	};
 
+	const { mutate } = useMutation({
+		mutationFn: async (formData: FormData) => {
+			const res = await axios.post(`${BASE_URL}/users/upload`, formData);
+			return res.data;
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["user"] });
+			toast.success("Photo is uploaded successfully");
+		},
+		onError: (error) => {
+			toast.error(error.message);
+		},
+	});
+
 	const handleUpload = async () => {
 		if (!userImage) {
-			alert("Please select an image first");
+			toast.error("Please select an image first");
 			return;
 		}
-
 		const formData = new FormData();
 		formData.append("userImg", userImage);
-
-		try {
-			const response = await fetch("http://localhost:5500/api/v1/users/upload", {
-				method: "POST",
-				body: formData,
-			});
-
-			if (!response.ok) {
-				throw new Error("Upload failed");
-			}
-
-			const data = await response.json();
-			console.log(data);
-		} catch (error) {
-			console.error("Error uploading image:", error);
-		}
+		formData.append("userId", user._id);
+		mutate(formData);
 	};
 
 	return (

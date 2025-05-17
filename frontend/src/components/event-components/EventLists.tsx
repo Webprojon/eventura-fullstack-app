@@ -17,14 +17,14 @@ export default function EventLists() {
 	return (
 		<section className="flex flex-col gap-y-6 sm:gap-y-5 flex-[2.5] z-40">
 			{isLoading && <EventListsSkeleton count={2} />}
-			{data?.data.map(({ _id, eventParticipants, organiserImg, eventTitle, user, eventDate, eventTime, eventCity, eventAvenue, eventDescription }) => (
+			{data?.data.map(({ _id, eventParticipants, eventTitle, user, eventDate, eventTime, eventCity, eventAvenue, eventDescription }) => (
 				<div key={_id} className="rounded-md p-3 border bg-[#10141E]">
 					<div className="flex justify-between items-start border-b">
 						<div className="flex gap-x-4 pb-2">
 							<Link to={linkTo(user?._id)} className="rounded-full bg-[#1C2029]">
 								<img
 									alt="User img"
-									src={organiserImg || NO_AVATAR}
+									src={user.userImg || NO_AVATAR}
 									className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-full object-cover border bg-[#1C2029"
 								/>
 							</Link>
@@ -53,9 +53,9 @@ export default function EventLists() {
 					<div className="p-3 rounded-sm border bg-[#1C2029]">
 						{eventParticipants.length !== 0 && (
 							<div className="flex items-center gap-x-2 pb-2 mb-4 border-b">
-								{eventParticipants.map(({ _id, name, img }, idx) => (
+								{eventParticipants.map(({ _id, name, userImg }, idx) => (
 									<Link to={linkTo(_id)} key={idx} className="flex flex-col items-center gap-y-1 cursor-pointer">
-										<img alt="User img" key={idx} src={img || NO_AVATAR} className="w-9 h-9 rounded-full border object-cover" />
+										<img alt="User img" key={idx} src={userImg || NO_AVATAR} className="w-9 h-9 rounded-full border object-cover" />
 										<span className="text-[11px]">{name}</span>
 									</Link>
 								))}
