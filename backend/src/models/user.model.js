@@ -29,7 +29,6 @@ const userSchema = new mongoose.Schema(
 		},
 		description: {
 			type: String,
-			minLength: 5,
 			required: false,
 			default: "",
 		},

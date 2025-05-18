@@ -2,7 +2,9 @@ import { useState } from "react";
 import { DEFAULT_BG_IMG } from "../../../lib/data";
 import { MdOutlineDateRange } from "react-icons/md";
 import { Link } from "react-router-dom";
+import Heading from "./Heading";
 
+// Temporary static data
 const LINKS = [
 	{
 		id: 1,
@@ -20,7 +22,6 @@ const LINKS = [
 		linkName: "Your Events",
 	},
 ];
-
 const EVENTS = [
 	{
 		id: 1,
@@ -43,11 +44,7 @@ export default function EventSection() {
 
 	return (
 		<>
-			<div className="flex items-center gap-3">
-				<MdOutlineDateRange className="size-6" />
-				<h1 className="text-xl leading-none">Events</h1>
-			</div>
-
+			<Heading icon={MdOutlineDateRange} text="Events" />
 			<ul className="flex gap-x-6 text-slate-300 border-b mt-6 mb-4">
 				{LINKS.map(({ id, tab, linkName }) => (
 					<li onClick={() => setActiveTab(tab)} key={id} className={`text-sm pb-2 cursor-pointer ${activeTab === tab ? "border-b-1 text-white" : ""}`}>
@@ -55,7 +52,6 @@ export default function EventSection() {
 					</li>
 				))}
 			</ul>
-
 			<div className={`${activeTab === "future-events" ? "block" : "flex"} justify-center items-center sm:h-[20vh]`}>
 				{activeTab === "future-events" && (
 					<div className="flex gap-x-4">

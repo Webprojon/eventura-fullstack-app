@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { BASE_URL } from "../../../lib/data";
+import Heading from "./Heading";
 
 export default function PhotoSection({ user }: { user: { _id: string } }) {
 	const [userImage, setUserImage] = useState<File | null>(null);
@@ -15,7 +16,6 @@ export default function PhotoSection({ user }: { user: { _id: string } }) {
 		const file = e.target.files?.[0];
 		if (file) {
 			setUserImage(file);
-
 			const reader = new FileReader();
 			reader.onload = () => {
 				setPreview(reader.result as string);
@@ -49,22 +49,23 @@ export default function PhotoSection({ user }: { user: { _id: string } }) {
 		mutate(formData);
 	};
 
+	const deletePhoto = () => {
+		setUserImage(null);
+		setPreview(null);
+	};
+
 	return (
-		<div>
+		<>
 			<div className="flex justify-between items-start">
-				<div className="flex items-center gap-3">
-					<FaUser className="size-5" />
-					<h1 className="text-xl leading-none">Photo</h1>
-				</div>
+				<Heading icon={FaUser} text="Photo" />
 				{userImage && (
 					<button onClick={handleUpload} className="py-[5px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">
 						Save photo
 					</button>
 				)}
 			</div>
-
-			<div className="flex flex-col gap-y-3 w-[140px] items-start relative gap-x-4 mt-6">
-				{preview && <img alt="Uploaded" src={preview} className="w-[150px] h-[150px] object-cover border rounded" />}
+			<div className="w-[140px] relative mt-4">
+				{preview && <img alt="Uploaded" src={preview} className="w-[140px] h-[140px] object-cover border rounded" />}
 				<input
 					required
 					type="file"
@@ -82,11 +83,15 @@ export default function PhotoSection({ user }: { user: { _id: string } }) {
 						Upload Photo
 					</button>
 				)}
-
-				{userImage && (
-					<button className="w-full py-1 px-4 font-extralight text-sm cursor-pointer rounded-md border-1 border-red-400 text-red-400">Delete Photo</button>
-				)}
 			</div>
-		</div>
+			{userImage && (
+				<button
+					onClick={deletePhoto}
+					className="w-[140px] mt-2 py-1 px-4 font-extralight text-sm cursor-pointer rounded-md border-1 border-red-400 text-red-400"
+				>
+					Delete Photo
+				</button>
+			)}
+		</>
 	);
 }
