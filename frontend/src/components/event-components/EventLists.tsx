@@ -62,7 +62,7 @@ export default function EventLists() {
 							</div>
 						)}
 						<p className="line-clamp-1 sm:line-clamp-none">
-							{eventDescription.length > 15 ? eventDescription.split(" ").slice(0, 15).join(" ") + "..." : eventDescription}
+							{eventDescription.split(" ").length > 15 ? eventDescription.split(" ").slice(0, 15).join(" ") + "..." : eventDescription}
 						</p>
 						<Link to={`/events/${_id}`} className="flex justify-end mt-4 font-medium text-sky-300">
 							Learn More

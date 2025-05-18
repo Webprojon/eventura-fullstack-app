@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { EventFormData } from "../lib/types";
 import { BASE_URL } from "../lib/data";
 import toast from "react-hot-toast";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 type UseEventFormHandlerProps = { mode: "create" } | { mode: "edit"; id?: string };
 
@@ -62,7 +62,12 @@ export function useEventFormHandler(props: UseEventFormHandlerProps) {
 		const token = localStorage.getItem("token");
 
 		if (isEditMode) {
-			const res = await axios.put(`${BASE_URL}/events/${props.id}`, eventData, { headers: { "Content-Type": "application/json" } });
+			const res = await axios.put(`${BASE_URL}/events/${props.id}`, eventData, {
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			});
 			return res.data;
 		} else {
 			const res = await axios.post(`${BASE_URL}/events`, eventData, {
@@ -82,8 +87,9 @@ export function useEventFormHandler(props: UseEventFormHandlerProps) {
 			toast.success(isEditMode ? "Event is successfully updated!" : "New event is added!");
 			navigate("/events");
 		},
-		onError: (error) => {
-			toast.error("Something went wrong. Please try again. " + error.message);
+		onError: (error: AxiosError<{ message: string }>) => {
+			const message = error.response?.data?.message ?? "Something went wrong";
+			toast.error(message);
 		},
 	});
 

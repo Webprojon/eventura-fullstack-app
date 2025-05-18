@@ -10,9 +10,9 @@ eventRouter.get("/:id", getEvent);
 
 eventRouter.post("/", authorize, createEvent);
 
-eventRouter.put("/:id", updateEvent);
+eventRouter.put("/:id", authorize, updateEvent);
 
-eventRouter.delete("/:id", deleteEvent);
+eventRouter.delete("/:id", authorize, deleteEvent);
 
 eventRouter.post("/:eventId/join", authorize, joinEvent);
 

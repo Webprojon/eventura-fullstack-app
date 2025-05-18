@@ -1,4 +1,5 @@
 import Event from "../models/event.model.js";
+import User from "./../models/user.model.js";
 
 // GET all events
 export const getAllEvents = async (req, res, next) => {
@@ -51,16 +52,28 @@ export const updateEvent = async (req, res) => {
 		const { id } = req.params;
 		const updates = req.body;
 
+		const event = await Event.findById(id);
+		if (!event) {
+			return res.status(404).json({ message: "Event not found" });
+		}
+
+		// Check if current user is the owner
+		if (event.user.toString() !== req.user._id.toString()) {
+			return res.status(403).json({ message: "Not allowed to update other's event" });
+		}
+
 		const updatedEvent = await Event.findByIdAndUpdate(id, updates, {
 			new: true,
 			runValidators: true,
 		});
 
-		if (!updatedEvent) res.status(404).json({ message: "Event not found" });
+		if (!updatedEvent) {
+			return res.status(404).json({ message: "Event not found after update" });
+		}
 
-		res.status(200).json({ success: true, data: updatedEvent });
+		return res.status(200).json({ success: true, data: updatedEvent });
 	} catch (error) {
-		res.status(500).json({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -68,9 +81,19 @@ export const updateEvent = async (req, res) => {
 export const deleteEvent = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const deleteEvent = await Event.findByIdAndDelete(id);
+		const event = await Event.findById(id);
+		if (!event) {
+			return res.status(404).json({ message: "Event not found" });
+		}
 
-		if (!deleteEvent) {
+		// Check if current user is the owner
+		if (event.user.toString() !== req.user._id.toString()) {
+			return res.status(403).json({ message: "Not allowed to delete other's event" });
+		}
+
+		const deletedEvent = await Event.findByIdAndDelete(id);
+
+		if (!deletedEvent) {
 			return res.status(404).json({ message: "Event not found" });
 		}
 		return res.status(200).json({
