@@ -7,10 +7,11 @@ import { BASE_URL } from "../../../lib/data";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { AboutSectionProps } from "../../../lib/types";
 import Heading from "./Heading";
+import { useUser } from "../../../hooks/useUser";
 
-export default function AboutSection({ user }: AboutSectionProps) {
+export default function AboutSection() {
+	const { user } = useUser();
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 	const [textValue, setTextValue] = useState("");
 	const { formatDate } = useGetEvents();
@@ -38,16 +39,16 @@ export default function AboutSection({ user }: AboutSectionProps) {
 				<Heading icon={FaUser} text={`About ${user.name}`} />
 				{textValue && <button className="py-[3px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">Save</button>}
 			</div>
-			<span className="text-sm tracking-wider text-slate-300">Member since: {formatDate(user.createdAt)}</span>
+			<span className="text-[13px] tracking-wider text-slate-300">Member since: {formatDate(user.createdAt)}</span>
 			<textarea
 				name="about"
 				id="about"
 				placeholder="Say something about you..."
 				value={textValue}
 				onChange={(e) => setTextValue(e.target.value)}
-				className="bg-[#1C2029] textare-size w-full border p-3 h-[20vh] rounded-md mt-4 small-scroll text-sm tracking-wider leading-6 text-slate-300 outline-none"
+				className="bg-[#1C2029] textare-size w-full border p-3 h-[17vh] rounded-md mt-4 small-scroll text-sm tracking-wider leading-6 text-slate-300 outline-none"
 			></textarea>
-			<button onClick={handleDeleteModal} className="mt-4 py-2 sm:py-1 px-3 font-extralight text-sm cursor-pointer rounded-sm border-1 text-red-500">
+			<button onClick={handleDeleteModal} className="mt-2 py-2 sm:py-1 px-3 font-extralight text-sm cursor-pointer rounded-sm border-1 text-red-500">
 				Delete Account
 			</button>
 			{isDeleteModalOpen && <ConfirmationModal message="Permanently delete your account?" onCancel={handleDeleteModal} onConfirm={() => mutation.mutate()} />}

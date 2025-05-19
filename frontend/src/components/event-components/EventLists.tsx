@@ -6,13 +6,14 @@ import { NO_AVATAR } from "../../lib/data";
 import { useGetEvents } from "../../hooks/useGetEvents";
 import { EventListsSkeleton } from "../skeletons/EventListsSkeleton";
 import { ManageEventBase } from "../modals/ManageEventModal";
+import { TbUsers } from "react-icons/tb";
 
 export default function EventLists() {
 	const { data, isLoading, formatDate } = useGetEvents();
+	//const { calendarValue } = useCalendarStore();
+	//const filteredEvents = data?.data.filter((event) => (calendarValue ? formatDate(event.eventDate) === formatDate(calendarValue) : true));
 
-	const linkTo = (id: string) => {
-		return `/profile/user/${id}`;
-	};
+	const linkTo = (id: string) => `/profile/user/${id}`;
 
 	return (
 		<section className="flex flex-col gap-y-6 sm:gap-y-5 flex-[2.5] z-40">
@@ -21,7 +22,7 @@ export default function EventLists() {
 				<div key={_id} className="rounded-md p-3 border bg-[#10141E]">
 					<div className="flex justify-between items-start border-b">
 						<div className="flex gap-x-4 pb-2">
-							<Link to={linkTo(user?._id)} className="rounded-full bg-[#1C2029]">
+							<Link to={linkTo(user._id)} className="rounded-full bg-[#1C2029]">
 								<img
 									alt="User img"
 									src={user.userImg || NO_AVATAR}
@@ -32,8 +33,8 @@ export default function EventLists() {
 								<span className="font-medium text-[20px]">{eventTitle}</span>
 								<span className="text-[14px]">
 									Organised by{" "}
-									<Link to={linkTo(user?._id)} className="font-semibold text-sky-300">
-										{user?.name || "Unknown"}
+									<Link to={linkTo(user._id)} className="font-semibold text-sky-300">
+										{user.name || "Unknown"}
 									</Link>
 								</span>
 							</div>
@@ -52,14 +53,19 @@ export default function EventLists() {
 					</div>
 					<div className="p-3 rounded-sm border bg-[#1C2029]">
 						{eventParticipants.length !== 0 && (
-							<div className="flex items-center gap-x-2 pb-2 mb-4 border-b">
-								{eventParticipants.map(({ _id, name, userImg }, idx) => (
-									<Link to={linkTo(_id)} key={idx} className="flex flex-col items-center gap-y-1 cursor-pointer">
-										<img alt="User img" key={idx} src={userImg || NO_AVATAR} className="w-9 h-9 rounded-full border object-cover" />
-										<span className="text-[11px]">{name}</span>
-									</Link>
-								))}
-							</div>
+							<>
+								<div className="flex items-center gap-x-2">
+									<TbUsers className="size-4" />
+									<span className="text-sm">Participants</span>
+								</div>
+								<div className="flex items-center gap-x-2 pb-1 my-3 border-b">
+									{eventParticipants.map(({ _id, userImg }, idx) => (
+										<Link to={linkTo(_id)} key={idx} className="flex flex-col items-center gap-y-1 cursor-pointer">
+											<img alt="User img" key={idx} src={userImg || NO_AVATAR} className="w-10 h-10 rounded-full border object-cover" />
+										</Link>
+									))}
+								</div>
+							</>
 						)}
 						<p className="line-clamp-1 sm:line-clamp-none">
 							{eventDescription.split(" ").length > 15 ? eventDescription.split(" ").slice(0, 15).join(" ") + "..." : eventDescription}

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { smoothOpacity } from "../../lib/page-animations";
 import { useUser } from "../../hooks/useUser";
-import { NO_AVATAR } from "../../lib/data";
+import { MY_ACCOUNT_LINKS, NO_AVATAR } from "../../lib/data";
 import { useState } from "react";
 import AboutSection from "./account-items/AboutSection";
 import EventSection from "./account-items/EventSection";
@@ -9,43 +9,13 @@ import PhotoSection from "./account-items/PhotoSection";
 import FollowerSection from "./account-items/FollowerSection";
 import FollowingSection from "./account-items/FollowingSection";
 
-const LINKS = [
-	{
-		id: 1,
-		tab: "about",
-		linkName: "About",
-	},
-	{
-		id: 2,
-		tab: "photos",
-		linkName: "Photos",
-	},
-	{
-		id: 3,
-		tab: "event",
-		linkName: "Event",
-	},
-	{
-		id: 4,
-		tab: "followers",
-		linkName: "Followers",
-	},
-	{
-		id: 5,
-		tab: "following",
-		linkName: "Following",
-	},
-];
-
 export default function MyAccount() {
 	const { user } = useUser();
 	const [activeTab, setActiveTab] = useState("about");
 
-	if (!user) return <div className="h-[calc(100vh-9rem)] flex justify-center items-center text-xl">Loading...</div>;
+	const handleActiveTab = (active: string) => setActiveTab(active);
 
-	const handleActiveTab = (active: string) => {
-		setActiveTab(active);
-	};
+	if (!user) return <div className="h-[calc(100vh-9rem)] flex justify-center items-center text-xl">Loading...</div>;
 
 	return (
 		<motion.section
@@ -72,15 +42,15 @@ export default function MyAccount() {
 			</div>
 			<div className="flex flex-col-reverse sm:flex-row w-full gap-6">
 				<div className="flex-[2.9] p-3 sm:px-5 sm:py-4 rounded-md border bg-[#10141E]">
-					{activeTab === "about" && <AboutSection user={user} />}
-					{activeTab === "photos" && <PhotoSection user={user} />}
+					{activeTab === "about" && <AboutSection />}
+					{activeTab === "photos" && <PhotoSection />}
 					{activeTab === "event" && <EventSection />}
 					{activeTab === "followers" && <FollowerSection />}
 					{activeTab === "following" && <FollowingSection />}
 				</div>
 				<div className="flex-1 rounded-md">
 					<ul className="flex sm:flex-col justify-between sm:gap-2">
-						{LINKS.map(({ id, tab, linkName }) => (
+						{MY_ACCOUNT_LINKS.map(({ id, tab, linkName }) => (
 							<li
 								key={id}
 								onClick={() => handleActiveTab(tab)}

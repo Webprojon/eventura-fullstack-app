@@ -54,7 +54,3 @@ export interface ConfirmationModalProps {
 	onCancel: () => void;
 	onConfirm: () => void;
 }
-
-export interface AboutSectionProps {
-	user: { name: string; email: string; createdAt: string; _id: string };
-}

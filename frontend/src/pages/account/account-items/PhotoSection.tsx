@@ -6,8 +6,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { BASE_URL } from "../../../lib/data";
 import Heading from "./Heading";
+import { useUser } from "../../../hooks/useUser";
 
-export default function PhotoSection({ user }: { user: { _id: string } }) {
+export default function PhotoSection() {
+	const { user } = useUser();
 	const [userImage, setUserImage] = useState<File | null>(null);
 	const [preview, setPreview] = useState<string | null>(null);
 	const queryClient = useQueryClient();
