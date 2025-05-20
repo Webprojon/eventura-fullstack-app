@@ -9,7 +9,7 @@ export default function Navbar() {
 	const { token, isLoading } = useUser();
 
 	return (
-		<header className="max-w-[1350px] mx-auto flex items-center justify-between h-[9vh] border-b px-2 xl:px-0">
+		<header className="max-w-[1350px] mx-auto flex items-center justify-between h-[9vh] border-b px-2 xl:px-0 select-none">
 			<LogoSection />
 			<nav className="font-semibold flex items-center gap-x-5 sm:gap-x-3">
 				<CreateButton />

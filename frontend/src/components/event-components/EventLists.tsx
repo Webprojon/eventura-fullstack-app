@@ -9,7 +9,8 @@ import { ManageEventBase } from "../modals/ManageEventModal";
 import { TbUsers } from "react-icons/tb";
 
 export default function EventLists() {
-	const { data, isLoading, formatDate } = useGetEvents();
+	const { events, isLoading, formatDate } = useGetEvents();
+
 	//const { calendarValue } = useCalendarStore();
 	//const filteredEvents = data?.data.filter((event) => (calendarValue ? formatDate(event.eventDate) === formatDate(calendarValue) : true));
 
@@ -18,7 +19,7 @@ export default function EventLists() {
 	return (
 		<section className="flex flex-col gap-y-6 sm:gap-y-5 flex-[2.5] z-40">
 			{isLoading && <EventListsSkeleton count={2} />}
-			{data?.data.map(({ _id, eventParticipants, eventTitle, user, eventDate, eventTime, eventCity, eventAvenue, eventDescription }) => (
+			{events?.map(({ _id, eventParticipants, eventTitle, user, eventDate, eventTime, eventCity, eventAvenue, eventDescription }) => (
 				<div key={_id} className="rounded-md p-3 border bg-[#10141E]">
 					<div className="flex justify-between items-start border-b">
 						<div className="flex gap-x-4 pb-2">

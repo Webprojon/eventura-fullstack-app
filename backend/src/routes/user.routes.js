@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteUser, getUser, getUsers, updateUser, uploadImage } from "../controllers/user.controller.js";
+import { deleteUser, getAccountOwner, getUser, getUsers, updateUser, uploadImage } from "../controllers/user.controller.js";
 import authorize from "../middlewares/auth.middleware.js";
 import upload from "../middlewares/multerConfig.js";
 
@@ -7,7 +7,9 @@ const userRouter = Router();
 
 userRouter.get("/", getUsers);
 
-userRouter.get("/me", authorize, getUser);
+userRouter.get("/:id", getUser);
+
+userRouter.get("/me", authorize, getAccountOwner);
 
 userRouter.put("/:id", updateUser);
 

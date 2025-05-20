@@ -21,7 +21,7 @@ export default function AboutSection() {
 	const mutation = useMutation({
 		mutationFn: () => axios.delete(`${BASE_URL}/users/${user._id}`),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["users"] });
+			queryClient.invalidateQueries({ queryKey: ["user"] });
 			toast.success("Your account deleted.");
 			localStorage.removeItem("token");
 			navigate("/events");

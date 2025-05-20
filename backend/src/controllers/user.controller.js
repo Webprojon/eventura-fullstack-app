@@ -15,6 +15,26 @@ export const getUsers = async (req, res, next) => {
 // Get single user
 export const getUser = async (req, res, next) => {
 	try {
+		const { id } = req.params;
+
+		const user = await User.findById(id).select("-password");
+
+		// Check if user not exist throw an error
+		if (!user) {
+			const error = new Error("User not found");
+			error.statusCode = 404;
+			throw error;
+		}
+
+		res.status(200).json({ success: true, data: user });
+	} catch (error) {
+		next(error);
+	}
+};
+
+// Get account owner
+export const getAccountOwner = async (req, res, next) => {
+	try {
 		const user = await User.findById(req.user.id).select("-password");
 
 		// Check if user not exist throw an error

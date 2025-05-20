@@ -16,6 +16,9 @@ export default function EventDetails() {
 	const { joinEvent, isJoining, token, isJoined } = useJoinEvent(id);
 	const { cancelEvent, isCanceling } = useCancelEvent(id);
 
+	// api endpoint
+	// `https://eventura-data.onrender.com/api/v1/events/${id}`
+
 	if (isLoading) return <EventDetailsSkeleton />;
 	if (!event) return;
 

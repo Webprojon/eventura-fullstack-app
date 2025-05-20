@@ -3,8 +3,10 @@ import { EventTypes } from "../lib/types";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../lib/data";
 import axios from "axios";
+import { useUser } from "./useUser";
 
 export function useGetEvents() {
+	const { user } = useUser();
 	const { id } = useParams<{ id: string }>();
 
 	const getEvents = async () => {
@@ -17,11 +19,8 @@ export function useGetEvents() {
 		queryFn: getEvents,
 	});
 
-	// Single event for EventDetail page
-	const event = data?.data.find((detail) => detail._id === id);
-
 	// Formatting date
-	const formatDate = (dateString: string) => {
+	const formatDate = (dateString: string | Date): string => {
 		const date = new Date(dateString);
 		return date.toLocaleDateString("en-US", {
 			year: "numeric",
@@ -30,11 +29,23 @@ export function useGetEvents() {
 		});
 	};
 
+	// Single event for EventDetail page
+	const event = data?.data.find((detail) => detail._id === id);
+
+	// EventSection items
+	const today = new Date();
+	const futureEvents = data?.data.filter((event) => event.eventParticipants.some((participant) => participant._id === user?._id));
+	const pastEvents = data?.data.filter((event) => formatDate(event.eventDate) < formatDate(today));
+	const ownerEvents = data?.data.filter((event) => event.user?._id === user?._id);
+
 	return {
 		id,
-		data,
-		isLoading,
 		event,
+		isLoading,
 		formatDate,
+		pastEvents,
+		ownerEvents,
+		futureEvents,
+		events: data?.data,
 	};
 }

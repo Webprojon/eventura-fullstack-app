@@ -14,7 +14,7 @@ export default function EventParticipants({ participants }: { participants: User
 				{participants.map(({ _id, name, userImg }) => (
 					<Link
 						key={_id}
-						to={`/profile/${name.toLowerCase().replace(/\s+/g, "-")}`}
+						to={`/profile/user/682a4148ebf0deada97fd486`}
 						className="flex items-center gap-x-4 px-3 py-[5px] rounded-md transition-all bg-[#1C2029] hover:bg-[#262a34]"
 					>
 						<img src={userImg || NO_AVATAR} alt="coming user" className="w-10 h-10 border rounded-full object-cover" />
