@@ -11,7 +11,7 @@ export default function UserProfile() {
 	const { data, isLoading } = useQuery({
 		queryKey: ["user", id],
 		queryFn: async () => {
-			const res = await axios.get(`http://localhost:5500/api/v1/users/${id}`);
+			const res = await axios.get(`https://eventura-data.onrender.com/api/v1/users${id}`);
 			return res.data;
 		},
 		enabled: !!id,
