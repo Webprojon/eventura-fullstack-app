@@ -11,7 +11,7 @@ export default function UserProfile() {
 	const { data } = useQuery({
 		queryKey: ["user", id],
 		queryFn: async () => {
-			const res = await axios.get(`${BASE_URL}/users${id}`);
+			const res = await axios.get(`${BASE_URL}/users/user/${id}`);
 			return res.data;
 		},
 		enabled: !!id,

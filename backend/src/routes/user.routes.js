@@ -7,7 +7,7 @@ const userRouter = Router();
 
 userRouter.get("/", getUsers);
 
-userRouter.get("/:id", getUser);
+userRouter.get("/user/:id", getUser);
 
 userRouter.get("/me", authorize, getAccountOwner);
 
