@@ -3,15 +3,15 @@ import { smoothOpacity } from "../../lib/page-animations";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { DEFAULT_BG_IMG, NO_AVATAR } from "../../lib/data";
+import { BASE_URL, DEFAULT_BG_IMG, NO_AVATAR } from "../../lib/data";
 
 export default function UserProfile() {
 	const { id } = useParams();
 
-	const { data, isLoading } = useQuery({
+	const { data } = useQuery({
 		queryKey: ["user", id],
 		queryFn: async () => {
-			const res = await axios.get(`https://eventura-data.onrender.com/api/v1/users${id}`);
+			const res = await axios.get(`${BASE_URL}/users${id}`);
 			return res.data;
 		},
 		enabled: !!id,

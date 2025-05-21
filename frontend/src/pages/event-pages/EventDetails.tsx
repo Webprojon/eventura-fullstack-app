@@ -1,26 +1,34 @@
 import { MdOutlineDateRange } from "react-icons/md";
 import { TfiLocationPin } from "react-icons/tfi";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { SlInfo } from "react-icons/sl";
 import EventParticipants from "../../components/event-components/EventParticipants";
 import { smoothOpacity } from "../../lib/page-animations";
-import { DEFAULT_BG_IMG } from "../../lib/data";
+import { BASE_URL, DEFAULT_BG_IMG } from "../../lib/data";
 import { useGetEvents } from "../../hooks/useGetEvents";
 import { EventDetailsSkeleton } from "../../components/skeletons/EventDetailsSkeleton";
 import { useJoinEvent } from "../../hooks/useJoinEvent";
 import { useCancelEvent } from "../../hooks/useCancelEvent";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export default function EventDetails() {
-	const { id, event, isLoading, formatDate } = useGetEvents();
+	const { id } = useParams();
+	const { formatDate } = useGetEvents();
 	const { joinEvent, isJoining, token, isJoined } = useJoinEvent(id);
 	const { cancelEvent, isCanceling } = useCancelEvent(id);
 
-	// api endpoint
-	// `https://eventura-data.onrender.com/api/v1/events/${id}`
+	const { data, isLoading } = useQuery({
+		queryKey: ["event", id],
+		queryFn: async () => {
+			const res = await axios.get(`${BASE_URL}/events/${id}`);
+			return res.data;
+		},
+		enabled: !!id,
+	});
 
 	if (isLoading) return <EventDetailsSkeleton />;
-	if (!event) return;
 
 	return (
 		<motion.section
@@ -33,14 +41,14 @@ export default function EventDetails() {
 				<div className="relative overflow-hidden border rounded-md">
 					<img src={DEFAULT_BG_IMG} alt="background img" className="w-full h-[30vh] sm:h-[44vh] object-cover" />
 					<div className="flex flex-col gap-y-1 absolute bottom-0 p-4 w-full h-[30vh] sm:h-[44vh] bg-black/75">
-						<span className="font-medium text-[24px]">{event.eventTitle}</span>
+						<span className="font-medium text-[24px]">{data.data.eventTitle}</span>
 						<span className="flex gap-x-2 text-[18px] items-center">
-							{formatDate(event.eventDate)}, at {event.eventTime}
+							{formatDate(data?.data.eventDate)}, at {data?.data.eventTime}
 						</span>
 						<span>
 							Organised by{" "}
-							<Link to={`/profile/user/${event.user._id}`} className="font-semibold text-sky-300">
-								{event.user.name || "Unkown"}
+							<Link to={`/profile/user/${data?.data.user._id}`} className="font-semibold text-sky-300">
+								{data?.data.user.name || "Unkown"}
 							</Link>
 						</span>
 					</div>
@@ -51,17 +59,17 @@ export default function EventDetails() {
 						<span>
 							<SlInfo className="size-5" />
 						</span>
-						{event.eventDescription}
+						{data?.data.eventDescription}
 					</div>
 
 					<div className="flex items-center gap-x-4 border-b pb-3 w-full">
 						<MdOutlineDateRange className="size-5" />
-						{formatDate(event.eventDate)}, at {event.eventTime}
+						{formatDate(data?.data.eventDate)}, at {data?.data.eventTime}
 					</div>
 
 					<div className="flex items-center gap-x-4 border-b pb-3 w-full">
 						<TfiLocationPin className="size-5" />
-						{event.eventCity}, {event.eventAvenue}
+						{data?.data.eventCity}, {data?.data.eventAvenue}
 					</div>
 
 					{isJoined ? (
@@ -76,7 +84,7 @@ export default function EventDetails() {
 				</div>
 			</div>
 
-			<EventParticipants participants={event.eventParticipants} />
+			<EventParticipants participants={data?.data.eventParticipants} />
 		</motion.section>
 	);
 }
