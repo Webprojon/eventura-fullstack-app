@@ -29,9 +29,6 @@ export function useGetEvents() {
 		});
 	};
 
-	// Single event for EventDetail page
-	const event = data?.data.find((detail) => detail._id === id);
-
 	// EventSection items
 	const today = new Date();
 	const futureEvents = data?.data.filter((event) => event.eventParticipants.some((participant) => participant._id === user?._id));
@@ -40,7 +37,6 @@ export function useGetEvents() {
 
 	return {
 		id,
-		event,
 		isLoading,
 		formatDate,
 		pastEvents,

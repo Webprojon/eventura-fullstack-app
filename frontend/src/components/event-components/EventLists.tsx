@@ -7,14 +7,16 @@ import { useGetEvents } from "../../hooks/useGetEvents";
 import { EventListsSkeleton } from "../skeletons/EventListsSkeleton";
 import { ManageEventBase } from "../modals/ManageEventModal";
 import { TbUsers } from "react-icons/tb";
+import { useUser } from "../../hooks/useUser";
 
 export default function EventLists() {
 	const { events, isLoading, formatDate } = useGetEvents();
+	const { user: currentUser } = useUser();
 
 	//const { calendarValue } = useCalendarStore();
 	//const filteredEvents = data?.data.filter((event) => (calendarValue ? formatDate(event.eventDate) === formatDate(calendarValue) : true));
 
-	const linkTo = (id: string) => `/profile/user/${id}`;
+	const linkTo = (id: string) => (currentUser?._id === id ? `/account/me` : `/profile/user/${id}`);
 
 	return (
 		<section className="flex flex-col gap-y-6 sm:gap-y-5 flex-[2.5] z-40">
