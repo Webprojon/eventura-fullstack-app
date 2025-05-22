@@ -13,7 +13,7 @@ import { useUser } from "../../../hooks/useUser";
 export default function AboutSection() {
 	const { user } = useUser();
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-	const [textValue, setTextValue] = useState("");
+	const [descriptionVal, setDescriptionVal] = useState(user?.description);
 	const { formatDate } = useGetEvents();
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
@@ -31,21 +31,46 @@ export default function AboutSection() {
 		},
 	});
 
+	const { mutate } = useMutation({
+		mutationFn: async (textValue: string) => {
+			const res = await axios.put(
+				`${BASE_URL}/users/${user?._id}`,
+				{ description: textValue },
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+			);
+			return res.data;
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["users"] });
+			toast.success("User description is successfully added!");
+		},
+	});
+
+	const handleAdd = () => mutate(descriptionVal);
+
 	const handleDeleteModal = () => setIsDeleteModalOpen((prev) => !prev);
 
 	return (
 		<>
 			<div className="flex justify-between items-center">
 				<Heading icon={FaUser} text={`About ${user.name}`} />
-				{textValue && <button className="py-[3px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">Save</button>}
+				{descriptionVal !== user?.description && (
+					<button onClick={handleAdd} className="py-[3px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">
+						Save
+					</button>
+				)}
 			</div>
 			<span className="text-[13px] tracking-wider text-slate-300">Member since: {formatDate(user.createdAt)}</span>
 			<textarea
 				name="about"
 				id="about"
 				placeholder="Say something about you..."
-				value={textValue}
-				onChange={(e) => setTextValue(e.target.value)}
+				value={descriptionVal}
+				onChange={(e) => setDescriptionVal(e.target.value)}
 				className="bg-[#1C2029] textare-size w-full border p-3 h-[17vh] rounded-md mt-4 small-scroll text-sm tracking-wider leading-6 text-slate-300 outline-none"
 			></textarea>
 			<button onClick={handleDeleteModal} className="mt-2 py-2 sm:py-1 px-3 font-extralight text-sm cursor-pointer rounded-sm border-1 text-red-500">

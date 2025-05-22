@@ -23,6 +23,9 @@ export default function EventDetails() {
 
 	const { eventTitle, eventDate, eventTime, user, eventDescription, eventCity, eventAvenue, eventParticipants } = event;
 
+	const today = new Date();
+	const isEventDateValid = formatDate(event.eventDate) < formatDate(today);
+
 	const formattedDateTime = `${formatDate(eventDate)}, at ${eventTime}`;
 
 	return (
@@ -65,11 +68,15 @@ export default function EventDetails() {
 						{eventCity}, {eventAvenue}
 					</div>
 
-					{isJoined ? (
+					{isEventDateValid && <span className="text-sm text-red-500">⛔ Notice: This event has ended.</span>}
+
+					{isJoined && (
 						<button onClick={() => cancelEvent()} className="cursor-pointer rounded-md font-semibold border-1 border-sky-300 text-sky-300 py-2 px-4">
 							{isCanceling ? "Canceling..." : "Cancel My Place"}
 						</button>
-					) : (
+					)}
+
+					{!isJoined && !isEventDateValid && (
 						<button onClick={() => joinEvent()} className="btn py-2 px-4">
 							{token ? (isJoining ? "Joining..." : "Join This Event") : "Sign in to join this event"}
 						</button>
