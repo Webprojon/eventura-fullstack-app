@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { useUser } from "../../hooks/useUser";
 import Loader from "../Loader";
 import LogoSection from "./Logo";
 import CreateButton from "./CreateButton";
 import Dropdown from "./Dropdown";
+import { useUserData } from "../../hooks/useUserData";
 
 export default function Navbar() {
-	const { token, isLoading } = useUser();
+	const { token, isLoading } = useUserData();
 
 	return (
 		<header className="max-w-[1350px] mx-auto flex items-center justify-between h-[9vh] border-b px-2 xl:px-0 select-none">

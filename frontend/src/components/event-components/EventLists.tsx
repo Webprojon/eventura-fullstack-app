@@ -7,16 +7,11 @@ import { useGetEvents } from "../../hooks/useGetEvents";
 import { EventListsSkeleton } from "../skeletons/EventListsSkeleton";
 import { ManageEventBase } from "../modals/ManageEventModal";
 import { TbUsers } from "react-icons/tb";
-import { useUser } from "../../hooks/useUser";
+import { useUserData } from "../../hooks/useUserData";
 
 export default function EventLists() {
 	const { events, isLoading, formatDate } = useGetEvents();
-	const { user: currentUser } = useUser();
-
-	//const { calendarValue } = useCalendarStore();
-	//const filteredEvents = data?.data.filter((event) => (calendarValue ? formatDate(event.eventDate) === formatDate(calendarValue) : true));
-
-	const linkTo = (id: string) => (currentUser?._id === id ? `/account/me` : `/profile/user/${id}`);
+	const { getUserProfileLink } = useUserData();
 
 	return (
 		<section className="flex flex-col gap-y-6 sm:gap-y-5 flex-[2.5] z-40">
@@ -25,7 +20,7 @@ export default function EventLists() {
 				<div key={_id} className="rounded-md p-3 border bg-[#10141E]">
 					<div className="flex justify-between items-start border-b">
 						<div className="flex gap-x-4 pb-2">
-							<Link to={linkTo(user._id)} className="rounded-full bg-[#1C2029]">
+							<Link to={getUserProfileLink(user._id)} className="rounded-full bg-[#1C2029]">
 								<img
 									alt="User img"
 									src={user.userImg || NO_AVATAR}
@@ -36,7 +31,7 @@ export default function EventLists() {
 								<span className="font-medium text-[20px]">{eventTitle}</span>
 								<span className="text-[14px]">
 									Organised by{" "}
-									<Link to={linkTo(user._id)} className="font-semibold text-sky-300">
+									<Link to={getUserProfileLink(user._id)} className="font-semibold text-sky-300">
 										{user.name || "Unknown"}
 									</Link>
 								</span>
@@ -63,7 +58,7 @@ export default function EventLists() {
 								</div>
 								<div className="flex items-center gap-x-2 pb-1 my-3 border-b">
 									{eventParticipants.map(({ _id, userImg }, idx) => (
-										<Link to={linkTo(_id)} key={idx} className="flex flex-col items-center gap-y-1 cursor-pointer">
+										<Link to={getUserProfileLink(_id)} key={idx} className="flex flex-col items-center gap-y-1 cursor-pointer">
 											<img alt="User img" key={idx} src={userImg || NO_AVATAR} className="w-10 h-10 rounded-full border object-cover" />
 										</Link>
 									))}
@@ -84,3 +79,6 @@ export default function EventLists() {
 		</section>
 	);
 }
+
+//const { calendarValue } = useCalendarStore();
+//const filteredEvents = data?.data.filter((event) => (calendarValue ? formatDate(event.eventDate) === formatDate(calendarValue) : true));

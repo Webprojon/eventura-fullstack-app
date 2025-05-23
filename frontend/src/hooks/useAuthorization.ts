@@ -1,17 +1,11 @@
 import axios from "axios";
 import { BASE_URL } from "../lib/data";
-import { AuthUserType } from "../lib/types";
+import { AuthUserType, UseAuthorizationProps } from "../lib/types";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { LoginSchema } from "../lib/validation/login.schema";
 import { RegisterSchema } from "../lib/validation/register.schema";
-
-type Mode = "login" | "register";
-
-interface UseAuthorizationProps {
-	mode: Mode;
-}
 
 export function useAuthorization({ mode }: UseAuthorizationProps) {
 	const navigate = useNavigate();

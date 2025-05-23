@@ -6,10 +6,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { BASE_URL } from "../../../lib/data";
 import Heading from "./Heading";
-import { useUser } from "../../../hooks/useUser";
+import { useUserData } from "../../../hooks/useUserData";
 
 export default function PhotoSection() {
-	const { user } = useUser();
+	const { user } = useUserData();
 	const [userImage, setUserImage] = useState<File | null>(null);
 	const [preview, setPreview] = useState<string | null>(null);
 	const queryClient = useQueryClient();
@@ -26,14 +26,14 @@ export default function PhotoSection() {
 		}
 	};
 
-	const { mutate } = useMutation({
+	const uploadPhotoMutation = useMutation({
 		mutationFn: async (formData: FormData) => {
 			const res = await axios.post(`${BASE_URL}/users/upload`, formData);
 			return res.data;
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["user"] });
-			toast.success("Photo is uploaded successfully");
+			toast.success("Photo is uploaded!");
 		},
 		onError: (error) => {
 			toast.error(error.message);
@@ -48,7 +48,7 @@ export default function PhotoSection() {
 		const formData = new FormData();
 		formData.append("userImg", userImage);
 		formData.append("userId", user._id);
-		mutate(formData);
+		uploadPhotoMutation.mutate(formData);
 	};
 
 	const deletePhoto = () => {

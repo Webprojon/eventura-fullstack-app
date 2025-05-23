@@ -7,11 +7,11 @@ import Login from "./pages/authentication/Login";
 import Register from "./pages/authentication/Register";
 import CreateEvent from "./pages/event-pages/CreateEvent";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import StarterPage from "./pages/home-page/Starter";
 import UpdateEvent from "./pages/event-pages/UpdateEvent";
 import { ProtectedAuthRoute } from "./components/ProtectedAuthRoute";
 import MyAccount from "./pages/account/MyAccount";
-import UserProfile from "./pages/user-page/UserProfile";
+import StarterPage from "./pages/Starter";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
 	const pathname = useLocation().pathname;

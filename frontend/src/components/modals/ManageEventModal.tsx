@@ -7,17 +7,17 @@ import { useMemo, useState } from "react";
 import { modalAnim } from "../../lib/page-animations";
 import ConfirmationModal from "./ConfirmationModal";
 import { useDeleteEvent } from "../../hooks/useDeleteEvent";
-import { useUser } from "../../hooks/useUser";
 import useModalStore from "../../store/modalStore";
+import { useUserData } from "../../hooks/useUserData";
 
 export function ManageEventBase({ id, isMobile = false }: { id: string; isMobile?: boolean }) {
 	const isMenuOpen = useModalStore((state) => state.isMenuOpen(id));
 	const toggleMenu = useModalStore((state) => state.toggleMenu);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { handleDelete } = useDeleteEvent();
-	const { token } = useUser();
+	const { token } = useUserData();
 
-	const handleModal = () => setIsModalOpen((prev) => !prev);
+	const toggleModal = () => setIsModalOpen((prev) => !prev);
 
 	const linkTo = useMemo(() => (token ? `/events/update/${id}` : "/sign-in"), [token, id]);
 
@@ -36,7 +36,7 @@ export function ManageEventBase({ id, isMobile = false }: { id: string; isMobile
 							<MdOutlineEdit className={iconClasses} />
 							Update event
 						</Link>
-						<button onClick={handleModal} className={`flex items-center gap-2 cursor-pointer font-semibold text-red-400 ${buttonClasses}`}>
+						<button onClick={toggleModal} className={`flex items-center gap-2 cursor-pointer font-semibold text-red-400 ${buttonClasses}`}>
 							<RiDeleteBin6Line className={iconClasses} />
 							Delete event
 						</button>
@@ -52,7 +52,7 @@ export function ManageEventBase({ id, isMobile = false }: { id: string; isMobile
 			</div>
 
 			{/* Confirmation Modal */}
-			{isModalOpen && <ConfirmationModal message="Confirm deletion of this event?" onCancel={handleModal} onConfirm={() => handleDelete(id)} />}
+			{isModalOpen && <ConfirmationModal message="Confirm deletion of this event?" onCancel={toggleModal} onConfirm={() => handleDelete(id)} />}
 		</>
 	);
 }

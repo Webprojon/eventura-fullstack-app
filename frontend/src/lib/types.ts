@@ -28,17 +28,6 @@ export interface EventFormData {
 	eventDescription: string;
 }
 
-export interface AuthLayoutProps {
-	subtitle: string;
-	children: React.ReactNode;
-}
-
-export interface AuthUserType {
-	name?: string;
-	email: string;
-	password: string;
-}
-
 export interface InputProps {
 	id: string;
 	name: string;
@@ -53,4 +42,22 @@ export interface ConfirmationModalProps {
 	message: string;
 	onCancel: () => void;
 	onConfirm: () => void;
+}
+
+// Auth types
+export interface AuthLayoutProps {
+	subtitle: string;
+	children: React.ReactNode;
+}
+
+export interface AuthUserType {
+	name?: string;
+	email: string;
+	password: string;
+}
+
+type Mode = "login" | "register";
+
+export interface UseAuthorizationProps {
+	mode: Mode;
 }

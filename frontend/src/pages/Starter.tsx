@@ -2,7 +2,7 @@ import { FaPeopleGroup } from "react-icons/fa6";
 import { MdArrowForward } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { fromTopToBottom } from "../../lib/page-animations";
+import { fromTopToBottom } from "../lib/page-animations";
 
 export default function StarterPage() {
 	return (

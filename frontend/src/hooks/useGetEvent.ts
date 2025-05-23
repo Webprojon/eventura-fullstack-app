@@ -3,7 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../lib/data";
 import { useParams } from "react-router-dom";
 
-export function useGetSingleEvent() {
+export function useGetEvent() {
 	const { id } = useParams();
 
 	const { data, isLoading } = useQuery({

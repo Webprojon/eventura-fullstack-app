@@ -7,20 +7,17 @@ import axios, { AxiosError } from "axios";
 export function useDeleteEvent() {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
+	const token = localStorage.getItem("token");
 
-	const deleteEvent = async (id: string) => {
-		const token = localStorage.getItem("token");
-
-		await axios.delete(`${BASE_URL}/events/${id}`, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
-		return id;
-	};
-
-	const mutation = useMutation({
-		mutationFn: (id: string) => deleteEvent(id),
+	const deleteEventMutation = useMutation({
+		mutationFn: async (id: string) => {
+			await axios.delete(`${BASE_URL}/events/${id}`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			return id;
+		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["events"] });
 			toast.success("Event successfully deleted.");
@@ -32,9 +29,7 @@ export function useDeleteEvent() {
 		},
 	});
 
-	const handleDelete = (id: string) => {
-		mutation.mutate(id);
-	};
+	const handleDelete = (id: string) => deleteEventMutation.mutate(id);
 
 	return {
 		handleDelete,

@@ -3,7 +3,7 @@ import { BASE_URL } from "../lib/data";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export function useUser() {
+export function useUserData() {
 	const navigate = useNavigate();
 	const token = localStorage.getItem("token");
 
@@ -18,8 +18,8 @@ export function useUser() {
 	};
 
 	const { data, isLoading } = useQuery({
-		queryKey: ["user"],
 		queryFn: getUser,
+		queryKey: ["user"],
 		enabled: !!token,
 	});
 
@@ -28,15 +28,15 @@ export function useUser() {
 		navigate("/events");
 	};
 
-	const user = data?.data;
-
-	const linkTo = `${token ? "/events/create-event" : "/sign-in"}`;
+	const createEventOrSignInLink = `${token ? "/events/create-event" : "/sign-in"}`;
+	const getUserProfileLink = (id: string) => (data?.data?._id === id ? `/account/me` : `/profile/user/${id}`);
 
 	return {
-		user,
 		token,
-		linkTo,
 		isLoading,
 		handleLogOut,
+		user: data?.data,
+		getUserProfileLink,
+		createEventOrSignInLink,
 	};
 }

@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BASE_URL } from "../lib/data";
 import toast from "react-hot-toast";
-import { useUser } from "./useUser";
 import axios, { AxiosError } from "axios";
-import { useGetSingleEvent } from "./useGetSingleEvent";
+import { useUserData } from "./useUserData";
+import { useGetEvent } from "./useGetEvent";
 
 export function useJoinEvent(eventId: string | undefined) {
 	const queryClient = useQueryClient();
 	const token = localStorage.getItem("token");
-	const { event } = useGetSingleEvent();
-	const { user } = useUser();
+	const { event } = useGetEvent();
+	const { user } = useUserData();
 
 	const { mutate, isPending, data, error } = useMutation({
 		mutationFn: async () => {
@@ -20,7 +20,6 @@ export function useJoinEvent(eventId: string | undefined) {
 			});
 			return res.data;
 		},
-
 		onSuccess: (data) => {
 			toast.success(data.message || "Joined the event successfully");
 			queryClient.invalidateQueries({ queryKey: ["events"] });
@@ -31,6 +30,7 @@ export function useJoinEvent(eventId: string | undefined) {
 		},
 	});
 
+	// Check if user is joind or not
 	const isJoined = event?.eventParticipants.some((participant: { _id: string }) => participant._id === user?._id);
 
 	return {

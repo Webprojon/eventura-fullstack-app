@@ -3,20 +3,18 @@ import { EventTypes } from "../lib/types";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../lib/data";
 import axios from "axios";
-import { useUser } from "./useUser";
+import { useUserData } from "./useUserData";
 
 export function useGetEvents() {
-	const { user } = useUser();
+	const { user } = useUserData();
 	const { id } = useParams<{ id: string }>();
-
-	const getEvents = async () => {
-		const res = await axios.get(`${BASE_URL}/events`);
-		return res.data;
-	};
 
 	const { data, isLoading } = useQuery<{ data: EventTypes[] }>({
 		queryKey: ["events"],
-		queryFn: getEvents,
+		queryFn: async () => {
+			const res = await axios.get(`${BASE_URL}/events`);
+			return res.data;
+		},
 	});
 
 	// Formatting date

@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
-import { smoothOpacity } from "../../lib/page-animations";
+import { smoothOpacity } from "../lib/page-animations";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { BASE_URL, DEFAULT_BG_IMG, NO_AVATAR } from "../../lib/data";
-import { useGetEvents } from "../../hooks/useGetEvents";
+import { BASE_URL, DEFAULT_BG_IMG, NO_AVATAR } from "../lib/data";
+import { useGetEvents } from "../hooks/useGetEvents";
 
 export default function UserProfile() {
 	const { id } = useParams();
@@ -12,11 +12,11 @@ export default function UserProfile() {
 
 	const { data, isLoading } = useQuery({
 		queryKey: ["user", id],
+		enabled: !!id,
 		queryFn: async () => {
 			const res = await axios.get(`${BASE_URL}/users/user/${id}`);
 			return res.data;
 		},
-		enabled: !!id,
 	});
 	const user = data?.data;
 	const userEvents = events?.filter((event) => event.user?._id === user?._id);

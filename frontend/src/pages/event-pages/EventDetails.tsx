@@ -10,14 +10,14 @@ import { useGetEvents } from "../../hooks/useGetEvents";
 import { EventDetailsSkeleton } from "../../components/skeletons/EventDetailsSkeleton";
 import { useJoinEvent } from "../../hooks/useJoinEvent";
 import { useCancelEvent } from "../../hooks/useCancelEvent";
-import { useGetSingleEvent } from "../../hooks/useGetSingleEvent";
+import { useGetEvent } from "../../hooks/useGetEvent";
 
 export default function EventDetails() {
 	const { id } = useParams();
 	const { formatDate } = useGetEvents();
-	const { joinEvent, isJoining, token, isJoined } = useJoinEvent(id);
+	const { event, isLoading } = useGetEvent();
 	const { cancelEvent, isCanceling } = useCancelEvent(id);
-	const { event, isLoading } = useGetSingleEvent();
+	const { joinEvent, isJoining, token, isJoined } = useJoinEvent(id);
 
 	if (isLoading) return <EventDetailsSkeleton />;
 

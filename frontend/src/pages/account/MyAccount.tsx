@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { smoothOpacity } from "../../lib/page-animations";
-import { useUser } from "../../hooks/useUser";
 import { MY_ACCOUNT_LINKS, NO_AVATAR } from "../../lib/data";
 import { useState } from "react";
 import AboutSection from "./account-items/AboutSection";
@@ -8,12 +7,13 @@ import EventSection from "./account-items/EventSection";
 import PhotoSection from "./account-items/PhotoSection";
 import FollowerSection from "./account-items/FollowerSection";
 import FollowingSection from "./account-items/FollowingSection";
+import { useUserData } from "../../hooks/useUserData";
 
 export default function MyAccount() {
-	const { user } = useUser();
+	const { user } = useUserData();
 	const [activeTab, setActiveTab] = useState("about");
 
-	const handleActiveTab = (active: string) => setActiveTab(active);
+	const toggleActiveTab = (active: string) => setActiveTab(active);
 
 	if (!user) return <div className="h-[calc(100vh-9rem)] flex justify-center items-center text-xl">Loading...</div>;
 
@@ -53,7 +53,7 @@ export default function MyAccount() {
 						{MY_ACCOUNT_LINKS.map(({ id, tab, linkName }) => (
 							<li
 								key={id}
-								onClick={() => handleActiveTab(tab)}
+								onClick={() => toggleActiveTab(tab)}
 								className={`rounded-md border cursor-pointer text-sm sm:text-md p-2 sm:p-3 hover:bg-[#1C2029] ${
 									activeTab === tab ? "bg-[#1C2029]" : "bg-[#10141E]"
 								}`}

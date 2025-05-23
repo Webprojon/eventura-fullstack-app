@@ -8,21 +8,21 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Heading from "./Heading";
-import { useUser } from "../../../hooks/useUser";
+import { useUserData } from "../../../hooks/useUserData";
 
 export default function AboutSection() {
-	const { user } = useUser();
+	const { user } = useUserData();
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 	const [descriptionVal, setDescriptionVal] = useState(user?.description);
 	const { formatDate } = useGetEvents();
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 
-	const mutation = useMutation({
+	const deleteAccountMutation = useMutation({
 		mutationFn: () => axios.delete(`${BASE_URL}/users/${user._id}`),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["user"] });
-			toast.success("Your account deleted.");
+			toast.success("Your account deleted!");
 			localStorage.removeItem("token");
 			navigate("/events");
 		},
@@ -31,7 +31,7 @@ export default function AboutSection() {
 		},
 	});
 
-	const { mutate } = useMutation({
+	const updateDescriptionMutation = useMutation({
 		mutationFn: async (textValue: string) => {
 			const res = await axios.put(
 				`${BASE_URL}/users/${user?._id}`,
@@ -45,21 +45,21 @@ export default function AboutSection() {
 			return res.data;
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["users"] });
-			toast.success("User description is successfully added!");
+			queryClient.invalidateQueries({ queryKey: ["user"] });
+			toast.success("Description is updated!");
 		},
 	});
 
-	const handleAdd = () => mutate(descriptionVal);
+	const handleUpdate = () => updateDescriptionMutation.mutate(descriptionVal);
 
-	const handleDeleteModal = () => setIsDeleteModalOpen((prev) => !prev);
+	const toggleDeleteModal = () => setIsDeleteModalOpen((prev) => !prev);
 
 	return (
 		<>
 			<div className="flex justify-between items-center">
 				<Heading icon={FaUser} text={`About ${user.name}`} />
 				{descriptionVal !== user?.description && (
-					<button onClick={handleAdd} className="py-[3px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">
+					<button onClick={handleUpdate} className="py-[3px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">
 						Save
 					</button>
 				)}
@@ -73,10 +73,12 @@ export default function AboutSection() {
 				onChange={(e) => setDescriptionVal(e.target.value)}
 				className="bg-[#1C2029] textare-size w-full border p-3 h-[17vh] rounded-md mt-4 small-scroll text-sm tracking-wider leading-6 text-slate-300 outline-none"
 			></textarea>
-			<button onClick={handleDeleteModal} className="mt-2 py-2 sm:py-1 px-3 font-extralight text-sm cursor-pointer rounded-sm border-1 text-red-500">
+			<button onClick={toggleDeleteModal} className="mt-2 py-2 sm:py-1 px-3 font-extralight text-sm cursor-pointer rounded-sm border-1 text-red-500">
 				Delete Account
 			</button>
-			{isDeleteModalOpen && <ConfirmationModal message="Permanently delete your account?" onCancel={handleDeleteModal} onConfirm={() => mutation.mutate()} />}
+			{isDeleteModalOpen && (
+				<ConfirmationModal message="Permanently delete your account?" onCancel={toggleDeleteModal} onConfirm={() => deleteAccountMutation.mutate()} />
+			)}
 		</>
 	);
 }
