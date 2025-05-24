@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import userRouter from "./routes/user.routes.js";
 import authRouter from "./routes/auth.routes.js";
+import followRouter from "./routes/follow.routes.js";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/events", eventRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/users", followRouter);
 
 app.get("/", (req, res) => {
 	res.send("Welcome to Eventura API");
