@@ -1,17 +1,19 @@
 import { Router } from "express";
+import authorize from "./../middlewares/auth.middleware.js";
+import { followUser, getUserFollowers, getUserFollowings, unFollowUser } from "../controllers/follow.controller.js";
 
 const followRouter = Router();
 
 // Follow
-followRouter.post("/:userId/follow", (req, res) => res.send({ title: "Follow" }));
+followRouter.post("/:id/follow", authorize, followUser);
 
 // UnFollow
-followRouter.delete("/:userId/unfollow", (req, res) => res.send({ title: "UnFollow" }));
+followRouter.delete("/:id/unfollow", authorize, unFollowUser);
 
 // User Followers
-followRouter.get("/:userId/followers", (req, res) => res.send({ title: "GET User Followers" }));
+followRouter.get("/:id/followers", getUserFollowers);
 
 // User Followings
-followRouter.get("/:userId/following", (req, res) => res.send({ title: "GET User Following" }));
+followRouter.get("/:id/following", getUserFollowings);
 
 export default followRouter;
