@@ -2,29 +2,21 @@ import { FaUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { NO_AVATAR } from "../../../lib/data";
 import Heading from "./Heading";
-
-// Temporary static data
-const FOLLOWINGS = [
-	{
-		id: 1,
-		name: "Bek",
-		img: NO_AVATAR,
-	},
-	{
-		id: 2,
-		name: "Ali",
-		img: NO_AVATAR,
-	},
-];
+import Loader from "../../../components/Loader";
+import { useFollow } from "../../../hooks/useFollow";
 
 export default function FollowingSection() {
+	const { followItems, isLoading, followCount } = useFollow("following");
+
 	return (
 		<>
-			<Heading icon={FaUser} text={`Following 2`} />
+			<Heading icon={FaUser} text={`Following ${followCount}`} />
 			<div className="flex gap-x-4 border-b mt-8 pb-2">
-				{FOLLOWINGS.map(({ id, img, name }) => (
-					<Link to="/events" key={id} className="flex flex-col gap-y-1 justify-center items-center">
-						<img src={img} alt="follower img" className="w-11 h-11 border object-cover rounded-full" />
+				{isLoading && <Loader className="w-10 h-10" />}
+				{followItems?.length === 0 && <span className="text-sm text-slate-400">You're not following anyone. Discover and connect with others!</span>}
+				{followItems?.map(({ _id, userImg, name }) => (
+					<Link to="/events" key={_id} className="flex flex-col gap-y-1 justify-center items-center">
+						<img src={userImg || NO_AVATAR} alt="follower img" className="w-11 h-11 border object-cover rounded-full" />
 						<span className="text-sm">{name}</span>
 					</Link>
 				))}

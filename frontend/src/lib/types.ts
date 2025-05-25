@@ -44,6 +44,12 @@ export interface ConfirmationModalProps {
 	onConfirm: () => void;
 }
 
+export interface FollowType {
+	_id: string;
+	name: string;
+	userImg: string;
+}
+
 // Auth types
 export interface AuthLayoutProps {
 	subtitle: string;

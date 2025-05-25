@@ -5,6 +5,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL, DEFAULT_BG_IMG, NO_AVATAR } from "../lib/data";
 import { useGetEvents } from "../hooks/useGetEvents";
+import { useFollow } from "../hooks/useFollow";
 
 export default function UserProfile() {
 	const { id } = useParams();
@@ -20,6 +21,7 @@ export default function UserProfile() {
 	});
 	const user = data?.data;
 	const userEvents = events?.filter((event) => event.user?._id === user?._id);
+	const { followUser, unfollowUser } = useFollow("follower", user?._id);
 
 	if (isLoading) {
 		return <div className="flex items-center justify-center h-screen text-xl">Loading...</div>;
@@ -42,7 +44,12 @@ export default function UserProfile() {
 				</span>
 				<div className="font-extralight cursor-pointer text-sky-300 mt-3">
 					<button className="cursor-pointer mr-4">{0} Followers</button>
-					<button className="cursor-pointer">Follow</button>
+					<button onClick={() => followUser.mutate()} className="cursor-pointer">
+						Follow
+					</button>
+					<button onClick={() => unfollowUser.mutate()} className="cursor-pointer">
+						Unfollow
+					</button>
 				</div>
 			</div>
 
