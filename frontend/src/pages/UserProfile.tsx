@@ -21,7 +21,7 @@ export default function UserProfile() {
 	});
 	const user = data?.data;
 	const userEvents = events?.filter((event) => event.user?._id === user?._id);
-	const { followUser, unfollowUser } = useFollow("follower", user?._id);
+	const { followUser, unfollowUser } = useFollow(user?._id);
 
 	if (isLoading) {
 		return <div className="flex items-center justify-center h-screen text-xl">Loading...</div>;

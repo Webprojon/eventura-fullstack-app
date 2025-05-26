@@ -5,22 +5,33 @@ import { useUserData } from "./useUserData";
 import { FollowType } from "../lib/types";
 import toast from "react-hot-toast";
 
-export function useFollow(mode: "follower" | "following", userId?: string) {
+export function useFollow(userId?: string) {
 	const { user } = useUserData();
 	const queryClient = useQueryClient();
 	const token = localStorage.getItem("token");
 
-	const ENDPOINT = mode === "follower" ? "followers" : "following";
+	// Get followers and followings
+	const getFollows = async (type: "followers" | "following"): Promise<FollowType[]> => {
+		const res = await axios.get(`${BASE_URL}/users/${user?._id}/${type}`);
+		return res.data.data;
+	};
 
-	// Get followers or following
-	const { data, isLoading } = useQuery<{ data: FollowType[] }>({
+	const followersQuery = useQuery<FollowType[]>({
 		enabled: !!user?._id,
-		queryKey: ["users", user?._id, ENDPOINT],
-		queryFn: async () => {
-			const res = await axios.get(`${BASE_URL}/users/${user?._id}/${ENDPOINT}`);
-			return res.data;
-		},
+		queryKey: ["users", user?._id, "followers"],
+		queryFn: () => getFollows("followers"),
 	});
+
+	const followingsQuery = useQuery<FollowType[]>({
+		enabled: !!user?._id,
+		queryKey: ["users", user?._id, "following"],
+		queryFn: () => getFollows("following"),
+	});
+
+	const followerData = followersQuery.data;
+	const followerLoading = followersQuery.isLoading;
+	const followingData = followingsQuery.data;
+	const followingLoading = followingsQuery.isLoading;
 
 	// Handle errors
 	const handleError = (error: AxiosError<{ message: string }>) => {
@@ -67,16 +78,23 @@ export function useFollow(mode: "follower" | "following", userId?: string) {
 		onError: handleError,
 	});
 
-	// User's count of follower or following
-	const followCount = `${isLoading ? "..." : `${data?.data?.length || 0}`}`;
-
-	// Account owner's count of follower or following
+	// Count of follower or following
+	const followerCount = `${followerLoading ? "..." : `${followerData?.length || 0}`}`;
+	const followingCount = `${followingLoading ? "..." : `${followingData?.length || 0}`}`;
 
 	return {
-		isLoading,
+		// For both
 		followUser,
-		followCount,
 		unfollowUser,
-		followItems: data?.data,
+
+		// Follower
+		followerData,
+		followerCount,
+		followerLoading,
+
+		// Following
+		followingData,
+		followingCount,
+		followingLoading,
 	};
 }

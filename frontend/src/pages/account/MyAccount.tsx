@@ -8,10 +8,12 @@ import FollowerSection from "./account-items/follow-items/FollowerSection";
 import FollowingSection from "./account-items/follow-items/FollowingSection";
 import { useUserData } from "../../hooks/useUserData";
 import EventSection from "./account-items/event-items/EventSection";
+import { useFollow } from "../../hooks/useFollow";
 
 export default function MyAccount() {
 	const { user } = useUserData();
 	const [activeTab, setActiveTab] = useState("about");
+	const { followerCount, followingCount } = useFollow();
 
 	const toggleActiveTab = (active: string) => setActiveTab(active);
 
@@ -31,12 +33,12 @@ export default function MyAccount() {
 				</div>
 				<div className="flex items-center gap-x-6">
 					<div className="flex flex-col items-center">
-						<span className="sm:text-[30px]">0</span>
-						<span className="text-sm sm:text-[18px] tracking-wider">Followers</span>
+						<span className="sm:text-2xl">{followerCount}</span>
+						<span className="text-sm sm:text-[16px] tracking-wider">Followers</span>
 					</div>
 					<div className="flex flex-col items-center">
-						<span className="sm:text-[30px]">0</span>
-						<span className="text-sm sm:text-[18px] tracking-wider">Following</span>
+						<span className="sm:text-2xl">{followingCount}</span>
+						<span className="text-sm sm:text-[16px] tracking-wider">Following</span>
 					</div>
 				</div>
 			</div>

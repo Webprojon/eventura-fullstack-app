@@ -5,15 +5,15 @@ import { useFollow } from "../../../../hooks/useFollow";
 import FollowSectionCards from "./FollowSectionCards";
 
 export default function FollowerSection() {
-	const { followItems, isLoading, followCount } = useFollow("follower");
+	const { followerData, followerCount, followerLoading } = useFollow();
 
 	return (
 		<>
-			<Heading icon={FaUser} text={`Followers ${followCount}`} />
-			<div className="flex gap-x-4 border-b mt-8 pb-2">
-				{isLoading && <Loader className="w-10 h-10" />}
-				{followItems?.length === 0 && <span className="text-sm text-slate-400">No followers yet. Stay active!</span>}
-				<FollowSectionCards items={followItems} />
+			<Heading icon={FaUser} text={`Followers ${followerCount}`} />
+			<div className="border-b mt-8 pb-2">
+				{followerLoading && <Loader className="w-10 h-10" />}
+				{followerData?.length === 0 && <span className="text-sm text-slate-400">No followers yet. Stay active!</span>}
+				<FollowSectionCards items={followerData} />
 			</div>
 		</>
 	);
