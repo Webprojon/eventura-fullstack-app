@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { EVENT_SECTION_LINKS } from "../../../lib/data";
 import { MdOutlineDateRange } from "react-icons/md";
-import Heading from "./Heading";
-import { useGetEvents } from "../../../hooks/useGetEvents";
+import { useGetEvents } from "../../../../hooks/useGetEvents";
+import Heading from "../Heading";
+import { EVENT_SECTION_LINKS } from "../../../../lib/data";
 import EventSectionCards from "./EventSectionCards";
 
 export default function EventSection() {

@@ -42,11 +42,13 @@ export default function UserProfile() {
 					<strong>Contact: </strong>
 					{user.email}
 				</span>
-				<div className="font-extralight cursor-pointer text-sky-300 mt-3">
-					<button className="cursor-pointer mr-4">{0} Followers</button>
+				<div className="flex gap-x-4 font-extralight cursor-pointer text-sky-300 mt-3">
+					<button className="cursor-pointer">{0} Followers</button>
+
 					<button onClick={() => followUser.mutate()} className="cursor-pointer">
 						Follow
 					</button>
+
 					<button onClick={() => unfollowUser.mutate()} className="cursor-pointer">
 						Unfollow
 					</button>

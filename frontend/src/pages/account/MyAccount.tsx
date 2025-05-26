@@ -3,11 +3,11 @@ import { smoothOpacity } from "../../lib/page-animations";
 import { MY_ACCOUNT_LINKS, NO_AVATAR } from "../../lib/data";
 import { useState } from "react";
 import AboutSection from "./account-items/AboutSection";
-import EventSection from "./account-items/EventSection";
 import PhotoSection from "./account-items/PhotoSection";
-import FollowerSection from "./account-items/FollowerSection";
-import FollowingSection from "./account-items/FollowingSection";
+import FollowerSection from "./account-items/follow-items/FollowerSection";
+import FollowingSection from "./account-items/follow-items/FollowingSection";
 import { useUserData } from "../../hooks/useUserData";
+import EventSection from "./account-items/event-items/EventSection";
 
 export default function MyAccount() {
 	const { user } = useUserData();
@@ -40,6 +40,7 @@ export default function MyAccount() {
 					</div>
 				</div>
 			</div>
+
 			<div className="flex flex-col-reverse sm:flex-row w-full gap-6">
 				<div className="flex-[2.9] p-3 sm:px-5 sm:py-4 rounded-md border bg-[#10141E]">
 					{activeTab === "about" && <AboutSection />}

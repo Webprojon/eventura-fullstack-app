@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { useGetEvents } from "../../../hooks/useGetEvents";
-import { DEFAULT_BG_IMG } from "../../../lib/data";
-import { EventTypes } from "../../../lib/types";
-import Loader from "../../../components/Loader";
+import { EventTypes } from "../../../../lib/types";
+import { useGetEvents } from "../../../../hooks/useGetEvents";
+import Loader from "../../../../components/Loader";
+import { DEFAULT_BG_IMG } from "../../../../lib/data";
 
 export default function EventSectionCards({ events }: { events?: EventTypes[] }) {
 	const { formatDate, isLoading } = useGetEvents();

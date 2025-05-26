@@ -12,7 +12,7 @@ export function useFollow(mode: "follower" | "following", userId?: string) {
 
 	const ENDPOINT = mode === "follower" ? "followers" : "following";
 
-	// GET followers/following
+	// Get followers or following
 	const { data, isLoading } = useQuery<{ data: FollowType[] }>({
 		enabled: !!user?._id,
 		queryKey: ["users", user?._id, ENDPOINT],
@@ -28,7 +28,7 @@ export function useFollow(mode: "follower" | "following", userId?: string) {
 		toast.error(message);
 	};
 
-	// FOLLOW user
+	// Follow user
 	const followUser = useMutation({
 		mutationFn: async () => {
 			const res = await axios.post(
@@ -45,12 +45,12 @@ export function useFollow(mode: "follower" | "following", userId?: string) {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["user"] });
-			toast.success(`You followed ${user?.name}!`);
+			toast.success("You followed successfully!");
 		},
 		onError: handleError,
 	});
 
-	// UNFOLLOW user
+	// Unfollow user
 	const unfollowUser = useMutation({
 		mutationFn: async () => {
 			const res = await axios.delete(`${BASE_URL}/users/${userId}/unfollow`, {
@@ -62,12 +62,15 @@ export function useFollow(mode: "follower" | "following", userId?: string) {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["user"] });
-			toast.success(`You unfollowed ${user?.name}!`);
+			toast.success("You unfollowed successfully!");
 		},
 		onError: handleError,
 	});
 
+	// User's count of follower or following
 	const followCount = `${isLoading ? "..." : `${data?.data?.length || 0}`}`;
+
+	// Account owner's count of follower or following
 
 	return {
 		isLoading,
