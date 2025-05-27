@@ -4,7 +4,7 @@ import User from "./../models/user.model.js";
 // Get all users
 export const getUsers = async (req, res, next) => {
 	try {
-		const users = await User.find();
+		const users = await User.find().select("-password").populate("followers", "name email userImg").populate("following", "name email userImg");
 
 		res.status(200).json({ success: true, data: users });
 	} catch (error) {
@@ -17,7 +17,7 @@ export const getUser = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 
-		const user = await User.findById(id).select("-password");
+		const user = await User.findById(id).select("-password").populate("followers", "name email image").populate("following", "name email image");
 
 		// Check if user not exist throw an error
 		if (!user) {
@@ -104,7 +104,7 @@ export const uploadImage = async (req, res) => {
 			return res.status(400).json({ error: "User id is required" });
 		}
 
-		const user = await User.findByIdAndUpdate(userId, { userImg: imagePath }, { new: true });
+		const user = await User.findByIdAndUpdate(userId, { image: imagePath }, { new: true });
 
 		if (!user) {
 			return res.status(404).json({ error: "User not found" });

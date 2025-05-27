@@ -6,7 +6,7 @@ import axios from "axios";
 import { useUserData } from "./useUserData";
 
 export function useGetEvents() {
-	const { user } = useUserData();
+	const { accountOwner } = useUserData();
 	const { id } = useParams<{ id: string }>();
 
 	const { data, isLoading } = useQuery<{ data: EventTypes[] }>({
@@ -29,9 +29,9 @@ export function useGetEvents() {
 
 	// EventSection items
 	const today = new Date();
-	const futureEvents = data?.data.filter((event) => event.eventParticipants.some((participant) => participant._id === user?._id));
+	const futureEvents = data?.data.filter((event) => event.eventParticipants.some((participant) => participant._id === accountOwner?._id));
 	const pastEvents = data?.data.filter((event) => formatDate(event.eventDate) < formatDate(today));
-	const ownerEvents = data?.data.filter((event) => event.user?._id === user?._id);
+	const ownerEvents = data?.data.filter((event) => event.user?._id === accountOwner?._id);
 
 	return {
 		id,

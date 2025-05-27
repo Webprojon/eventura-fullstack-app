@@ -9,7 +9,7 @@ export function useJoinEvent(eventId: string | undefined) {
 	const queryClient = useQueryClient();
 	const token = localStorage.getItem("token");
 	const { event } = useGetEvent();
-	const { user } = useUserData();
+	const { accountOwner } = useUserData();
 
 	const { mutate, isPending, data, error } = useMutation({
 		mutationFn: async () => {
@@ -31,7 +31,7 @@ export function useJoinEvent(eventId: string | undefined) {
 	});
 
 	// Check if user is joind or not
-	const isJoined = event?.eventParticipants.some((participant: { _id: string }) => participant._id === user?._id);
+	const isJoined = event?.eventParticipants.some((participant: { _id: string }) => participant._id === accountOwner?._id);
 
 	return {
 		joinEvent: mutate,

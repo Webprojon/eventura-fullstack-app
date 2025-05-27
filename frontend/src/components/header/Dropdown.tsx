@@ -6,7 +6,7 @@ import { useUserData } from "../../hooks/useUserData";
 
 export default function Dropdown() {
 	const [isOpen, setIsOpen] = useState(false);
-	const { createEventOrSignInLink, user, handleLogOut } = useUserData();
+	const { createEventOrSignInLink, accountOwner, handleLogOut } = useUserData();
 
 	const toggleMenu = () => setIsOpen((prev) => !prev);
 
@@ -36,9 +36,9 @@ export default function Dropdown() {
 			{isOpen && <div onClick={toggleMenu} className="fixed top-0 left-0 w-full h-full bg-black/50 z-[300]"></div>}
 			<div onClick={toggleMenu} className="flex items-center gap-x-3 cursor-pointer select-none">
 				<div className="rounded-full bg-[#1C2029]">
-					<img src={user?.userImg || NO_AVATAR} alt="user img" className="w-9 h-9 rounded-full border object-cover" />
+					<img src={accountOwner?.userImg || NO_AVATAR} alt="user img" className="w-9 h-9 rounded-full border object-cover" />
 				</div>
-				<span>{user?.name}</span>
+				<span>{accountOwner?.name}</span>
 				<div className="hidden sm:block">{isOpen ? <FaCaretUp /> : <FaCaretDown />}</div>
 			</div>
 			{isOpen && (

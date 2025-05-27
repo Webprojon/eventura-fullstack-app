@@ -5,26 +5,26 @@ import { useUserData } from "./useUserData";
 import { FollowType } from "../lib/types";
 import toast from "react-hot-toast";
 
-export function useFollow(userId?: string) {
-	const { user } = useUserData();
+export function useFollow() {
+	const { accountOwner, userData } = useUserData();
 	const queryClient = useQueryClient();
 	const token = localStorage.getItem("token");
 
 	// Get followers and followings
 	const getFollows = async (type: "followers" | "following"): Promise<FollowType[]> => {
-		const res = await axios.get(`${BASE_URL}/users/${user?._id}/${type}`);
+		const res = await axios.get(`${BASE_URL}/users/${accountOwner?._id}/${type}`);
 		return res.data.data;
 	};
 
 	const followersQuery = useQuery<FollowType[]>({
-		enabled: !!user?._id,
-		queryKey: ["users", user?._id, "followers"],
+		enabled: !!accountOwner?._id,
+		queryKey: ["users", accountOwner?._id, "followers"],
 		queryFn: () => getFollows("followers"),
 	});
 
 	const followingsQuery = useQuery<FollowType[]>({
-		enabled: !!user?._id,
-		queryKey: ["users", user?._id, "following"],
+		enabled: !!accountOwner?._id,
+		queryKey: ["users", accountOwner?._id, "following"],
 		queryFn: () => getFollows("following"),
 	});
 
@@ -43,7 +43,7 @@ export function useFollow(userId?: string) {
 	const followUser = useMutation({
 		mutationFn: async () => {
 			const res = await axios.post(
-				`${BASE_URL}/users/${userId}/follow`,
+				`${BASE_URL}/users/${userData._id}/follow`,
 				{},
 				{
 					headers: {
@@ -64,7 +64,7 @@ export function useFollow(userId?: string) {
 	// Unfollow user
 	const unfollowUser = useMutation({
 		mutationFn: async () => {
-			const res = await axios.delete(`${BASE_URL}/users/${userId}/unfollow`, {
+			const res = await axios.delete(`${BASE_URL}/users/${userData._id}/unfollow`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},

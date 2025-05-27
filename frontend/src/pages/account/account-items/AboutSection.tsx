@@ -11,15 +11,15 @@ import Heading from "./Heading";
 import { useUserData } from "../../../hooks/useUserData";
 
 export default function AboutSection() {
-	const { user } = useUserData();
+	const { accountOwner } = useUserData();
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-	const [descriptionVal, setDescriptionVal] = useState(user?.description);
+	const [descriptionVal, setDescriptionVal] = useState(accountOwner?.description);
 	const { formatDate } = useGetEvents();
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 
 	const deleteAccountMutation = useMutation({
-		mutationFn: () => axios.delete(`${BASE_URL}/users/${user._id}`),
+		mutationFn: () => axios.delete(`${BASE_URL}/users/${accountOwner._id}`),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["user"] });
 			toast.success("Your account deleted!");
@@ -34,7 +34,7 @@ export default function AboutSection() {
 	const updateDescriptionMutation = useMutation({
 		mutationFn: async (textValue: string) => {
 			const res = await axios.put(
-				`${BASE_URL}/users/${user?._id}`,
+				`${BASE_URL}/users/${accountOwner?._id}`,
 				{ description: textValue },
 				{
 					headers: {
@@ -57,14 +57,14 @@ export default function AboutSection() {
 	return (
 		<>
 			<div className="flex justify-between items-center">
-				<Heading icon={FaUser} text={`About ${user.name}`} />
-				{descriptionVal !== user?.description && (
+				<Heading icon={FaUser} text={`About ${accountOwner.name}`} />
+				{descriptionVal !== accountOwner?.description && (
 					<button onClick={handleUpdate} className="py-[3px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">
 						Save
 					</button>
 				)}
 			</div>
-			<span className="text-[13px] tracking-wider text-slate-300">Member since: {formatDate(user.createdAt)}</span>
+			<span className="text-[13px] tracking-wider text-slate-300">Member since: {formatDate(accountOwner.createdAt)}</span>
 			<textarea
 				name="about"
 				id="about"

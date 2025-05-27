@@ -9,7 +9,7 @@ import Heading from "./Heading";
 import { useUserData } from "../../../hooks/useUserData";
 
 export default function PhotoSection() {
-	const { user } = useUserData();
+	const { accountOwner } = useUserData();
 	const [userImage, setUserImage] = useState<File | null>(null);
 	const [preview, setPreview] = useState<string | null>(null);
 	const queryClient = useQueryClient();
@@ -47,7 +47,7 @@ export default function PhotoSection() {
 		}
 		const formData = new FormData();
 		formData.append("userImg", userImage);
-		formData.append("userId", user._id);
+		formData.append("userId", accountOwner._id);
 		uploadPhotoMutation.mutate(formData);
 	};
 

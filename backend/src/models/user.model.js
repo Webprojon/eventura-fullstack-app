@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
 			required: [true, "User Password is required"],
 			minLength: 6,
 		},
-		userImg: {
+		image: {
 			type: String,
 			required: false,
 			default: "",
@@ -32,6 +32,18 @@ const userSchema = new mongoose.Schema(
 			required: false,
 			default: "",
 		},
+		followers: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "User",
+			},
+		],
+		following: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "User",
+			},
+		],
 	},
 	{ timestamps: true },
 );

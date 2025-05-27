@@ -20,6 +20,13 @@ export const followUser = async (req, res) => {
 
 		await Follow.create({ followerId, followingId });
 
+		await User.findByIdAndUpdate(followerId, {
+			$addToSet: { following: followingId },
+		});
+		await User.findByIdAndUpdate(followingId, {
+			$addToSet: { followers: followerId },
+		});
+
 		res.status(201).json({ message: "User followed successfully" });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
@@ -40,6 +47,13 @@ export const unFollowUser = async (req, res) => {
 		}
 
 		await Follow.deleteOne({ followerId, followingId });
+
+		await User.findByIdAndUpdate(followerId, {
+			$pull: { following: followingId },
+		});
+		await User.findByIdAndUpdate(followingId, {
+			$pull: { followers: followerId },
+		});
 
 		res.status(200).json({ message: "Unfollowed successfully" });
 	} catch (error) {
