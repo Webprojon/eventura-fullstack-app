@@ -29,7 +29,7 @@ export default function MyAccount() {
 			<div className="flex flex-col sm:flex-row gap-y-6 items-center justify-between w-full p-3 sm:p-5 rounded-md border bg-[#10141E]">
 				<div className="flex flex-col sm:flex-row items-center gap-4">
 					<img
-						src={accountOwner.userImg || NO_AVATAR}
+						src={accountOwner.image || NO_AVATAR}
 						alt="user img"
 						className="w-[100px] h-[100px] sm:w-[140px] sm:h-[140px] rounded-full border object-cover"
 					/>

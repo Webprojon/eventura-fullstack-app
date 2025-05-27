@@ -23,7 +23,7 @@ export default function EventLists() {
 							<Link to={getUserProfileLink(user._id)} className="rounded-full bg-[#1C2029]">
 								<img
 									alt="User img"
-									src={user.userImg || NO_AVATAR}
+									src={user.image || NO_AVATAR}
 									className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-full object-cover border bg-[#1C2029"
 								/>
 							</Link>
@@ -57,9 +57,9 @@ export default function EventLists() {
 									<span className="text-sm">Participants</span>
 								</div>
 								<div className="flex items-center gap-x-2 pb-1 my-3 border-b">
-									{eventParticipants.map(({ _id, userImg }, idx) => (
+									{eventParticipants.map(({ _id, image }, idx) => (
 										<Link to={getUserProfileLink(_id)} key={idx} className="flex flex-col items-center gap-y-1 cursor-pointer">
-											<img alt="User img" key={idx} src={userImg || NO_AVATAR} className="w-10 h-10 rounded-full border object-cover" />
+											<img alt="User img" key={idx} src={image || NO_AVATAR} className="w-10 h-10 rounded-full border object-cover" />
 										</Link>
 									))}
 								</div>

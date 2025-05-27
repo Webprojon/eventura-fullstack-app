@@ -14,13 +14,13 @@ export default function EventParticipants({ participants }: { participants: User
 				<span className="font-semibold text-[18px]">Participants {participants.length}</span>
 			</div>
 			<div className="flex flex-col gap-y-3 p-3 max-h-[35.4vh] overflow-y-scroll small-scroll">
-				{participants.map(({ _id, name, userImg }) => (
+				{participants.map(({ _id, name, image }) => (
 					<Link
 						key={_id}
 						to={getUserProfileLink(_id)}
 						className="flex items-center gap-x-4 px-3 py-[5px] rounded-md transition-all bg-[#1C2029] hover:bg-[#262a34]"
 					>
-						<img src={userImg || NO_AVATAR} alt="coming user" className="w-10 h-10 border rounded-full object-cover" />
+						<img src={image || NO_AVATAR} alt="coming user" className="w-10 h-10 border rounded-full object-cover" />
 						<span className="font-medium">{name}</span>
 					</Link>
 				))}

@@ -2,7 +2,7 @@ export interface UserType {
 	_id: string;
 	name: string;
 	email: string;
-	userImg: string;
+	image: string;
 }
 
 export interface EventTypes {
@@ -47,7 +47,7 @@ export interface ConfirmationModalProps {
 export interface FollowType {
 	_id: string;
 	name: string;
-	userImg: string;
+	image: string;
 }
 
 // Auth types
