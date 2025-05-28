@@ -4,15 +4,15 @@ import { BASE_URL } from "../lib/data";
 import { useParams } from "react-router-dom";
 
 export function useGetEvent() {
-	const { id } = useParams();
+	const { eventId } = useParams();
 
 	const { data, isLoading } = useQuery({
-		queryKey: ["events", id],
+		queryKey: ["events", eventId],
 		queryFn: async () => {
-			const res = await axios.get(`${BASE_URL}/events/${id}`);
+			const res = await axios.get(`${BASE_URL}/events/${eventId}`);
 			return res.data?.data;
 		},
-		enabled: !!id,
+		enabled: !!eventId,
 	});
 
 	return {

@@ -4,10 +4,17 @@ import { useGetEvents } from "../../../../hooks/useGetEvents";
 import Heading from "../Heading";
 import { EVENT_SECTION_LINKS } from "../../../../lib/data";
 import EventSectionCards from "./EventSectionCards";
+import { useUserData } from "../../../../hooks/useUserData";
 
 export default function EventSection() {
-	const { pastEvents, ownerEvents, futureEvents } = useGetEvents();
+	const { events } = useGetEvents();
+	const { accountOwner } = useUserData();
 	const [activeTab, setActiveTab] = useState("future-events");
+
+	const today = new Date();
+	const futureEvents = events?.filter((event) => event.eventParticipants.some((participant) => participant._id === accountOwner?._id));
+	const ownerEvents = events?.filter((event) => event.user?._id === accountOwner?._id);
+	const pastEvents = ownerEvents?.filter((event) => new Date(event.eventDate) < new Date(today));
 
 	return (
 		<>

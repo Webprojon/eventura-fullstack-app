@@ -9,13 +9,11 @@ export function useFollow() {
 	const queryClient = useQueryClient();
 	const token = localStorage.getItem("token");
 
-	// Handle errors
 	const handleError = (error: AxiosError<{ message: string }>) => {
 		const message = error.response?.data?.message || error.message || "Network error";
 		toast.error(message);
 	};
 
-	// Follow user
 	const followUser = useMutation({
 		mutationFn: async () => {
 			const res = await axios.post(
@@ -37,7 +35,6 @@ export function useFollow() {
 		onError: handleError,
 	});
 
-	// Unfollow user
 	const unfollowUser = useMutation({
 		mutationFn: async () => {
 			const res = await axios.delete(`${BASE_URL}/users/${userData._id}/unfollow`, {
@@ -55,7 +52,6 @@ export function useFollow() {
 	});
 
 	return {
-		// For both
 		followUser,
 		unfollowUser,
 	};

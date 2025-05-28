@@ -3,10 +3,8 @@ import { EventTypes } from "../lib/types";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../lib/data";
 import axios from "axios";
-import { useUserData } from "./useUserData";
 
 export function useGetEvents() {
-	const { accountOwner } = useUserData();
 	const { id } = useParams<{ id: string }>();
 
 	const { data, isLoading } = useQuery<{ data: EventTypes[] }>({
@@ -27,19 +25,10 @@ export function useGetEvents() {
 		});
 	};
 
-	// EventSection items
-	const today = new Date();
-	const futureEvents = data?.data.filter((event) => event.eventParticipants.some((participant) => participant._id === accountOwner?._id));
-	const ownerEvents = data?.data.filter((event) => event.user?._id === accountOwner?._id);
-	const pastEvents = ownerEvents?.filter((event) => new Date(event.eventDate) < new Date(today));
-
 	return {
 		id,
 		isLoading,
 		formatDate,
-		pastEvents,
-		ownerEvents,
-		futureEvents,
 		events: data?.data,
 	};
 }

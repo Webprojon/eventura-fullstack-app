@@ -11,12 +11,12 @@ import Heading from "./Heading";
 import { useUserData } from "../../../hooks/useUserData";
 
 export default function AboutSection() {
+	const navigate = useNavigate();
+	const queryClient = useQueryClient();
+	const { formatDate } = useGetEvents();
 	const { accountOwner } = useUserData();
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 	const [descriptionVal, setDescriptionVal] = useState(accountOwner?.description);
-	const { formatDate } = useGetEvents();
-	const queryClient = useQueryClient();
-	const navigate = useNavigate();
 
 	const deleteAccountMutation = useMutation({
 		mutationFn: () => axios.delete(`${BASE_URL}/users/${accountOwner._id}`),
@@ -50,9 +50,9 @@ export default function AboutSection() {
 		},
 	});
 
-	const handleUpdate = () => updateDescriptionMutation.mutate(descriptionVal);
-
 	const toggleDeleteModal = () => setIsDeleteModalOpen((prev) => !prev);
+
+	const handleUpdate = () => updateDescriptionMutation.mutate(descriptionVal);
 
 	return (
 		<>
