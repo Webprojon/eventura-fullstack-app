@@ -20,7 +20,7 @@ export default function EventLists() {
 				<div key={_id} className="rounded-md p-3 border bg-[#10141E]">
 					<div className="flex justify-between items-start border-b">
 						<div className="flex gap-x-4 pb-2">
-							<Link to={getUserProfileLink(user._id)} className="rounded-full bg-[#1C2029]">
+							<Link to={getUserProfileLink(user?._id)} className="rounded-full bg-[#1C2029]">
 								<img
 									alt="User img"
 									src={user.image || NO_AVATAR}

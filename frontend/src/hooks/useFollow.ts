@@ -1,37 +1,13 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../lib/data";
 import { useUserData } from "./useUserData";
-import { FollowType } from "../lib/types";
 import toast from "react-hot-toast";
 
 export function useFollow() {
-	const { accountOwner, userData } = useUserData();
+	const { userData } = useUserData();
 	const queryClient = useQueryClient();
 	const token = localStorage.getItem("token");
-
-	// Get followers and followings
-	const getFollows = async (type: "followers" | "following"): Promise<FollowType[]> => {
-		const res = await axios.get(`${BASE_URL}/users/${accountOwner?._id}/${type}`);
-		return res.data.data;
-	};
-
-	const followersQuery = useQuery<FollowType[]>({
-		enabled: !!accountOwner?._id,
-		queryKey: ["users", accountOwner?._id, "followers"],
-		queryFn: () => getFollows("followers"),
-	});
-
-	const followingsQuery = useQuery<FollowType[]>({
-		enabled: !!accountOwner?._id,
-		queryKey: ["users", accountOwner?._id, "following"],
-		queryFn: () => getFollows("following"),
-	});
-
-	const followerData = followersQuery.data;
-	const followerLoading = followersQuery.isLoading;
-	const followingData = followingsQuery.data;
-	const followingLoading = followingsQuery.isLoading;
 
 	// Handle errors
 	const handleError = (error: AxiosError<{ message: string }>) => {
@@ -78,23 +54,37 @@ export function useFollow() {
 		onError: handleError,
 	});
 
-	// Count of follower or following
-	const followerCount = `${followerLoading ? "..." : `${followerData?.length || 0}`}`;
-	const followingCount = `${followingLoading ? "..." : `${followingData?.length || 0}`}`;
-
 	return {
 		// For both
 		followUser,
 		unfollowUser,
-
-		// Follower
-		followerData,
-		followerCount,
-		followerLoading,
-
-		// Following
-		followingData,
-		followingCount,
-		followingLoading,
 	};
 }
+
+// -----------------------------------------RED ZONE-----------------------------------------------
+// Get followers and followings
+//const getFollows = async (type: "followers" | "following"): Promise<FollowType[]> => {
+//	const res = await axios.get(`${BASE_URL}/users/${accountOwner?._id}/${type}`);
+//	return res.data.data;
+//};
+
+//const followersQuery = useQuery<FollowType[]>({
+//	enabled: !!accountOwner?._id,
+//	queryKey: ["users", accountOwner?._id, "followers"],
+//	queryFn: () => getFollows("followers"),
+//});
+
+//const followingsQuery = useQuery<FollowType[]>({
+//	enabled: !!accountOwner?._id,
+//	queryKey: ["users", accountOwner?._id, "following"],
+//	queryFn: () => getFollows("following"),
+//});
+
+// Follower -----------------
+//const followerData = followersQuery.data,
+//const followerLoading = followersQuery.isLoading,
+
+// Following ----------------
+//const followingData = followingsQuery.data,
+//const followingLoading = followingsQuery.isLoading,
+// -----------------------------------------RED ZONE-----------------------------------------------

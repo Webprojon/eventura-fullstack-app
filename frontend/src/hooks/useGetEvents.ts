@@ -30,8 +30,8 @@ export function useGetEvents() {
 	// EventSection items
 	const today = new Date();
 	const futureEvents = data?.data.filter((event) => event.eventParticipants.some((participant) => participant._id === accountOwner?._id));
-	const pastEvents = data?.data.filter((event) => formatDate(event.eventDate) < formatDate(today));
 	const ownerEvents = data?.data.filter((event) => event.user?._id === accountOwner?._id);
+	const pastEvents = ownerEvents?.filter((event) => new Date(event.eventDate) < new Date(today));
 
 	return {
 		id,

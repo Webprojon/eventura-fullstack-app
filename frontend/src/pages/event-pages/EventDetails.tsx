@@ -24,7 +24,7 @@ export default function EventDetails() {
 	const { eventTitle, eventDate, eventTime, user, eventDescription, eventCity, eventAvenue, eventParticipants } = event;
 
 	const today = new Date();
-	const isEventDateValid = formatDate(event.eventDate) < formatDate(today);
+	const isEventDateValid = new Date(event.eventDate) < new Date(today);
 
 	const formattedDateTime = `${formatDate(eventDate)}, at ${eventTime}`;
 
@@ -43,7 +43,7 @@ export default function EventDetails() {
 						<span className="flex gap-x-2 text-[18px] items-center">{formattedDateTime}</span>
 						<span>
 							Organised by{" "}
-							<Link to={`/profile/user/${user._id}`} className="font-semibold text-sky-300">
+							<Link to={`/profile/user/${user?._id}`} className="font-semibold text-sky-300">
 								{user.name || "Unkown"}
 							</Link>
 						</span>

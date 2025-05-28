@@ -10,13 +10,13 @@ export function useGetEvent() {
 		queryKey: ["events", id],
 		queryFn: async () => {
 			const res = await axios.get(`${BASE_URL}/events/${id}`);
-			return res.data;
+			return res.data?.data;
 		},
 		enabled: !!id,
 	});
 
 	return {
-		event: data?.data,
+		event: data,
 		isLoading,
 	};
 }

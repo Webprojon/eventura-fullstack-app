@@ -5,14 +5,14 @@ import { DEFAULT_BG_IMG, NO_AVATAR } from "../lib/data";
 import { useGetEvents } from "../hooks/useGetEvents";
 import { useFollow } from "../hooks/useFollow";
 import { useUserData } from "../hooks/useUserData";
+import { FollowType } from "../lib/types";
 
 export default function UserProfile() {
 	const { formatDate, events } = useGetEvents();
-	const { userData, isloading } = useUserData();
+	const { accountOwner, userData, isloading } = useUserData();
 	const { followUser, unfollowUser } = useFollow();
 
-	//const isFollowed = followerData?.some((follower) => follower._id === userData?._id);
-
+	const isFollowed = userData?.followers?.some((follower: FollowType) => follower._id === accountOwner?._id);
 	const userEvents = events?.filter((event) => event.user?._id === userData?._id);
 
 	if (isloading) {
@@ -34,16 +34,17 @@ export default function UserProfile() {
 					<strong>Contact: </strong>
 					{userData.email}
 				</span>
-				<div className="flex gap-x-4 font-extralight cursor-pointer text-sky-300 mt-3">
-					<button className="cursor-pointer">{0} Followers</button>
-
-					<button onClick={() => followUser.mutate()} className="cursor-pointer">
-						Follow
-					</button>
-
-					<button onClick={() => unfollowUser.mutate()} className="cursor-pointer">
-						Unfollow
-					</button>
+				<div className="flex items-end gap-x-4 font-extralight text-sky-300 mt-3">
+					<span>{userData?.followers?.length || 0} Followers</span>
+					{isFollowed ? (
+						<button onClick={() => unfollowUser.mutate()} className="cursor-pointer">
+							Unfollow
+						</button>
+					) : (
+						<button onClick={() => followUser.mutate()} className="cursor-pointer">
+							Follow
+						</button>
+					)}
 				</div>
 			</div>
 

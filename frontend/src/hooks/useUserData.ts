@@ -24,8 +24,8 @@ export function useUserData() {
 	});
 	const accountOwner = accountOwnerQuery.data ?? null;
 
-	// Get specific user's data
-	const specificUserQuery = useQuery({
+	// Get other user's data
+	const otherUserQuery = useQuery({
 		enabled: !!id,
 		queryKey: ["user", id],
 		queryFn: async () => {
@@ -33,7 +33,7 @@ export function useUserData() {
 			return res.data?.data;
 		},
 	});
-	const userData = specificUserQuery.data ?? null;
+	const userData = otherUserQuery.data ?? null;
 
 	const handleLogOut = () => {
 		localStorage.removeItem("token");
@@ -52,6 +52,6 @@ export function useUserData() {
 		isLoading: accountOwnerQuery.isLoading,
 
 		userData,
-		isloading: specificUserQuery.isLoading,
+		isloading: otherUserQuery.isLoading,
 	};
 }
