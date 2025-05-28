@@ -35,7 +35,7 @@ export const getUser = async (req, res, next) => {
 // Get account owner
 export const getAccountOwner = async (req, res, next) => {
 	try {
-		const user = await User.findById(req.user.id).select("-password");
+		const user = await User.findById(req.user.id).select("-password").populate("followers", "name email image").populate("following", "name email image");
 
 		// Check if user not exist throw an error
 		if (!user) {
