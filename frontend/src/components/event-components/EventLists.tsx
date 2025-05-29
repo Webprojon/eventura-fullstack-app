@@ -29,7 +29,7 @@ export default function EventLists() {
 							</Link>
 							<div className="flex flex-col">
 								<span className="font-medium text-[20px]">{eventTitle}</span>
-								<span className="text-[14px]">
+								<span className="text-sm sm:text-md">
 									Organised by{" "}
 									<Link to={getUserProfileLink(user._id)} className="font-semibold text-sky-300">
 										{user.name || "Unknown"}
@@ -40,11 +40,11 @@ export default function EventLists() {
 						<ManageEventBase id={_id} />
 					</div>
 					<div className="flex justify-between items-center gap-y-3 flex-wrap py-3">
-						<span className="flex gap-x-2 items-center">
+						<span className="flex gap-x-2 items-center text-sm sm:text-md">
 							<MdOutlineDateRange className="size-5" />
 							{formatDate(eventDate)}, at {eventTime}
 						</span>
-						<span className="flex gap-x-2 items-center">
+						<span className="flex gap-x-2 items-center text-sm sm:text-md">
 							<TfiLocationPin className="size-5" />
 							{eventCity}, {eventAvenue}
 						</span>
@@ -65,10 +65,10 @@ export default function EventLists() {
 								</div>
 							</>
 						)}
-						<p className="line-clamp-1 sm:line-clamp-none">
+						<p className="line-clamp-1 sm:line-clamp-none text-sm sm:text-md">
 							{eventDescription.split(" ").length > 15 ? eventDescription.split(" ").slice(0, 15).join(" ") + "..." : eventDescription}
 						</p>
-						<Link to={`/events/${_id}`} className="flex justify-end mt-4 font-medium text-sky-300">
+						<Link to={`/events/${_id}`} className="flex justify-end mt-4 font-medium text-sky-300 text-sm sm:text-md">
 							Learn More
 						</Link>
 					</div>
