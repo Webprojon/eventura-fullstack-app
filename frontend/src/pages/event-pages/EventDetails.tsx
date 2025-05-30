@@ -13,11 +13,11 @@ import { useCancelEvent } from "../../hooks/useCancelEvent";
 import { useGetEvent } from "../../hooks/useGetEvent";
 
 export default function EventDetails() {
-	const { id } = useParams();
+	const { eventId } = useParams();
 	const { formatDate } = useGetEvents();
 	const { event, isLoading } = useGetEvent();
-	const { cancelEvent, isCanceling } = useCancelEvent(id);
-	const { joinEvent, isJoining, token, isJoined } = useJoinEvent(id);
+	const { cancelEvent, isCanceling } = useCancelEvent(eventId);
+	const { joinEvent, isJoining, token, isJoined } = useJoinEvent(eventId);
 
 	if (isLoading) return <EventDetailsSkeleton />;
 
@@ -70,7 +70,7 @@ export default function EventDetails() {
 
 					{isEventDateValid && <span className="text-sm text-red-500">⛔ Notice: This event has ended.</span>}
 
-					{isJoined && (
+					{isJoined && !isEventDateValid && (
 						<button
 							onClick={() => cancelEvent()}
 							className="cursor-pointer rounded-md font-semibold border-1 border-sky-300 text-sky-300 py-2 px-4 text-sm sm:text-md"

@@ -23,7 +23,7 @@ export default function EventLists() {
 							<Link to={getUserProfileLink(user?._id)} className="rounded-full bg-[#1C2029]">
 								<img
 									alt="User img"
-									src={user.image || NO_AVATAR}
+									src={user?.image || NO_AVATAR}
 									className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-full object-cover border bg-[#1C2029"
 								/>
 							</Link>
@@ -31,8 +31,8 @@ export default function EventLists() {
 								<span className="font-medium text-[20px]">{eventTitle}</span>
 								<span className="text-sm sm:text-md">
 									Organised by{" "}
-									<Link to={getUserProfileLink(user._id)} className="font-semibold text-sky-300">
-										{user.name || "Unknown"}
+									<Link to={getUserProfileLink(user?._id)} className="font-semibold text-sky-300">
+										{user?.name || "Unknown"}
 									</Link>
 								</span>
 							</div>
