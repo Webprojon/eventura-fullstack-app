@@ -10,7 +10,7 @@ export function useGetEvents() {
 	const { data, isLoading } = useQuery<{ data: EventTypes[] }>({
 		queryKey: ["events"],
 		queryFn: async () => {
-			const res = await axios.get(`${BASE_URL}/events`);
+			const res = await axios.get(`${BASE_URL}/events`, { withCredentials: true });
 			return res.data;
 		},
 	});

@@ -5,14 +5,11 @@ import axios from "axios";
 
 export function useCancelEvent(eventId: string | undefined) {
 	const queryClient = useQueryClient();
-	const token = localStorage.getItem("token");
 
 	const { mutate, isPending, data, error } = useMutation({
 		mutationFn: async () => {
 			const res = await axios.post(`${BASE_URL}/events/${eventId}/cancel`, null, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
+				withCredentials: true,
 			});
 			return res.data;
 		},
@@ -28,7 +25,6 @@ export function useCancelEvent(eventId: string | undefined) {
 	return {
 		cancelEvent: mutate,
 		isCanceling: isPending,
-		token,
 		data,
 		error,
 	};

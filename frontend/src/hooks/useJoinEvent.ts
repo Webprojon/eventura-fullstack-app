@@ -7,16 +7,13 @@ import { useGetEvent } from "./useGetEvent";
 
 export function useJoinEvent(eventId: string | undefined) {
 	const queryClient = useQueryClient();
-	const token = localStorage.getItem("token");
 	const { event } = useGetEvent();
 	const { accountOwner } = useUserData();
 
 	const { mutate, isPending, data, error } = useMutation({
 		mutationFn: async () => {
 			const res = await axios.post(`${BASE_URL}/events/${eventId}/join`, null, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
+				withCredentials: true,
 			});
 			return res.data;
 		},
@@ -37,7 +34,6 @@ export function useJoinEvent(eventId: string | undefined) {
 		joinEvent: mutate,
 		isJoining: isPending,
 		isJoined,
-		token,
 		data,
 		error,
 	};

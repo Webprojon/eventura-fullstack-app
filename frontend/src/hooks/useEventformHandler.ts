@@ -26,7 +26,7 @@ export function useEventFormHandler(props: UseEventFormHandlerProps) {
 		return useQuery({
 			queryKey: ["event", id],
 			queryFn: async () => {
-				const res = await axios.get(`${BASE_URL}/events/${id}`);
+				const res = await axios.get(`${BASE_URL}/events/${id}`, { withCredentials: true });
 				return res.data.data;
 			},
 			enabled: enabled && !!id,
@@ -59,22 +59,20 @@ export function useEventFormHandler(props: UseEventFormHandlerProps) {
 
 	// API call for create or update
 	const submitEvent = async (eventData: EventFormData) => {
-		const token = localStorage.getItem("token");
-
 		if (isEditMode) {
 			const res = await axios.put(`${BASE_URL}/events/${props.id}`, eventData, {
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
 				},
+				withCredentials: true,
 			});
 			return res.data;
 		} else {
 			const res = await axios.post(`${BASE_URL}/events`, eventData, {
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
 				},
+				withCredentials: true,
 			});
 			return res.data;
 		}

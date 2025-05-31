@@ -7,14 +7,11 @@ import axios, { AxiosError } from "axios";
 export function useDeleteEvent() {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
-	const token = localStorage.getItem("token");
 
 	const deleteEventMutation = useMutation({
 		mutationFn: async (id: string) => {
 			await axios.delete(`${BASE_URL}/events/${id}`, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
+				withCredentials: true,
 			});
 			return id;
 		},

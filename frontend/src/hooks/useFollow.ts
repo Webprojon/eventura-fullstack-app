@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 export function useFollow() {
 	const { userData } = useUserData();
 	const queryClient = useQueryClient();
-	const token = localStorage.getItem("token");
 
 	const handleError = (error: AxiosError<{ message: string }>) => {
 		const message = error.response?.data?.message || error.message || "Network error";
@@ -16,14 +15,16 @@ export function useFollow() {
 
 	const followUser = useMutation({
 		mutationFn: async () => {
+			if (!userData?._id) throw new Error("User is not authenticated");
+
 			const res = await axios.post(
 				`${BASE_URL}/users/${userData._id}/follow`,
 				{},
 				{
 					headers: {
 						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
 					},
+					withCredentials: true,
 				},
 			);
 			return res.data;
@@ -37,11 +38,7 @@ export function useFollow() {
 
 	const unfollowUser = useMutation({
 		mutationFn: async () => {
-			const res = await axios.delete(`${BASE_URL}/users/${userData._id}/unfollow`, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
+			const res = await axios.delete(`${BASE_URL}/users/${userData._id}/unfollow`, { withCredentials: true });
 			return res.data;
 		},
 		onSuccess: () => {

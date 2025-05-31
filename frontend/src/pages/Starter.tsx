@@ -12,7 +12,7 @@ export default function StarterPage() {
 					<FaPeopleGroup className="size-12 text-sky-300" />
 					<h1 className="leading-none font-semibold text-[46px]">Eventura</h1>
 				</div>
-				<p className="text-lg text-slate-300 text-center px-2">Your gateway to discovering and joining amazing events around you.</p>
+				<p className="text-lg text-slate-300 font-light text-center px-2">Your gateway to discovering and joining amazing events around you.</p>
 				<Link to="/events" className="flex items-center gap-x-2 group mt-6 py-[10px] px-[46px] btn">
 					START
 					<MdArrowForward className="size-5 transform transition-transform duration-200 group-hover:translate-x-1" />

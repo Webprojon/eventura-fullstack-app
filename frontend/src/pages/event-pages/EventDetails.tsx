@@ -11,13 +11,15 @@ import { EventDetailsSkeleton } from "../../components/skeletons/EventDetailsSke
 import { useJoinEvent } from "../../hooks/useJoinEvent";
 import { useCancelEvent } from "../../hooks/useCancelEvent";
 import { useGetEvent } from "../../hooks/useGetEvent";
+import { useUserData } from "../../hooks/useUserData";
 
 export default function EventDetails() {
 	const { eventId } = useParams();
 	const { formatDate } = useGetEvents();
 	const { event, isLoading } = useGetEvent();
 	const { cancelEvent, isCanceling } = useCancelEvent(eventId);
-	const { joinEvent, isJoining, token, isJoined } = useJoinEvent(eventId);
+	const { joinEvent, isJoining, isJoined } = useJoinEvent(eventId);
+	const { accountOwner } = useUserData();
 
 	if (isLoading) return <EventDetailsSkeleton />;
 
@@ -81,7 +83,7 @@ export default function EventDetails() {
 
 					{!isJoined && !isEventDateValid && (
 						<button onClick={() => joinEvent()} className="btn py-2 px-4 text-sm sm:text-md">
-							{token ? (isJoining ? "Joining..." : "Join This Event") : "Sign in to join this event"}
+							{accountOwner ? (isJoining ? "Joining..." : "Join This Event") : "Sign in to join this event"}
 						</button>
 					)}
 				</div>

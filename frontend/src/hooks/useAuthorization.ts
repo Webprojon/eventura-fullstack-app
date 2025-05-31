@@ -12,9 +12,10 @@ export function useAuthorization({ mode }: UseAuthorizationProps) {
 
 	// API Call
 	const authFn = async (userData: AuthUserType) => {
-		const url = mode === "login" ? "/auth/sign-in" : "/auth/sign-up";
-		const res = await axios.post(`${BASE_URL}${url}`, userData, {
+		const url = mode === "login" ? "auth/sign-in" : "auth/sign-up";
+		const res = await axios.post(`${BASE_URL}/${url}`, userData, {
 			headers: { "Content-Type": "application/json" },
+			withCredentials: true,
 		});
 		return res.data;
 	};
@@ -22,14 +23,8 @@ export function useAuthorization({ mode }: UseAuthorizationProps) {
 	// Mutation
 	const { mutate, isPending } = useMutation({
 		mutationFn: authFn,
-		onSuccess: (data) => {
+		onSuccess: () => {
 			toast.success(mode === "login" ? "User logged in!" : "User created successfully!");
-
-			const token = data?.data?.token || data?.token;
-			if (token) {
-				localStorage.setItem("token", token);
-			}
-
 			navigate("/events");
 		},
 		onError: (error: Error) => {

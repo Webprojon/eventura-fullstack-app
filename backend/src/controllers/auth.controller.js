@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { JWT_EXPIRES_IN, JWT_SECRET } from "../config/env.js";
+import { JWT_EXPIRES_IN, JWT_SECRET, NODE_ENV } from "../config/env.js";
 
 export const signUp = async (req, res, next) => {
 	const session = await mongoose.startSession();
@@ -36,6 +36,14 @@ export const signUp = async (req, res, next) => {
 		// Creating token
 		const token = jwt.sign({ userId: newUser[0]._id }, JWT_SECRET, {
 			expiresIn: JWT_EXPIRES_IN,
+		});
+
+		// Save toke in Cookie
+		res.cookie("token", token, {
+			httpOnly: true,
+			secure: true,
+			sameSite: "Strict",
+			maxAge: 3 * 24 * 60 * 60 * 1000,
 		});
 
 		// Ending
@@ -92,6 +100,16 @@ export const signIn = async (req, res, next) => {
 			expiresIn: JWT_EXPIRES_IN,
 		});
 
+		// Save token in Cookiew
+		res.cookie("token", token, {
+			httpOnly: true,
+			secure: NODE_ENV === "production",
+			sameSite: NODE_ENV === "production" ? "none" : "lax",
+			//secure: true,
+			//sameSite: "Strict",
+			maxAge: 3 * 24 * 60 * 60 * 1000,
+		});
+
 		// if all match
 		// Remove password before sending
 		const { password: _, ...userWithoutPassword } = user.toObject();
@@ -109,4 +127,7 @@ export const signIn = async (req, res, next) => {
 	}
 };
 
-export const signOut = async () => {};
+export const signOut = async (req, res) => {
+	res.clearCookie("token");
+	res.json({ message: "Logged out" });
+};

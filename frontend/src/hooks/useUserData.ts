@@ -5,18 +5,13 @@ import axios from "axios";
 
 export function useUserData() {
 	const navigate = useNavigate();
-	const token = localStorage.getItem("token");
 	const { id } = useParams();
 
 	// Get account owner's data
 	const accountOwnerQuery = useQuery({
 		queryKey: ["user"],
-		enabled: !!token,
 		queryFn: async () => {
 			const res = await axios.get(`${BASE_URL}/users/me`, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
 				withCredentials: true,
 			});
 			return res.data?.data;
@@ -29,22 +24,21 @@ export function useUserData() {
 		enabled: !!id,
 		queryKey: ["user", id],
 		queryFn: async () => {
-			const res = await axios.get(`${BASE_URL}/users/user/${id}`);
+			const res = await axios.get(`${BASE_URL}/users/user/${id}`, { withCredentials: true });
 			return res.data?.data;
 		},
 	});
 	const userData = otherUserQuery.data ?? null;
 
-	const handleLogOut = () => {
-		localStorage.removeItem("token");
+	const handleLogOut = async () => {
+		await axios.post(`${BASE_URL}/users/sign-out`, {}, { withCredentials: true });
 		navigate("/events");
 	};
 
-	const createEventOrSignInLink = `${token ? "/events/create-event" : "/sign-in"}`;
+	const createEventOrSignInLink = `${accountOwner ? "/events/create-event" : "/sign-in"}`;
 	const getUserProfileLink = (id: string) => (accountOwner?._id === id ? `/account/me` : `/profile/user/${id}`);
 
 	return {
-		token,
 		handleLogOut,
 		accountOwner,
 		getUserProfileLink,
