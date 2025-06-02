@@ -7,7 +7,7 @@ export const fromLeftToRight = {
 		opacity: 1,
 		x: 0,
 		transition: {
-			duration: 0.5,
+			duration: 0.3,
 		},
 	},
 };
@@ -34,7 +34,7 @@ export const smoothOpacity = {
 	animate: {
 		opacity: 1,
 		transition: {
-			duration: 0.5,
+			duration: 0.3,
 		},
 	},
 };
@@ -45,7 +45,7 @@ export const modalAnim = {
 		opacity: 1,
 		y: 0,
 		transition: {
-			duration: 0.4,
+			duration: 0.3,
 		},
 	},
 };
