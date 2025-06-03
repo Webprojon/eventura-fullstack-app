@@ -18,7 +18,7 @@ export default function Dropdown() {
 			onClick: undefined,
 		},
 		{
-			label: "My Account",
+			label: "My Profile",
 			icon: <FaUser className="text-sky-300" />,
 			to: "/account/me",
 			onClick: undefined,
@@ -44,7 +44,7 @@ export default function Dropdown() {
 			{isOpen && (
 				<div
 					onClick={toggleMenu}
-					className="flex flex-col items-start gap-y-5 sm:gap-y-4 sm:text-sm absolute top-12 right-0 py-4 px-3 w-[160px] sm:w-[152px] border rounded-md z-[400] bg-[#1C2029]"
+					className="flex flex-col items-start gap-y-6 sm:gap-y-5 sm:text-sm absolute top-12 right-0 py-4 px-3 w-[160px] sm:w-[152px] border rounded-md z-[400] bg-[#1C2029]"
 				>
 					{MENU_ITEMS.map((item, index) => (
 						<Link key={index} to={item.to} className="flex items-center gap-x-3 hover:text-slate-300" onClick={item.onClick}>

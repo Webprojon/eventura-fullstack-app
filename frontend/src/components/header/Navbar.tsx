@@ -4,6 +4,7 @@ import LogoSection from "./Logo";
 import CreateButton from "./CreateButton";
 import Dropdown from "./Dropdown";
 import { useUserData } from "../../hooks/useUserData";
+import Language from "./Language";
 
 export default function Navbar() {
 	const { token, isLoading } = useUserData();
@@ -13,6 +14,7 @@ export default function Navbar() {
 			<LogoSection />
 			<nav className="font-semibold flex items-center gap-x-5 sm:gap-x-3">
 				<CreateButton />
+				<Language />
 				{token ? (
 					<>{isLoading ? <Loader className="w-9 h-9" /> : <Dropdown />}</>
 				) : (
