@@ -40,6 +40,7 @@ html::-webkit-scrollbar-thumb {
 
 /* BORDERS */
 .border,
+.border-t,
 .border-b,
 .border-r,
 .border-l {
@@ -48,6 +49,10 @@ html::-webkit-scrollbar-thumb {
 
 .border {
 	@apply border;
+}
+
+.border-t {
+	@apply border-t;
 }
 
 .border-b {
