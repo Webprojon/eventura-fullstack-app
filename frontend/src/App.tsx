@@ -23,13 +23,20 @@ function App() {
 			<main className="bg-[#030712] min-h-[100vh] tracking-wide text-slate-100">
 				{!(pathname === "/" || pathname === "/sign-in" || pathname === "/sign-up") && <Navbar />}
 				<Routes>
-					<Route path="/" element={<StarterPage />} />
 					<Route path="/events" element={<EventsPage />} />
 					<Route path="/events/:eventId" element={<EventDetails />} />
 					<Route path="/events/create-event" element={<CreateEvent />} />
 					<Route path="/events/update/:id" element={<UpdateEvent />} />
 					<Route path="/account/me" element={<MyAccount />} />
 					<Route path="/profile/user/:id" element={<UserProfile />} />
+					<Route
+						path="/"
+						element={
+							<ProtectedAuthRoute>
+								<StarterPage />
+							</ProtectedAuthRoute>
+						}
+					/>
 					<Route
 						path="/sign-in"
 						element={
