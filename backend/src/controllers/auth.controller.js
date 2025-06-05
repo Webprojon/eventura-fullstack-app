@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { ACCESS_TOKEN_JWT_SECRET, REFRESH_TOKEN_JWT_SECRET, ACCESS_TOKEN_JWT_EXPIRES_IN, REFRESH_TOKEN_JWT_EXPIRES_IN } from "../config/env.js";
+import { NODE_ENV, ACCESS_TOKEN_JWT_SECRET, REFRESH_TOKEN_JWT_SECRET, ACCESS_TOKEN_JWT_EXPIRES_IN, REFRESH_TOKEN_JWT_EXPIRES_IN } from "../config/env.js";
 
 export const signUp = async (req, res, next) => {
 	const session = await mongoose.startSession();
@@ -42,6 +42,14 @@ export const signUp = async (req, res, next) => {
 			expiresIn: REFRESH_TOKEN_JWT_EXPIRES_IN,
 		});
 
+		// Save refresh token in cookie
+		res.cookie("refreshToken", refreshToken, {
+			httpOnly: true,
+			sameSite: "Strict",
+			secure: NODE_ENV === "production",
+			maxAge: 3 * 24 * 60 * 60 * 1000,
+		});
+
 		// Ending
 		await session.commitTransaction();
 		session.endSession();
@@ -53,7 +61,6 @@ export const signUp = async (req, res, next) => {
 			data: {
 				user: newUser[0],
 				accessToken,
-				refreshToken,
 			},
 		});
 	} catch (error) {
@@ -105,13 +112,20 @@ export const signIn = async (req, res, next) => {
 		// Remove password before sending
 		const { password: _, ...userWithoutPassword } = user.toObject();
 
+		// Save refresh token in cookie
+		res.cookie("refreshToken", refreshToken, {
+			httpOnly: true,
+			sameSite: "Strict",
+			secure: NODE_ENV === "production",
+			maxAge: 3 * 24 * 60 * 60 * 1000,
+		});
+
 		res.status(200).json({
 			success: true,
 			message: "User signed in successfully",
 			data: {
 				user: userWithoutPassword,
 				accessToken,
-				refreshToken,
 			},
 		});
 	} catch (error) {
@@ -119,4 +133,7 @@ export const signIn = async (req, res, next) => {
 	}
 };
 
-export const signOut = async () => {};
+export const signOut = async (req, res) => {
+	res.clearCookie("refreshToken");
+	res.json({ message: "Logged out" });
+};

@@ -15,6 +15,7 @@ export function useAuthorization({ mode }: UseAuthorizationProps) {
 		const url = mode === "login" ? "/auth/sign-in" : "/auth/sign-up";
 		const res = await axios.post(`${BASE_URL}${url}`, userData, {
 			headers: { "Content-Type": "application/json" },
+			withCredentials: true,
 		});
 		return res.data;
 	};

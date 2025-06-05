@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
-import { ACCESS_TOKEN_JWT_SECRET, ACCESS_TOKEN_JWT_EXPIRES_IN, REFRESH_TOKEN_JWT_SECRET, REFRESH_TOKEN_JWT_EXPIRES_IN } from "../config/env.js";
+import { NODE_ENV, ACCESS_TOKEN_JWT_SECRET, ACCESS_TOKEN_JWT_EXPIRES_IN, REFRESH_TOKEN_JWT_SECRET, REFRESH_TOKEN_JWT_EXPIRES_IN } from "../config/env.js";
 
 const authorize = async (req, res, next) => {
 	try {
@@ -50,9 +50,15 @@ export const getRefreshToken = async (req, res) => {
 			expiresIn: REFRESH_TOKEN_JWT_EXPIRES_IN,
 		});
 
+		res.cookie("refreshToken", newRefreshToken, {
+			httpOnly: true,
+			sameSite: "Strict",
+			secure: NODE_ENV === "production",
+			maxAge: 3 * 24 * 60 * 60 * 1000,
+		});
+
 		res.status(200).json({
 			accessToken: newAccessToken,
-			refreshToken: newRefreshToken,
 		});
 	} catch (err) {
 		res.status(403).json({ message: "Invalid or expired refresh token", error: err.message });
