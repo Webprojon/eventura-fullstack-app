@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { JWT_EXPIRES_IN, JWT_SECRET } from "../config/env.js";
+import { ACCESS_TOKEN_JWT_SECRET, REFRESH_TOKEN_JWT_SECRET, ACCESS_TOKEN_JWT_EXPIRES_IN, REFRESH_TOKEN_JWT_EXPIRES_IN } from "../config/env.js";
 
 export const signUp = async (req, res, next) => {
 	const session = await mongoose.startSession();
@@ -33,9 +33,13 @@ export const signUp = async (req, res, next) => {
 		const newUser = await User.create([{ name, email, password: hashedPassword }], { session });
 		//const newUser = await User.create([{ name, email, password: hashedPassword }], { session });
 
-		// Creating token
-		const token = jwt.sign({ userId: newUser[0]._id }, JWT_SECRET, {
-			expiresIn: JWT_EXPIRES_IN,
+		// If password is correct, generate new access token and refresh token
+		const accessToken = jwt.sign({ userId: newUser[0]._id }, ACCESS_TOKEN_JWT_SECRET, {
+			expiresIn: ACCESS_TOKEN_JWT_EXPIRES_IN,
+		});
+
+		const refreshToken = jwt.sign({ userId: newUser[0]._id }, REFRESH_TOKEN_JWT_SECRET, {
+			expiresIn: REFRESH_TOKEN_JWT_EXPIRES_IN,
 		});
 
 		// Ending
@@ -47,8 +51,9 @@ export const signUp = async (req, res, next) => {
 			success: true,
 			message: "User created successfully",
 			data: {
-				token,
 				user: newUser[0],
+				accessToken,
+				refreshToken,
 			},
 		});
 	} catch (error) {
@@ -87,9 +92,13 @@ export const signIn = async (req, res, next) => {
 			throw error;
 		}
 
-		// If password is correct, generate new token
-		const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
-			expiresIn: JWT_EXPIRES_IN,
+		// If password is correct, generate new access token and refresh token
+		const accessToken = jwt.sign({ userId: user._id }, ACCESS_TOKEN_JWT_SECRET, {
+			expiresIn: ACCESS_TOKEN_JWT_EXPIRES_IN,
+		});
+
+		const refreshToken = jwt.sign({ userId: user._id }, REFRESH_TOKEN_JWT_SECRET, {
+			expiresIn: REFRESH_TOKEN_JWT_EXPIRES_IN,
 		});
 
 		// if all match
@@ -100,8 +109,9 @@ export const signIn = async (req, res, next) => {
 			success: true,
 			message: "User signed in successfully",
 			data: {
-				token,
 				user: userWithoutPassword,
+				accessToken,
+				refreshToken,
 			},
 		});
 	} catch (error) {

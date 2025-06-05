@@ -25,9 +25,9 @@ export function useAuthorization({ mode }: UseAuthorizationProps) {
 		onSuccess: (data) => {
 			toast.success(mode === "login" ? "User logged in!" : "User created successfully!");
 
-			const token = data?.data?.token || data?.token;
-			if (token) {
-				localStorage.setItem("token", token);
+			const accessToken = data?.data?.accessToken || data?.accessToken;
+			if (accessToken) {
+				localStorage.setItem("token", accessToken);
 			}
 
 			navigate("/events");
