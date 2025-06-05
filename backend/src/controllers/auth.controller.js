@@ -108,14 +108,12 @@ export const signIn = async (req, res, next) => {
 			expiresIn: REFRESH_TOKEN_JWT_EXPIRES_IN,
 		});
 
-		// if all match
 		// Remove password before sending
 		const { password: _, ...userWithoutPassword } = user.toObject();
 
 		// Save refresh token in cookie
 		res.cookie("refreshToken", refreshToken, {
 			httpOnly: true,
-			sameSite: "Strict",
 			secure: NODE_ENV === "production",
 			maxAge: 3 * 24 * 60 * 60 * 1000,
 		});
@@ -134,6 +132,5 @@ export const signIn = async (req, res, next) => {
 };
 
 export const signOut = async (req, res) => {
-	res.clearCookie("refreshToken");
-	res.json({ message: "Logged out" });
+	res.clearCookie("refreshToken").status(200).json({ message: "Logged out" });
 };

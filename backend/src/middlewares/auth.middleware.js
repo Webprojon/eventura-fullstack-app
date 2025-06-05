@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
-import { NODE_ENV, ACCESS_TOKEN_JWT_SECRET, ACCESS_TOKEN_JWT_EXPIRES_IN, REFRESH_TOKEN_JWT_SECRET, REFRESH_TOKEN_JWT_EXPIRES_IN } from "../config/env.js";
+import { ACCESS_TOKEN_JWT_SECRET, ACCESS_TOKEN_JWT_EXPIRES_IN, REFRESH_TOKEN_JWT_SECRET, REFRESH_TOKEN_JWT_EXPIRES_IN } from "../config/env.js";
 
 const authorize = async (req, res, next) => {
 	try {
@@ -28,7 +28,7 @@ const authorize = async (req, res, next) => {
 
 export const getRefreshToken = async (req, res) => {
 	try {
-		const refreshToken = req.body.token;
+		const refreshToken = req.cookies?.refreshToken;
 
 		// Check there is token or no
 		if (!refreshToken) return res.status(401).json({ message: "Refresh token is required" });
@@ -52,8 +52,7 @@ export const getRefreshToken = async (req, res) => {
 
 		res.cookie("refreshToken", newRefreshToken, {
 			httpOnly: true,
-			sameSite: "Strict",
-			secure: NODE_ENV === "production",
+			//secure: NODE_ENV === "production",
 			maxAge: 3 * 24 * 60 * 60 * 1000,
 		});
 
