@@ -1,20 +1,21 @@
 import axios from "axios";
-import { BASE_URL } from "../lib/data";
 import { AuthUserType, UseAuthorizationProps } from "../lib/types";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { LoginSchema } from "../lib/validation/login.schema";
 import { RegisterSchema } from "../lib/validation/register.schema";
+import { useAuthStore } from "../store/authStore";
 
 export function useAuthorization({ mode }: UseAuthorizationProps) {
 	const navigate = useNavigate();
+	const { setToken } = useAuthStore.getState();
 
 	// API Call
 	const authFn = async (userData: AuthUserType) => {
-		const url = mode === "login" ? "auth/sign-in" : "auth/sign-up";
-		//const res = await axios.post(`http://localhost:5500/api/v1/auth/sign-in`, userData, {
-		const res = await axios.post(`${BASE_URL}/${url}`, userData, {
+		//const url = mode === "login" ? "auth/sign-in" : "auth/sign-up";
+		const res = await axios.post(`http://localhost:5500/api/v1/auth/sign-in`, userData, {
+			//const res = await axios.post(`${BASE_URL}/${url}`, userData, {
 			headers: { "Content-Type": "application/json" },
 			withCredentials: true,
 		});
@@ -26,12 +27,10 @@ export function useAuthorization({ mode }: UseAuthorizationProps) {
 		mutationFn: authFn,
 		onSuccess: (data) => {
 			toast.success(mode === "login" ? "User logged in!" : "User created successfully!");
-
 			const accessToken = data?.data?.accessToken || data?.accessToken;
 			if (accessToken) {
-				localStorage.setItem("token", accessToken);
+				setToken(accessToken);
 			}
-
 			navigate("/events");
 		},
 		onError: (error: Error) => {

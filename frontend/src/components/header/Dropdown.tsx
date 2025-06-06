@@ -3,10 +3,12 @@ import { NO_AVATAR } from "../../lib/data";
 import { FaCaretDown, FaCaretUp, FaPlus, FaPowerOff, FaUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useUserData } from "../../hooks/useUserData";
+import { useAuthStore } from "../../store/authStore";
 
 export default function Dropdown() {
 	const [isOpen, setIsOpen] = useState(false);
-	const { createEventOrSignInLink, accountOwner, handleLogOut } = useUserData();
+	const { createEventOrSignInLink, accountOwner } = useUserData();
+	const { logout } = useAuthStore();
 
 	const toggleMenu = () => setIsOpen((prev) => !prev);
 
@@ -27,7 +29,7 @@ export default function Dropdown() {
 			label: "Log out",
 			icon: <FaPowerOff className="text-sky-300" />,
 			to: "/events",
-			onClick: handleLogOut,
+			onClick: logout,
 		},
 	];
 

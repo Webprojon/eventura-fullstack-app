@@ -13,11 +13,11 @@ import { useCancelEvent } from "../../hooks/useCancelEvent";
 import { useGetEvent } from "../../hooks/useGetEvent";
 
 export default function EventDetails() {
-	const { id } = useParams();
+	const { eventId } = useParams();
 	const { formatDate } = useGetEvents();
 	const { event, isLoading } = useGetEvent();
-	const { cancelEvent, isCanceling } = useCancelEvent(id);
-	const { joinEvent, isJoining, token, isJoined } = useJoinEvent(id);
+	const { cancelEvent, isCanceling } = useCancelEvent(eventId);
+	const { joinEvent, isJoining, token, isJoined } = useJoinEvent(eventId);
 
 	if (isLoading) return <EventDetailsSkeleton />;
 

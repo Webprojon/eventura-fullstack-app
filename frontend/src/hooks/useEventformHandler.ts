@@ -5,12 +5,14 @@ import { EventFormData } from "../lib/types";
 import { BASE_URL } from "../lib/data";
 import toast from "react-hot-toast";
 import axios, { AxiosError } from "axios";
+import { useAuthStore } from "../store/authStore";
 
 type UseEventFormHandlerProps = { mode: "create" } | { mode: "edit"; id?: string };
 
 export function useEventFormHandler(props: UseEventFormHandlerProps) {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
+	const { token } = useAuthStore();
 
 	const [formData, setFormData] = useState<EventFormData>({
 		eventTitle: "",
@@ -59,7 +61,6 @@ export function useEventFormHandler(props: UseEventFormHandlerProps) {
 
 	// API call for create or update
 	const submitEvent = async (eventData: EventFormData) => {
-		const token = localStorage.getItem("token");
 
 		if (isEditMode) {
 			const res = await axios.put(`${BASE_URL}/events/${props.id}`, eventData, {

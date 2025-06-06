@@ -3,11 +3,12 @@ import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../lib/data";
 import { useUserData } from "./useUserData";
 import toast from "react-hot-toast";
+import { useAuthStore } from "../store/authStore";
 
 export function useFollow() {
 	const { userData } = useUserData();
 	const queryClient = useQueryClient();
-	const token = localStorage.getItem("token");
+	const { token } = useAuthStore();
 
 	const handleError = (error: AxiosError<{ message: string }>) => {
 		const message = error.response?.data?.message || error.message || "Network error";

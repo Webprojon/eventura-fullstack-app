@@ -5,9 +5,11 @@ import CreateButton from "./CreateButton";
 import Dropdown from "./Dropdown";
 import { useUserData } from "../../hooks/useUserData";
 import Language from "./Language";
+import { useAuthStore } from "../../store/authStore";
 
 export default function Navbar() {
-	const { token, isLoading } = useUserData();
+	const { isLoading } = useUserData();
+	const { token } = useAuthStore();
 
 	return (
 		<header className="max-w-[1350px] mx-auto flex items-center justify-between h-[9vh] border-b px-2 xl:px-0 select-none">

@@ -1,7 +1,9 @@
 import { Navigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 export const ProtectedAuthRoute = ({ children }: { children: React.ReactNode }) => {
-	const token = localStorage.getItem("token");
+	const { token } = useAuthStore();
+
 	if (token) {
 		return <Navigate to="/events" replace />;
 	}

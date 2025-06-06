@@ -4,12 +4,13 @@ import toast from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { useUserData } from "./useUserData";
 import { useGetEvent } from "./useGetEvent";
+import { useAuthStore } from "../store/authStore";
 
 export function useJoinEvent(eventId: string | undefined) {
-	const queryClient = useQueryClient();
-	const token = localStorage.getItem("token");
-	const { event } = useGetEvent();
 	const { accountOwner } = useUserData();
+	const queryClient = useQueryClient();
+	const { token } = useAuthStore();
+	const { event } = useGetEvent();
 
 	const { mutate, isPending, data, error } = useMutation({
 		mutationFn: async () => {

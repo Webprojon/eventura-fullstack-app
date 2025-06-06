@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../lib/data";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useAuthStore } from "../store/authStore";
 
 export function useUserData() {
-	const navigate = useNavigate();
-	const token = localStorage.getItem("token");
+	const { token } = useAuthStore();
 	const { id } = useParams();
 
 	// Get account owner's data
@@ -35,17 +35,11 @@ export function useUserData() {
 	});
 	const userData = otherUserQuery.data ?? null;
 
-	const handleLogOut = () => {
-		localStorage.removeItem("token");
-		navigate("/events");
-	};
-
 	const createEventOrSignInLink = `${token ? "/events/create-event" : "/sign-in"}`;
 	const getUserProfileLink = (id: string) => (accountOwner?._id === id ? `/account/me` : `/profile/user/${id}`);
 
 	return {
 		token,
-		handleLogOut,
 		accountOwner,
 		getUserProfileLink,
 		createEventOrSignInLink,
