@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { ACCESS_TOKEN_JWT_SECRET, REFRESH_TOKEN_JWT_SECRET, ACCESS_TOKEN_JWT_EXPIRES_IN, REFRESH_TOKEN_JWT_EXPIRES_IN } from "../config/env.js";
+import { NODE_ENV, ACCESS_TOKEN_JWT_SECRET, REFRESH_TOKEN_JWT_SECRET, ACCESS_TOKEN_JWT_EXPIRES_IN, REFRESH_TOKEN_JWT_EXPIRES_IN } from "../config/env.js";
 
 export const signUp = async (req, res, next) => {
 	const session = await mongoose.startSession();
@@ -113,7 +113,8 @@ export const signIn = async (req, res, next) => {
 		// Save refresh token in cookie
 		res.cookie("refreshToken", refreshToken, {
 			httpOnly: true,
-			//secure: NODE_ENV === "production",
+			secure: NODE_ENV === "production",
+			sameSite: "None",
 			maxAge: 3 * 24 * 60 * 60 * 1000,
 		});
 
