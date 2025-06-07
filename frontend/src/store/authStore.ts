@@ -16,7 +16,6 @@ export const useAuthStore = create<AuthState>((set) => ({
 	refreshToken: async () => {
 		try {
 			const res = await axios.post(`${BASE_URL}/auth/refresh`, {}, { withCredentials: true });
-			//const res = await axios.post("http://localhost:5500/api/v1/auth/refresh", {}, { withCredentials: true });
 			const newAccessToken = res.data.accessToken;
 			set({ token: newAccessToken });
 		} catch (err: unknown) {
@@ -30,7 +29,6 @@ export const useAuthStore = create<AuthState>((set) => ({
 	logout: async () => {
 		try {
 			await axios.post(`${BASE_URL}/auth/sign-out`, {}, { withCredentials: true });
-			//await axios.post("http://localhost:5500/api/v1/auth/sign-out", {}, { withCredentials: true });
 		} finally {
 			set({ token: null });
 		}

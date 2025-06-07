@@ -45,7 +45,8 @@ export const signUp = async (req, res, next) => {
 		// Save refresh token in cookie
 		res.cookie("refreshToken", refreshToken, {
 			httpOnly: true,
-			//secure: NODE_ENV === "production",
+			secure: true,
+			sameSite: "None",
 			maxAge: 3 * 24 * 60 * 60 * 1000,
 		});
 
@@ -113,7 +114,8 @@ export const signIn = async (req, res, next) => {
 		// Save refresh token in cookie
 		res.cookie("refreshToken", refreshToken, {
 			httpOnly: true,
-			//secure: NODE_ENV === "production",
+			secure: true,
+			sameSite: "None",
 			maxAge: 3 * 24 * 60 * 60 * 1000,
 		});
 
