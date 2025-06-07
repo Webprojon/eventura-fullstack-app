@@ -15,8 +15,8 @@ export const useAuthStore = create<AuthState>((set) => ({
 
 	refreshToken: async () => {
 		try {
-			//const res = await axios.post(`${BASE_URL}/auth/refresh`, {}, { withCredentials: true });
-			const res = await axios.post("http://localhost:5500/api/v1/auth/refresh", {}, { withCredentials: true });
+			const res = await axios.post(`${BASE_URL}/auth/refresh`, {}, { withCredentials: true });
+			//const res = await axios.post("http://localhost:5500/api/v1/auth/refresh", {}, { withCredentials: true });
 			const newAccessToken = res.data.accessToken;
 			set({ token: newAccessToken });
 		} catch (err: unknown) {

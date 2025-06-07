@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
-import { NODE_ENV, ACCESS_TOKEN_JWT_SECRET, ACCESS_TOKEN_JWT_EXPIRES_IN, REFRESH_TOKEN_JWT_SECRET, REFRESH_TOKEN_JWT_EXPIRES_IN } from "../config/env.js";
+import { ACCESS_TOKEN_JWT_SECRET, ACCESS_TOKEN_JWT_EXPIRES_IN, REFRESH_TOKEN_JWT_SECRET, REFRESH_TOKEN_JWT_EXPIRES_IN } from "../config/env.js";
 
 const authorize = async (req, res, next) => {
 	try {
@@ -52,8 +52,8 @@ export const getRefreshToken = async (req, res) => {
 
 		res.cookie("refreshToken", newRefreshToken, {
 			httpOnly: true,
-			secure: NODE_ENV === "production",
-			sameSite: "None",
+			//secure: NODE_ENV === "production",
+			//sameSite: "None",
 			maxAge: 3 * 24 * 60 * 60 * 1000,
 		});
 
