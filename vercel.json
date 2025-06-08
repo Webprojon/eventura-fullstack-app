@@ -1,8 +1,0 @@
-{
-	"rewrites": [
-		{
-			"source": "/api/:path*",
-			"destination": "https://eventura-data.onrender.com/api/:path*"
-		}
-	]
-}
