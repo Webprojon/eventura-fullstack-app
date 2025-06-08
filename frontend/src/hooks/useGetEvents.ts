@@ -3,8 +3,10 @@ import { EventTypes } from "../lib/types";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../lib/data";
 import axios from "axios";
+import useCalendarStore from "../store/calendarStore";
 
 export function useGetEvents() {
+	const { calendarValue } = useCalendarStore();
 	const { id } = useParams<{ id: string }>();
 
 	const { data, isLoading } = useQuery<{ data: EventTypes[] }>({
@@ -25,10 +27,13 @@ export function useGetEvents() {
 		});
 	};
 
+	const filteredEvents = data?.data?.filter((event) => (calendarValue ? formatDate(event.eventDate) === formatDate(calendarValue) : true));
+
 	return {
 		id,
 		isLoading,
 		formatDate,
+		filteredEvents,
 		events: data?.data,
 	};
 }
