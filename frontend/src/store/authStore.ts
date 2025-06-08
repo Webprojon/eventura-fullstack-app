@@ -11,26 +11,34 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
 	token: null,
+
 	setToken: (token) => set({ token }),
 
 	refreshToken: async () => {
+		const refreshToken = localStorage.getItem("refreshToken");
+		if (!refreshToken) {
+			set({ token: null });
+			return;
+		}
+
 		try {
-			const res = await axios.post(`${BASE_URL}/auth/refresh`, {}, { withCredentials: true });
+			const res = await axios.post(`${BASE_URL}/auth/refresh`, { refreshToken });
 			const newAccessToken = res.data.accessToken;
+			const newRefreshToken = res.data.refreshToken;
+
 			set({ token: newAccessToken });
+			localStorage.setItem("refreshToken", newRefreshToken);
 		} catch (err: unknown) {
 			if (err instanceof Error) {
 				console.error("Refresh token error:", err.message);
 			}
+			localStorage.removeItem("refreshToken");
 			set({ token: null });
 		}
 	},
 
 	logout: async () => {
-		try {
-			await axios.post(`${BASE_URL}/auth/sign-out`, {}, { withCredentials: true });
-		} finally {
-			set({ token: null });
-		}
+		localStorage.removeItem("refreshToken");
+		set({ token: null });
 	},
 }));

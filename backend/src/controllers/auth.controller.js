@@ -43,12 +43,12 @@ export const signUp = async (req, res, next) => {
 		});
 
 		// Save refresh token in cookie
-		res.cookie("refreshToken", refreshToken, {
-			httpOnly: true,
-			//secure: true,
-			//sameSite: "None",
-			maxAge: 3 * 24 * 60 * 60 * 1000,
-		});
+		//res.cookie("refreshToken", refreshToken, {
+		//	httpOnly: true,
+		//	secure: true,
+		//	sameSite: "None",
+		//	maxAge: 3 * 24 * 60 * 60 * 1000,
+		//});
 
 		// Ending
 		await session.commitTransaction();
@@ -61,6 +61,7 @@ export const signUp = async (req, res, next) => {
 			data: {
 				user: newUser[0],
 				accessToken,
+				refreshToken,
 			},
 		});
 	} catch (error) {
@@ -112,12 +113,12 @@ export const signIn = async (req, res, next) => {
 		const { password: _, ...userWithoutPassword } = user.toObject();
 
 		// Save refresh token in cookie
-		res.cookie("refreshToken", refreshToken, {
-			httpOnly: true,
-			//secure: true,
-			//sameSite: "None",
-			maxAge: 3 * 24 * 60 * 60 * 1000,
-		});
+		//res.cookie("refreshToken", refreshToken, {
+		//	httpOnly: true,
+		//	secure: true,
+		//	sameSite: "None",
+		//	maxAge: 3 * 24 * 60 * 60 * 1000,
+		//});
 
 		res.status(200).json({
 			success: true,
@@ -125,6 +126,7 @@ export const signIn = async (req, res, next) => {
 			data: {
 				user: userWithoutPassword,
 				accessToken,
+				refreshToken,
 			},
 		});
 	} catch (error) {
@@ -132,6 +134,4 @@ export const signIn = async (req, res, next) => {
 	}
 };
 
-export const signOut = async (req, res) => {
-	res.clearCookie("refreshToken").status(200).json({ message: "Logged out" });
-};
+export const signOut = async () => {};

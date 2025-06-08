@@ -28,7 +28,13 @@ const authorize = async (req, res, next) => {
 
 export const getRefreshToken = async (req, res) => {
 	try {
-		const refreshToken = req.cookies?.refreshToken;
+		//const refreshToken = req.cookies?.refreshToken;
+
+		const refreshToken = req.body.refreshToken;
+
+		if (!refreshToken) {
+			return res.status(401).json({ message: "Refresh token is required" });
+		}
 
 		// Check there is token or no
 		if (!refreshToken) return res.status(401).json({ message: "Refresh token is required" });
@@ -50,15 +56,16 @@ export const getRefreshToken = async (req, res) => {
 			expiresIn: REFRESH_TOKEN_JWT_EXPIRES_IN,
 		});
 
-		res.cookie("refreshToken", newRefreshToken, {
-			httpOnly: true,
-			//secure: true,
-			//sameSite: "None",
-			maxAge: 3 * 24 * 60 * 60 * 1000,
-		});
+		//res.cookie("refreshToken", newRefreshToken, {
+		//	httpOnly: true,
+		//	secure: true,
+		//	sameSite: "None",
+		//	maxAge: 3 * 24 * 60 * 60 * 1000,
+		//});
 
 		res.status(200).json({
 			accessToken: newAccessToken,
+			refreshToken: newRefreshToken,
 		});
 	} catch (err) {
 		res.status(403).json({ message: "Invalid or expired refresh token", error: err.message });
