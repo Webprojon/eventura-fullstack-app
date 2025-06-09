@@ -23,7 +23,7 @@ export default function AboutSection() {
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["user"] });
 			toast.success("Your account deleted!");
-			localStorage.removeItem("token");
+			localStorage.removeItem("refreshToken");
 			navigate("/events");
 		},
 		onError: (error) => {
@@ -57,14 +57,14 @@ export default function AboutSection() {
 	return (
 		<>
 			<div className="flex justify-between items-center">
-				<Heading icon={FaUser} text={`About ${accountOwner.name}`} />
+				<Heading icon={FaUser} text={`About ${accountOwner?.name}`} />
 				{descriptionVal !== accountOwner?.description && (
 					<button onClick={handleUpdate} className="py-[3px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">
 						Save
 					</button>
 				)}
 			</div>
-			<span className="text-[13px] tracking-wider text-slate-300">Member since: {formatDate(accountOwner.createdAt)}</span>
+			<span className="text-[13px] tracking-wider text-slate-300">Member since: {formatDate(accountOwner?.createdAt)}</span>
 			<textarea
 				name="about"
 				id="about"
