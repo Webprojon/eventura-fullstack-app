@@ -31,7 +31,7 @@ export default function EventLists() {
 								<div className="flex flex-col">
 									<span className="font-medium text-[20px]">{eventTitle}</span>
 									<span className="text-sm sm:text-md">
-										Organised by{" "}
+										Hosted by{" "}
 										<Link to={getUserProfileLink(user._id)} className="font-semibold text-sky-300">
 											{user.name || "Unknown"}
 										</Link>

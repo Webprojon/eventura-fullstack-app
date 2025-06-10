@@ -42,7 +42,7 @@ export default function EventDetails() {
 						<span className="font-medium text-[24px]">{eventTitle}</span>
 						<span className="flex gap-x-2 text-[18px] items-center">{formattedDateTime}</span>
 						<span>
-							Organised by{" "}
+							Hosted by{" "}
 							<Link to={`/profile/user/${user?._id}`} className="font-semibold text-sky-300">
 								{user.name || "Unkown"}
 							</Link>
