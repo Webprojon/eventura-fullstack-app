@@ -15,7 +15,6 @@ import UserProfile from "./pages/UserProfile";
 import Footer from "./components/Footer";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
-//import axiosInstance from "./api/axiosInstance";
 
 function App() {
 	const pathname = useLocation().pathname;
@@ -25,13 +24,6 @@ function App() {
 	useEffect(() => {
 		refreshToken();
 	}, []);
-
-	//useEffect(() => {
-	//	axiosInstance
-	//		.get("/auth/refresh")
-	//		.then((res) => console.log(res.data))
-	//		.catch((err) => console.error(err));
-	//}, []);
 
 	return (
 		<QueryClientProvider client={queryClient}>

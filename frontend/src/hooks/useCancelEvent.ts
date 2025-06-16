@@ -6,9 +6,9 @@ import { useAuthStore } from "../store/authStore";
 
 export function useCancelEvent(eventId: string | undefined) {
 	const queryClient = useQueryClient();
-		const { token } = useAuthStore();
-	
-	const { mutate, isPending, data, error } = useMutation({
+	const { token } = useAuthStore();
+
+	const { mutate, isPending } = useMutation({
 		mutationFn: async () => {
 			const res = await axios.post(`${BASE_URL}/events/${eventId}/cancel`, null, {
 				headers: {
@@ -29,8 +29,5 @@ export function useCancelEvent(eventId: string | undefined) {
 	return {
 		cancelEvent: mutate,
 		isCanceling: isPending,
-		token,
-		data,
-		error,
 	};
 }
