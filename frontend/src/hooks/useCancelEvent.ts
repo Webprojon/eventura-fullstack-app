@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { BASE_URL } from "../lib/data";
 import toast from "react-hot-toast";
-import axios from "axios";
 import { useAuthStore } from "../store/authStore";
+import { apiRequest } from "../lib/apiRequest";
 
 export function useCancelEvent(eventId: string | undefined) {
 	const queryClient = useQueryClient();
@@ -10,7 +9,7 @@ export function useCancelEvent(eventId: string | undefined) {
 
 	const { mutate, isPending } = useMutation({
 		mutationFn: async () => {
-			const res = await axios.post(`${BASE_URL}/events/${eventId}/cancel`, null, {
+			const res = await apiRequest.post(`/events/${eventId}/cancel`, null, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},

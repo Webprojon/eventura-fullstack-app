@@ -2,13 +2,12 @@ import { useState } from "react";
 import { FaUser } from "react-icons/fa6";
 import { useGetEvents } from "../../../hooks/useGetEvents";
 import ConfirmationModal from "../../../components/modals/ConfirmationModal";
-import axios from "axios";
-import { BASE_URL } from "../../../lib/data";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Heading from "./Heading";
 import { useUserData } from "../../../hooks/useUserData";
+import { apiRequest } from "../../../lib/apiRequest";
 
 export default function AboutSection() {
 	const navigate = useNavigate();
@@ -19,7 +18,7 @@ export default function AboutSection() {
 	const [descriptionVal, setDescriptionVal] = useState(accountOwner?.description);
 
 	const deleteAccountMutation = useMutation({
-		mutationFn: () => axios.delete(`${BASE_URL}/users/${accountOwner._id}`),
+		mutationFn: () => apiRequest.delete(`/users/${accountOwner._id}`),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["user"] });
 			toast.success("Your account deleted!");
@@ -33,8 +32,8 @@ export default function AboutSection() {
 
 	const updateDescriptionMutation = useMutation({
 		mutationFn: async (textValue: string) => {
-			const res = await axios.put(
-				`${BASE_URL}/users/${accountOwner?._id}`,
+			const res = await apiRequest.put(
+				`/users/${accountOwner?._id}`,
 				{ description: textValue },
 				{
 					headers: {

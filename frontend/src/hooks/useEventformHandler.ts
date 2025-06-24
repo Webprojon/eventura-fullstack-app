@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { EventFormData } from "../lib/types";
-import { BASE_URL } from "../lib/data";
 import toast from "react-hot-toast";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { useAuthStore } from "../store/authStore";
+import { apiRequest } from "../lib/apiRequest";
 
 type UseEventFormHandlerProps = { mode: "create" } | { mode: "edit"; id?: string };
 
@@ -28,7 +28,7 @@ export function useEventFormHandler(props: UseEventFormHandlerProps) {
 		return useQuery({
 			queryKey: ["event", id],
 			queryFn: async () => {
-				const res = await axios.get(`${BASE_URL}/events/${id}`);
+				const res = await apiRequest(`/events/${id}`);
 				return res.data.data;
 			},
 			enabled: enabled && !!id,
@@ -61,9 +61,8 @@ export function useEventFormHandler(props: UseEventFormHandlerProps) {
 
 	// API call for create or update
 	const submitEvent = async (eventData: EventFormData) => {
-
 		if (isEditMode) {
-			const res = await axios.put(`${BASE_URL}/events/${props.id}`, eventData, {
+			const res = await apiRequest.put(`/events/${props.id}`, eventData, {
 				headers: {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${token}`,
@@ -71,7 +70,7 @@ export function useEventFormHandler(props: UseEventFormHandlerProps) {
 			});
 			return res.data;
 		} else {
-			const res = await axios.post(`${BASE_URL}/events`, eventData, {
+			const res = await apiRequest.post(`/events`, eventData, {
 				headers: {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${token}`,

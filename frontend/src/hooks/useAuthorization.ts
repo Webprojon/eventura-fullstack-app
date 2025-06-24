@@ -1,4 +1,3 @@
-import axios from "axios";
 import { AuthUserType, UseAuthorizationProps } from "../lib/types";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -6,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { LoginSchema } from "../lib/validation/login.schema";
 import { RegisterSchema } from "../lib/validation/register.schema";
 import { useAuthStore } from "../store/authStore";
-import { BASE_URL } from "../lib/data";
+import { apiRequest } from "../lib/apiRequest";
 
 export function useAuthorization({ mode }: UseAuthorizationProps) {
 	const navigate = useNavigate();
@@ -15,7 +14,7 @@ export function useAuthorization({ mode }: UseAuthorizationProps) {
 	// API Call
 	const authFn = async (userData: AuthUserType) => {
 		const url = mode === "login" ? "auth/sign-in" : "auth/sign-up";
-		const res = await axios.post(`${BASE_URL}/${url}`, userData, {
+		const res = await apiRequest.post(`/${url}`, userData, {
 			headers: { "Content-Type": "application/json" },
 			withCredentials: true,
 		});

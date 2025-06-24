@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../lib/data";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { useAuthStore } from "../store/authStore";
+import { apiRequest } from "../lib/apiRequest";
 
 export function useDeleteEvent() {
 	const queryClient = useQueryClient();
@@ -12,7 +12,7 @@ export function useDeleteEvent() {
 
 	const deleteEventMutation = useMutation({
 		mutationFn: async (id: string) => {
-			await axios.delete(`${BASE_URL}/events/${id}`, {
+			await apiRequest.delete(`/events/${id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},

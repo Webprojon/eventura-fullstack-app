@@ -3,10 +3,9 @@ import { FaUser } from "react-icons/fa6";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { BASE_URL } from "../../../lib/data";
 import Heading from "./Heading";
 import { useUserData } from "../../../hooks/useUserData";
+import { apiRequest } from "../../../lib/apiRequest";
 
 export default function PhotoSection() {
 	const { accountOwner } = useUserData();
@@ -28,7 +27,7 @@ export default function PhotoSection() {
 
 	const uploadPhotoMutation = useMutation({
 		mutationFn: async (formData: FormData) => {
-			const res = await axios.post(`${BASE_URL}/users/upload`, formData);
+			const res = await apiRequest.post(`/users/upload`, formData);
 			return res.data;
 		},
 		onSuccess: () => {

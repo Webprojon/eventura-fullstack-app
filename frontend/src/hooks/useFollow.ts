@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import { BASE_URL } from "../lib/data";
+import { AxiosError } from "axios";
 import { useUserData } from "./useUserData";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../store/authStore";
+import { apiRequest } from "../lib/apiRequest";
 
 export function useFollow() {
 	const { userData } = useUserData();
@@ -17,8 +17,8 @@ export function useFollow() {
 
 	const followUser = useMutation({
 		mutationFn: async () => {
-			const res = await axios.post(
-				`${BASE_URL}/users/${userData._id}/follow`,
+			const res = await apiRequest.post(
+				`/users/${userData._id}/follow`,
 				{},
 				{
 					headers: {
@@ -38,7 +38,7 @@ export function useFollow() {
 
 	const unfollowUser = useMutation({
 		mutationFn: async () => {
-			const res = await axios.delete(`${BASE_URL}/users/${userData._id}/unfollow`, {
+			const res = await apiRequest.delete(`/users/${userData._id}/unfollow`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},

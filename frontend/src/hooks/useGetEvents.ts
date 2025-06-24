@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { EventTypes } from "../lib/types";
 import { useParams } from "react-router-dom";
-import { BASE_URL } from "../lib/data";
-import axios from "axios";
 import useCalendarStore from "../store/calendarStore";
+import { apiRequest } from "../lib/apiRequest";
 
 export function useGetEvents() {
 	const { calendarValue } = useCalendarStore();
@@ -12,7 +11,7 @@ export function useGetEvents() {
 	const { data, isLoading } = useQuery<{ data: EventTypes[] }>({
 		queryKey: ["events"],
 		queryFn: async () => {
-			const res = await axios.get(`${BASE_URL}/events`);
+			const res = await apiRequest("/events");
 			return res.data;
 		},
 	});

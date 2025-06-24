@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "../lib/data";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { useAuthStore } from "../store/authStore";
+import { apiRequest } from "../lib/apiRequest";
 
 export function useUserData() {
 	const { token } = useAuthStore();
@@ -13,7 +12,7 @@ export function useUserData() {
 		queryKey: ["user"],
 		enabled: !!token,
 		queryFn: async () => {
-			const res = await axios.get(`${BASE_URL}/users/me`, {
+			const res = await apiRequest("/users/me", {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -29,7 +28,7 @@ export function useUserData() {
 		enabled: !!id,
 		queryKey: ["user", id],
 		queryFn: async () => {
-			const res = await axios.get(`${BASE_URL}/users/user/${id}`);
+			const res = await apiRequest(`/users/user/${id}`);
 			return res.data?.data;
 		},
 	});

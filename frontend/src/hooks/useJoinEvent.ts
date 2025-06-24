@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { BASE_URL } from "../lib/data";
 import toast from "react-hot-toast";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { useUserData } from "./useUserData";
 import { useGetEvent } from "./useGetEvent";
 import { useAuthStore } from "../store/authStore";
+import { apiRequest } from "../lib/apiRequest";
 
 export function useJoinEvent(eventId: string | undefined) {
 	const { accountOwner } = useUserData();
@@ -14,7 +14,7 @@ export function useJoinEvent(eventId: string | undefined) {
 
 	const { mutate, isPending, data, error } = useMutation({
 		mutationFn: async () => {
-			const res = await axios.post(`${BASE_URL}/events/${eventId}/join`, null, {
+			const res = await apiRequest.post(`/events/${eventId}/join`, null, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
