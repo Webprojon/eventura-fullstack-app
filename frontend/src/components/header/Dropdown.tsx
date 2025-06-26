@@ -27,6 +27,11 @@ export default function Dropdown() {
 		},
 	});
 
+	const handleLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
+		e.preventDefault();
+		logout();
+	};
+
 	const MENU_ITEMS = [
 		{
 			label: "Create Event",
@@ -44,7 +49,7 @@ export default function Dropdown() {
 			label: "Log out",
 			icon: <FaPowerOff className="text-sky-300" />,
 			to: "/events",
-			onClick: logout,
+			onClick: handleLogout,
 		},
 	];
 
