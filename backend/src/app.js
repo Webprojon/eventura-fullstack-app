@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: ["http://localhost:5173", "http://localhost:5500", "https://eventura-hub.vercel.app", "http://eventura-data.onrender.com"],
+		origin: ["http://localhost:5173", "https://eventura-hub.vercel.app"],
 		credentials: true,
 	}),
 );
