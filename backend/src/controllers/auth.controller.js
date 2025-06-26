@@ -36,11 +36,11 @@ export const signUp = async (req, res, next) => {
 		const age = 5 * 24 * 60 * 60 * 1000;
 
 		// If password is correct, generate new access token and refresh token
-		const accessToken = jwt.sign({ userId: newUser[0]._id }, ACCESS_TOKEN_JWT_SECRET, {
+		const token = jwt.sign({ userId: newUser[0]._id }, ACCESS_TOKEN_JWT_SECRET, {
 			expiresIn: age,
 		});
 
-		res.cookie("accessToken", accessToken, {
+		res.cookie("token", token, {
 			httpOnly: true,
 			maxAge: age,
 			secure: NODE_ENV === "production",
@@ -98,14 +98,14 @@ export const signIn = async (req, res, next) => {
 		const age = 5 * 24 * 60 * 60 * 1000;
 
 		// If password is correct, generate new access token and refresh token
-		const accessToken = jwt.sign({ userId: user._id }, ACCESS_TOKEN_JWT_SECRET, {
+		const token = jwt.sign({ userId: user._id }, ACCESS_TOKEN_JWT_SECRET, {
 			expiresIn: age,
 		});
 
 		// Remove password before sending
 		const { password: _, ...userWithoutPassword } = user.toObject();
 
-		res.cookie("accessToken", accessToken, {
+		res.cookie("token", token, {
 			httpOnly: true,
 			maxAge: age,
 			secure: NODE_ENV === "production",
@@ -125,5 +125,5 @@ export const signIn = async (req, res, next) => {
 };
 
 export const signOut = async (req, res) => {
-	res.clearCookie("accessToken").status(200).json({ message: "You are logged out" });
+	res.clearCookie("token").status(200).json({ message: "You are logged out" });
 };

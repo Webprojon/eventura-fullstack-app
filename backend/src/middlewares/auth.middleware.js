@@ -4,11 +4,11 @@ import { ACCESS_TOKEN_JWT_SECRET } from "../config/env.js";
 
 const authorize = async (req, res, next) => {
 	try {
-		const accessToken = req.cookies?.accessToken;
+		const token = req.cookies?.token;
 
-		if (!accessToken) return res.status(401).json({ message: "Unauthorized" });
+		if (!token) return res.status(401).json({ message: "Unauthorized" });
 
-		const decoded = jwt.verify(accessToken, ACCESS_TOKEN_JWT_SECRET);
+		const decoded = jwt.verify(token, ACCESS_TOKEN_JWT_SECRET);
 
 		const user = await User.findById(decoded.userId);
 
