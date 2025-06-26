@@ -15,11 +15,11 @@ export function ManageEventBase({ id, isMobile = false }: { id: string; isMobile
 	const toggleMenu = useModalStore((state) => state.toggleMenu);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { handleDelete } = useDeleteEvent();
-	const { token } = useUserData();
+	const { accountOwner } = useUserData();
 
 	const toggleModal = () => setIsModalOpen((prev) => !prev);
 
-	const linkTo = useMemo(() => (token ? `/events/update/${id}` : "/sign-in"), [token, id]);
+	const linkTo = useMemo(() => (accountOwner ? `/events/update/${id}` : "/sign-in"), [accountOwner, id]);
 
 	const menuClasses = isMobile ? "w-full flex justify-between sm:hidden mt-4" : "hidden sm:flex flex-col gap-y-3";
 

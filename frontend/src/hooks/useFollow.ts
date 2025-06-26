@@ -2,13 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useUserData } from "./useUserData";
 import toast from "react-hot-toast";
-import { useAuthStore } from "../store/authStore";
 import { apiRequest } from "../lib/apiRequest";
 
 export function useFollow() {
 	const { userData } = useUserData();
 	const queryClient = useQueryClient();
-	const { token } = useAuthStore();
 
 	const handleError = (error: AxiosError<{ message: string }>) => {
 		const message = error.response?.data?.message || error.message || "Network error";
@@ -21,10 +19,7 @@ export function useFollow() {
 				`/users/${userData._id}/follow`,
 				{},
 				{
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
+					withCredentials: true,
 				},
 			);
 			return res.data;
@@ -39,9 +34,7 @@ export function useFollow() {
 	const unfollowUser = useMutation({
 		mutationFn: async () => {
 			const res = await apiRequest.delete(`/users/${userData._id}/unfollow`, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
+				withCredentials: true,
 			});
 			return res.data;
 		},

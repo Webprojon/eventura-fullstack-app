@@ -1,21 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { useAuthStore } from "../store/authStore";
 import { apiRequest } from "../lib/apiRequest";
 
 export function useUserData() {
-	const { token } = useAuthStore();
 	const { id } = useParams();
 
 	// Get account owner's data
 	const accountOwnerQuery = useQuery({
 		queryKey: ["user"],
-		enabled: !!token,
+		//enabled: !!token,
 		queryFn: async () => {
 			const res = await apiRequest("/users/me", {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
 				withCredentials: true,
 			});
 			return res.data?.data;
@@ -34,11 +29,10 @@ export function useUserData() {
 	});
 	const userData = otherUserQuery.data ?? null;
 
-	const createEventOrSignInLink = `${token ? "/events/create-event" : "/sign-in"}`;
+	const createEventOrSignInLink = `${accountOwner ? "/events/create-event" : "/sign-in"}`;
 	const getUserProfileLink = (id: string) => (accountOwner?._id === id ? `/account/me` : `/profile/user/${id}`);
 
 	return {
-		token,
 		accountOwner,
 		getUserProfileLink,
 		createEventOrSignInLink,

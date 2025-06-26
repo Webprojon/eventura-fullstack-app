@@ -13,17 +13,10 @@ import MyAccount from "./pages/account/MyAccount";
 import StarterPage from "./pages/Starter";
 import UserProfile from "./pages/UserProfile";
 import Footer from "./components/Footer";
-import { useAuthStore } from "./store/authStore";
-import { useEffect } from "react";
 
 function App() {
 	const pathname = useLocation().pathname;
 	const queryClient = new QueryClient();
-	const { refreshToken } = useAuthStore();
-
-	useEffect(() => {
-		refreshToken();
-	}, []);
 
 	return (
 		<QueryClientProvider client={queryClient}>

@@ -1,16 +1,31 @@
 import { useState } from "react";
 import { NO_AVATAR } from "../../lib/data";
 import { FaCaretDown, FaCaretUp, FaPlus, FaPowerOff, FaUser } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserData } from "../../hooks/useUserData";
-import { useAuthStore } from "../../store/authStore";
+import { apiRequest } from "../../lib/apiRequest";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 export default function Dropdown() {
 	const [isOpen, setIsOpen] = useState(false);
 	const { createEventOrSignInLink, accountOwner } = useUserData();
-	const { logout } = useAuthStore();
+	const navigate = useNavigate();
 
 	const toggleMenu = () => setIsOpen((prev) => !prev);
+
+	const { mutate: logout } = useMutation({
+		mutationFn: async () => {
+			return await apiRequest.post("/auth/sign-out");
+		},
+		onSuccess: () => {
+			toast.success("Logged out successfully");
+			navigate("/");
+		},
+		onError: (error) => {
+			console.error(error);
+		},
+	});
 
 	const MENU_ITEMS = [
 		{

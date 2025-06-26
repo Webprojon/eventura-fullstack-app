@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
-import { useAuthStore } from "../store/authStore";
+import { useUserData } from "../hooks/useUserData";
 
 export const ProtectedAuthRoute = ({ children }: { children: React.ReactNode }) => {
-	const { token } = useAuthStore();
+	const { accountOwner } = useUserData();
 
-	if (token) {
+	if (accountOwner) {
 		return <Navigate to="/events" replace />;
 	}
 	return <>{children}</>;

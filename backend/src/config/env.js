@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 
-config({ path: `.env.${process.env.NODE_ENV || "development"}.local` });
+config({ path: ".env.development.local" });
 
 export const {
 	PORT,
@@ -10,7 +10,5 @@ export const {
 	CLOUDINARY_CLOUD_NAME,
 	CLOUDINARY_API_SECRET,
 	ACCESS_TOKEN_JWT_SECRET,
-	REFRESH_TOKEN_JWT_SECRET,
 	ACCESS_TOKEN_JWT_EXPIRES_IN,
-	REFRESH_TOKEN_JWT_EXPIRES_IN,
 } = process.env;

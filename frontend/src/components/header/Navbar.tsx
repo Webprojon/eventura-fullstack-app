@@ -8,7 +8,7 @@ import Language from "./Language";
 
 export default function Navbar() {
 	const { isLoading } = useUserData();
-	const refreshToken = localStorage.getItem("refreshToken");
+	const { accountOwner } = useUserData();
 
 	return (
 		<header className="max-w-[1350px] mx-auto flex items-center justify-between h-[9vh] border-b px-2 xl:px-0 select-none">
@@ -16,7 +16,7 @@ export default function Navbar() {
 			<nav className="font-semibold flex items-center gap-x-5 sm:gap-x-3">
 				<CreateButton />
 				<Language />
-				{refreshToken ? (
+				{accountOwner ? (
 					<>{isLoading ? <Loader className="w-9 h-9" /> : <Dropdown />}</>
 				) : (
 					<Link to="/sign-in" className="py-[7px] sm:py-[4px] px-5 btn relative flex justify-center items-center">

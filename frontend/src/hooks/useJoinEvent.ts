@@ -3,21 +3,17 @@ import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 import { useUserData } from "./useUserData";
 import { useGetEvent } from "./useGetEvent";
-import { useAuthStore } from "../store/authStore";
 import { apiRequest } from "../lib/apiRequest";
 
 export function useJoinEvent(eventId: string | undefined) {
 	const { accountOwner } = useUserData();
 	const queryClient = useQueryClient();
-	const { token } = useAuthStore();
 	const { event } = useGetEvent();
 
 	const { mutate, isPending, data, error } = useMutation({
 		mutationFn: async () => {
 			const res = await apiRequest.post(`/events/${eventId}/join`, null, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
+				withCredentials: true,
 			});
 			return res.data;
 		},
@@ -38,7 +34,6 @@ export function useJoinEvent(eventId: string | undefined) {
 		joinEvent: mutate,
 		isJoining: isPending,
 		isJoined,
-		token,
 		data,
 		error,
 	};

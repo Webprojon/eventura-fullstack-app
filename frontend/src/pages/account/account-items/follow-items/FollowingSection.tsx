@@ -10,7 +10,6 @@ export default function FollowingSection() {
 		<>
 			<Heading icon={FaUser} text={`Following ${accountOwner?.following?.length || 0}`} />
 			<div className="border-b mt-8 pb-2">
-				{/*{followingLoading && <Loader className="w-10 h-10" />}*/}
 				{accountOwner?.following?.length === 0 && (
 					<span className="text-sm text-slate-400">You're not following anyone. Discover and connect with others!</span>
 				)}

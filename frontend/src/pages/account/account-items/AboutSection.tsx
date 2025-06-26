@@ -36,9 +36,7 @@ export default function AboutSection() {
 				`/users/${accountOwner?._id}`,
 				{ description: textValue },
 				{
-					headers: {
-						"Content-Type": "application/json",
-					},
+					withCredentials: true,
 				},
 			);
 			return res.data;

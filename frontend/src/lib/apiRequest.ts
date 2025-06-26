@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const apiRequest = axios.create({
-	baseURL: "https://eventura-data.onrender.com/api/v1",
+	baseURL: `${import.meta.env.VITE_API_URL}`,
 	withCredentials: true,
 });

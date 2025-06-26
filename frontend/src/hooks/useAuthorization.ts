@@ -4,18 +4,15 @@ import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { LoginSchema } from "../lib/validation/login.schema";
 import { RegisterSchema } from "../lib/validation/register.schema";
-import { useAuthStore } from "../store/authStore";
 import { apiRequest } from "../lib/apiRequest";
 
 export function useAuthorization({ mode }: UseAuthorizationProps) {
 	const navigate = useNavigate();
-	const { setToken } = useAuthStore.getState();
 
 	// API Call
 	const authFn = async (userData: AuthUserType) => {
 		const url = mode === "login" ? "auth/sign-in" : "auth/sign-up";
 		const res = await apiRequest.post(`/${url}`, userData, {
-			headers: { "Content-Type": "application/json" },
 			withCredentials: true,
 		});
 		return res.data;
@@ -24,12 +21,8 @@ export function useAuthorization({ mode }: UseAuthorizationProps) {
 	// Mutation
 	const { mutate, isPending } = useMutation({
 		mutationFn: authFn,
-		onSuccess: (data) => {
+		onSuccess: () => {
 			toast.success(mode === "login" ? "User logged in!" : "User created successfully!");
-			const accessToken = data?.data?.accessToken || data?.accessToken;
-			const refreshToken = data?.data?.refreshToken || data?.refreshToken;
-			localStorage.setItem("refreshToken", refreshToken);
-			setToken(accessToken);
 			navigate("/events");
 		},
 		onError: (error: Error) => {
