@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUserData } from "../../hooks/useUserData";
 import { apiRequest } from "../../lib/apiRequest";
 import { useMutation } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 
 export default function Dropdown() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +18,6 @@ export default function Dropdown() {
 			return await apiRequest.post("/auth/sign-out");
 		},
 		onSuccess: () => {
-			toast.success("Logged out successfully");
 			navigate("/");
 		},
 		onError: (error) => {

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { ACCESS_TOKEN_JWT_SECRET } from "../config/env.js";
+import { ACCESS_TOKEN_JWT_SECRET, NODE_ENV } from "../config/env.js";
 
 export const signUp = async (req, res, next) => {
 	const session = await mongoose.startSession();
@@ -33,7 +33,7 @@ export const signUp = async (req, res, next) => {
 		const newUser = await User.create([{ name, email, password: hashedPassword }], { session });
 		//const newUser = await User.create([{ name, email, password: hashedPassword }], { session });
 
-		const age = 3 * 24 * 60 * 60 * 1000;
+		const age = 5 * 24 * 60 * 60 * 1000;
 
 		// If password is correct, generate new access token and refresh token
 		const accessToken = jwt.sign({ userId: newUser[0]._id }, ACCESS_TOKEN_JWT_SECRET, {
@@ -43,8 +43,8 @@ export const signUp = async (req, res, next) => {
 		res.cookie("accessToken", accessToken, {
 			httpOnly: true,
 			maxAge: age,
-			secure: process.env.NODE_ENV === "production",
-			sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+			secure: NODE_ENV === "production",
+			sameSite: NODE_ENV === "production" ? "None" : "Lax",
 		});
 
 		// Ending
@@ -95,7 +95,7 @@ export const signIn = async (req, res, next) => {
 			throw error;
 		}
 
-		const age = 3 * 24 * 60 * 60 * 1000;
+		const age = 5 * 24 * 60 * 60 * 1000;
 
 		// If password is correct, generate new access token and refresh token
 		const accessToken = jwt.sign({ userId: user._id }, ACCESS_TOKEN_JWT_SECRET, {
@@ -108,8 +108,8 @@ export const signIn = async (req, res, next) => {
 		res.cookie("accessToken", accessToken, {
 			httpOnly: true,
 			maxAge: age,
-			secure: process.env.NODE_ENV === "production",
-			sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+			secure: NODE_ENV === "production",
+			sameSite: NODE_ENV === "production" ? "None" : "Lax",
 		});
 
 		res.status(200).json({
