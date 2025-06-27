@@ -22,7 +22,7 @@ export function useAuthorization({ mode }: UseAuthorizationProps) {
 	const { mutate, isPending } = useMutation({
 		mutationFn: authFn,
 		onSuccess: () => {
-			toast.success(mode === "login" ? "User logged in!" : "User created successfully!");
+			toast.success(mode === "login" ? "You're inside the system!" : "Your account is ready to use!");
 			navigate("/events");
 		},
 		onError: (error: Error) => {
