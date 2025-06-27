@@ -31,7 +31,6 @@ export const signUp = async (req, res, next) => {
 
 		// Creating new user
 		const newUser = await User.create([{ name, email, password: hashedPassword }], { session });
-		//const newUser = await User.create([{ name, email, password: hashedPassword }], { session });
 
 		const age = 5 * 24 * 60 * 60 * 1000;
 
@@ -40,11 +39,13 @@ export const signUp = async (req, res, next) => {
 			expiresIn: age,
 		});
 
+		const isProduction = process.env.NODE_ENV === "production";
+
 		res.cookie("token", token, {
 			httpOnly: true,
 			maxAge: age,
-			secure: NODE_ENV === "production",
-			sameSite: NODE_ENV === "production" ? "None" : "Lax",
+			secure: isProduction,
+			sameSite: isProduction ? "None" : "Lax",
 		});
 
 		// Ending
@@ -105,13 +106,13 @@ export const signIn = async (req, res, next) => {
 		// Remove password before sending
 		const { password: _, ...userWithoutPassword } = user.toObject();
 
+		const isProduction = process.env.NODE_ENV === "production";
+
 		res.cookie("token", token, {
 			httpOnly: true,
 			maxAge: age,
-			secure: true,
-			sameSite: "None",
-			//secure: process.env.NODE_ENV === "production",
-			//sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+			secure: isProduction,
+			sameSite: isProduction ? "None" : "Lax",
 		});
 
 		res.status(200).json({
