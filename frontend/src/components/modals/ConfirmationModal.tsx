@@ -11,7 +11,7 @@ export default function ConfirmationModal({ message, onCancel, onConfirm }: Conf
 			variants={modalAnim}
 			className="fixed left-0 top-0 w-full h-screen bg-black/50 flex items-center justify-center px-2"
 		>
-			<div onClick={(e) => e.stopPropagation()} className="flex flex-col gap-6 tracking-wider py-6 px-12 rounded-md bg-[#10141E]">
+			<div onClick={(e) => e.stopPropagation()} className="flex flex-col gap-6 tracking-wider py-6 px-12 rounded-md bg-primary">
 				<span className="text-center font-medium text-lg">{message}</span>
 				<div className="flex justify-center gap-6">
 					<button onClick={onCancel} className="py-[7px] px-4 text-sm rounded-md font-semibold cursor-pointer border border-sky-300 text-sky-300">

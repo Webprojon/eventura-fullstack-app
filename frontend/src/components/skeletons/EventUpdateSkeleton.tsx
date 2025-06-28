@@ -1,11 +1,10 @@
 import Skeleton from "react-loading-skeleton";
 
 export const EventUpdateSkeleton = () => {
-	const baseColor = "#1C2029";
-	const highlightColor = "#2A2F3A";
-
+	const baseColor = "bg-secondary";
+	const highlightColor = "bg-tertiary";
 	return (
-		<section className="max-w-[1350px] md:mx-2 xl:mx-auto rounded-md px-4 py-5 sm:mt-9 border select-none bg-[#10141E]">
+		<section className="max-w-[1350px] md:mx-2 xl:mx-auto rounded-md px-4 py-5 sm:mt-9 border select-none bg-primary">
 			{/* First row */}
 			<Skeleton className="mb-4" height={20} width={200} baseColor={baseColor} highlightColor={highlightColor} />
 			<Skeleton height={40} inline={true} count={2} width={"48%"} baseColor={baseColor} highlightColor={highlightColor} className="mr-4 mb-4" />

@@ -20,7 +20,7 @@ function App() {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<main className="bg-[#030712] min-h-[100vh] tracking-wide text-slate-100">
+			<main className="bg-primary-dark min-h-[100vh] tracking-wide">
 				{!(pathname === "/" || pathname === "/sign-in" || pathname === "/sign-up") && <Navbar />}
 				<Routes>
 					<Route path="/events" element={<EventsPage />} />
@@ -56,8 +56,8 @@ function App() {
 				</Routes>
 				{pathname === "/events" && <Footer />}
 				<Toaster position="bottom-right" />
-				<div className="fixed z-10 left-1/2 top-[-33rem] -translate-x-1/2 h-[30rem] w-[40rem] rounded-full blur-[10rem] bg-[#2a3f83]"></div>
-				<div className="fixed z-10 left-1/2 bottom-[-34rem] -translate-x-1/2 h-[30rem] w-[40rem] rounded-full blur-[10rem] bg-[#2a3f83]"></div>
+				<div className="bg-opacity top-[-33rem]"></div>
+				<div className="bg-opacity bottom-[-34rem]"></div>
 			</main>
 		</QueryClientProvider>
 	);

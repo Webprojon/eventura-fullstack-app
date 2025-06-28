@@ -8,7 +8,7 @@ import { useEventFormHandler } from "../../hooks/useEventformHandler";
 export default function UpdateEvent() {
 	const { id } = useParams();
 	const { formData, handleChange, handleSubmit, isPending, isLoading } = useEventFormHandler({ mode: "edit", id });
-	
+
 	if (isLoading) return <EventUpdateSkeleton />;
 
 	return (
@@ -16,7 +16,7 @@ export default function UpdateEvent() {
 			initial="initial"
 			animate="animate"
 			variants={smoothOpacity}
-			className="max-w-[1350px] md:mx-2 px-4 xl:mx-auto md:rounded-md py-5 md:mt-9 border select-none bg-[#10141E]"
+			className="max-w-[1350px] md:mx-2 px-4 xl:mx-auto md:rounded-md py-5 md:mt-9 border select-none bg-primary"
 		>
 			<form onSubmit={handleSubmit}>
 				<>
@@ -29,7 +29,7 @@ export default function UpdateEvent() {
 							name="eventCategory"
 							value={formData.eventCategory}
 							onChange={handleChange}
-							className="flex-[2] border outline-none cursor-pointer rounded-md py-3 sm:py-2 px-3 text-[15px] text-slate-400 bg-[#10141E]"
+							className="flex-[2] border outline-none cursor-pointer rounded-md py-3 sm:py-2 px-3 text-[15px] text-slate-400 bg-primary"
 						>
 							<option value="" disabled>
 								Select Category

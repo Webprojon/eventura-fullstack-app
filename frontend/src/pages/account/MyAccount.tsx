@@ -24,7 +24,7 @@ export default function MyAccount() {
 			variants={smoothOpacity}
 			className="flex flex-col items-start gap-6 mt-5 select-none sm:mt-9 max-w-[1350px] min-h-[100vh] mx-auto pb-10 px-2 xl:px-0"
 		>
-			<div className="flex flex-col sm:flex-row gap-y-6 items-center justify-between w-full p-3 sm:p-5 rounded-md border bg-[#10141E]">
+			<div className="flex flex-col sm:flex-row gap-y-6 items-center justify-between w-full p-3 sm:p-5 rounded-md border bg-primary">
 				<div className="flex flex-col sm:flex-row items-center gap-4">
 					<img
 						src={accountOwner.image || NO_AVATAR}
@@ -46,7 +46,7 @@ export default function MyAccount() {
 			</div>
 
 			<div className="flex flex-col-reverse sm:flex-row w-full gap-6">
-				<div className="flex-[2.9] p-3 sm:px-5 sm:py-4 rounded-md border bg-[#10141E]">
+				<div className="flex-[2.9] p-3 sm:px-5 sm:py-4 rounded-md border bg-primary">
 					{activeTab === "about" && <AboutSection />}
 					{activeTab === "photos" && <PhotoSection />}
 					{activeTab === "event" && <EventSection />}
@@ -59,8 +59,8 @@ export default function MyAccount() {
 							<li
 								key={id}
 								onClick={() => toggleActiveTab(tab)}
-								className={`rounded-md border cursor-pointer text-sm sm:text-md p-2 sm:p-3 hover:bg-[#1C2029] ${
-									activeTab === tab ? "bg-[#1C2029]" : "bg-[#10141E]"
+								className={`rounded-md border cursor-pointer text-sm sm:text-md p-2 sm:p-3 hover:bg-secondary ${
+									activeTab === tab ? "bg-secondary" : "bg-primary"
 								}`}
 							>
 								{linkName}

@@ -8,7 +8,7 @@ export default function EventParticipants({ participants }: { participants: User
 	const { getUserProfileLink } = useUserData();
 
 	return (
-		<div className="w-full flex-1 rounded-md border select-none bg-[#10141E]">
+		<div className="w-full flex-1 rounded-md border select-none bg-primary">
 			<div className="flex items-center gap-x-2 px-3 py-2 border-b">
 				<TbUsers className="size-5" />
 				<span className="font-semibold sm:text-[18px]">Participants {participants.length}</span>
@@ -18,7 +18,7 @@ export default function EventParticipants({ participants }: { participants: User
 					<Link
 						key={_id}
 						to={getUserProfileLink(_id)}
-						className="flex items-center gap-x-4 px-3 py-[5px] rounded-md transition-all bg-[#1C2029] hover:bg-[#262a34]"
+						className="flex items-center gap-x-4 px-3 py-[5px] rounded-md transition-all hover:scale-101 bg-secondary"
 					>
 						<img src={image || NO_AVATAR} alt="coming user" className="w-10 h-10 border rounded-full object-cover" />
 						<span className="font-medium">{name}</span>

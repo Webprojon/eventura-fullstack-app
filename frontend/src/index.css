@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
+/* COLOR STYLES */
+.bg-primary {
+	@apply bg-[#10141E];
+}
+
+.bg-primary-dark {
+	@apply bg-[#030712];
+}
+
+.bg-secondary {
+	@apply bg-[#1C2029];
+}
+
+.bg-tertiary {
+	@apply bg-[#2A2F3A];
+}
+
+/* GENERAL STYLES */
 html {
 	overflow-x: hidden;
 }
@@ -32,13 +50,14 @@ html::-webkit-scrollbar-thumb {
 	resize: none;
 }
 
-/* BUTTON */
+.bg-opacity {
+	@apply fixed z-10 left-1/2 -translate-x-1/2 h-[30rem] w-[40rem] rounded-full blur-[10rem] bg-[#2a3f83];
+}
 
 .btn {
 	@apply font-semibold rounded-md cursor-pointer border border-sky-300 text-sky-300 bg-[#032236] hover:bg-[#032236c1];
 }
 
-/* BORDERS */
 .border,
 .border-t,
 .border-b,
@@ -67,8 +86,7 @@ html::-webkit-scrollbar-thumb {
 	@apply border-l;
 }
 
-/* CALENDAR */
-
+/* CALENDAR STYLES */
 .p-datepicker {
 	background-color: #10141e;
 	border: none;

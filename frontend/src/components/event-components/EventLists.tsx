@@ -18,15 +18,11 @@ export default function EventLists() {
 			{isLoading && <EventListsSkeleton count={2} />}
 			{(filteredEvents?.length ? filteredEvents : events)?.map(
 				({ _id, eventParticipants, eventTitle, user, eventDate, eventTime, eventCity, eventAvenue, eventDescription }) => (
-					<div key={_id} className="rounded-md p-3 border bg-[#10141E]">
+					<div key={_id} className="rounded-md p-3 border bg-primary">
 						<div className="flex justify-between items-start border-b">
 							<div className="flex gap-x-4 pb-2">
-								<Link to={getUserProfileLink(user?._id)} className="rounded-full bg-[#1C2029]">
-									<img
-										alt="User img"
-										src={user.image || NO_AVATAR}
-										className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-full object-cover border bg-[#1C2029"
-									/>
+								<Link to={getUserProfileLink(user?._id)} className="rounded-full bg-secondary">
+									<img alt="User img" src={user.image || NO_AVATAR} className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-full object-cover border" />
 								</Link>
 								<div className="flex flex-col">
 									<span className="font-medium text-[20px]">{eventTitle}</span>
@@ -50,7 +46,7 @@ export default function EventLists() {
 								{eventCity}, {eventAvenue}
 							</span>
 						</div>
-						<div className="p-3 rounded-sm border bg-[#1C2029]">
+						<div className="p-3 rounded-sm border bg-secondary">
 							{eventParticipants.length !== 0 && (
 								<>
 									<div className="flex items-center gap-x-2">
