@@ -2,8 +2,8 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export function EventListsSkeleton({ count = 3 }) {
-	const baseColor = "bg-secondary";
-	const highlightColor = "bg-tertiary";
+	const baseColor = "#1C2029";
+	const highlightColor = "#2A2F3A";
 	return (
 		<>
 			{Array(count)

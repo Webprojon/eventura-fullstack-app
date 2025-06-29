@@ -14,10 +14,10 @@ export default function ConfirmationModal({ message, onCancel, onConfirm }: Conf
 			<div onClick={(e) => e.stopPropagation()} className="flex flex-col gap-6 tracking-wider py-6 px-12 rounded-md bg-primary">
 				<span className="text-center font-medium text-lg">{message}</span>
 				<div className="flex justify-center gap-6">
-					<button onClick={onCancel} className="py-[7px] px-4 text-sm rounded-md font-semibold cursor-pointer border border-sky-300 text-sky-300">
+					<button onClick={onCancel} className="py-2 px-5 text-sm rounded-md font-semibold cursor-pointer border border-sky-300 text-sky-300">
 						Cancel
 					</button>
-					<button onClick={onConfirm} className="btn py-[7px] px-4 text-sm">
+					<button onClick={onConfirm} className="btn py-2 px-5 text-sm">
 						Confirm
 					</button>
 				</div>

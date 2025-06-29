@@ -22,10 +22,10 @@ export default function EventLists() {
 						<div className="flex justify-between items-start border-b">
 							<div className="flex gap-x-4 pb-2">
 								<Link to={getUserProfileLink(user?._id)} className="rounded-full bg-secondary">
-									<img alt="User img" src={user.image || NO_AVATAR} className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-full object-cover border" />
+									<img alt="User img" src={user.image || NO_AVATAR} className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border" />
 								</Link>
 								<div className="flex flex-col">
-									<span className="font-medium text-[20px]">{eventTitle}</span>
+									<span className="font-medium text-xl">{eventTitle}</span>
 									<span className="text-sm sm:text-md">
 										Hosted by{" "}
 										<Link to={getUserProfileLink(user._id)} className="font-semibold text-sky-300">

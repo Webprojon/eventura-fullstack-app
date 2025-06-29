@@ -1,8 +1,8 @@
 import Skeleton from "react-loading-skeleton";
 
 export default function EventCalendarSkeleton() {
-	const highlightColor = "bg-tertiary";
-	const baseColor = "bg-secondary";
+	const baseColor = "#1C2029";
+	const highlightColor = "#2A2F3A";
 	return (
 		<div className="hidden md:block w-[380px] p-4 rounded-md bg-primary">
 			<div className="flex justify-between items-center mb-4">

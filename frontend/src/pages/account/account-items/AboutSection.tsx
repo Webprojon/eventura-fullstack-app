@@ -56,19 +56,19 @@ export default function AboutSection() {
 			<div className="flex justify-between items-center">
 				<Heading icon={FaUser} text={`About ${accountOwner?.name}`} />
 				{descriptionVal !== accountOwner?.description && (
-					<button onClick={handleUpdate} className="py-[3px] px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">
+					<button onClick={handleUpdate} className="py-1 px-4 font-extralight text-sm cursor-pointer rounded-md border text-sky-300">
 						Save
 					</button>
 				)}
 			</div>
-			<span className="text-[13px] tracking-wider text-slate-300">Member since: {formatDate(accountOwner?.createdAt)}</span>
+			<span className="text-xs tracking-wider text-slate-300">Member since: {formatDate(accountOwner?.createdAt)}</span>
 			<textarea
 				name="about"
 				id="about"
 				placeholder="Say something about you..."
 				value={descriptionVal}
 				onChange={(e) => setDescriptionVal(e.target.value)}
-				className="bg-secondary textare-size w-full border p-3 h-[17vh] rounded-md mt-4 small-scroll text-sm tracking-wider leading-6 text-slate-300 outline-none"
+				className="bg-secondary textare-size w-full border p-3 h-32 rounded-md mt-4 small-scroll text-sm tracking-wider leading-6 text-slate-300 outline-none"
 			></textarea>
 			<button onClick={toggleDeleteModal} className="mt-2 py-2 sm:py-1 px-3 font-extralight text-sm cursor-pointer rounded-sm border-1 text-red-500">
 				Delete Account

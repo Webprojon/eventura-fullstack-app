@@ -1,8 +1,8 @@
 import Skeleton from "react-loading-skeleton";
 
 export const EventDetailsSkeleton = () => {
-	const highlightColor = "bg-tertiary";
-	const baseColor = "bg-secondary";
+	const baseColor = "#1C2029";
+	const highlightColor = "#2A2F3A";
 	return (
 		<section className="flex flex-col md:flex-row items-start gap-5 mt-5 sm:mt-9 max-w-[1350px] min-h-[100vh] mx-auto pb-10 px-2 xl:px-0">
 			{/* Main content */}

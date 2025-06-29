@@ -1,22 +1,5 @@
 @import "tailwindcss";
 
-/* COLOR STYLES */
-.bg-primary {
-	@apply bg-[#10141E];
-}
-
-.bg-primary-dark {
-	@apply bg-[#030712];
-}
-
-.bg-secondary {
-	@apply bg-[#1C2029];
-}
-
-.bg-tertiary {
-	@apply bg-[#2A2F3A];
-}
-
 /* GENERAL STYLES */
 html {
 	overflow-x: hidden;
@@ -42,16 +25,45 @@ html::-webkit-scrollbar-thumb {
 	border-radius: 1px;
 }
 
-.placeholder-color::placeholder {
-	@apply text-slate-400;
-}
-
 .textare-size {
 	resize: none;
 }
 
+/* CALENDAR STYLES */
+.p-datepicker {
+	background-color: #10141e;
+	border: none;
+}
+
+.p-datepicker td {
+	padding: 0.1rem;
+}
+
+.p-datepicker-header {
+	background-color: #1c2029;
+	border-bottom: none;
+	border-radius: 4px;
+}
+
+/* TAILWIND CUSTOM STYLES */
+.container {
+	@apply max-w-7xl mx-auto;
+}
+
+.placeholder-color::placeholder {
+	@apply text-slate-400;
+}
+
+.event-label {
+	@apply uppercase text-sm leading-none font-semibold text-sky-300;
+}
+
 .bg-opacity {
 	@apply fixed z-10 left-1/2 -translate-x-1/2 h-[30rem] w-[40rem] rounded-full blur-[10rem] bg-[#2a3f83];
+}
+
+.flex-center {
+	@apply flex items-center justify-center;
 }
 
 .btn {
@@ -86,18 +98,19 @@ html::-webkit-scrollbar-thumb {
 	@apply border-l;
 }
 
-/* CALENDAR STYLES */
-.p-datepicker {
-	background-color: #10141e;
-	border: none;
+/* COLOR STYLES */
+.bg-primary {
+	@apply bg-[#10141E];
 }
 
-.p-datepicker td {
-	padding: 0.1rem;
+.bg-primary-dark {
+	@apply bg-[#030712];
 }
 
-.p-datepicker-header {
-	background-color: #1c2029;
-	border-bottom: none;
-	border-radius: 4px;
+.bg-secondary {
+	@apply bg-[#1C2029];
+}
+
+.bg-tertiary {
+	@apply bg-[#2A2F3A];
 }

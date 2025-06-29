@@ -25,7 +25,7 @@ export function ManageEventBase({ id, isMobile = false }: { id: string; isMobile
 
 	const iconClasses = isMobile ? "size-5" : "size-4";
 
-	const buttonClasses = !isMobile && "text-[14px]";
+	const buttonClasses = !isMobile && "text-sm";
 
 	return (
 		<>

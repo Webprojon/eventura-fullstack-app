@@ -22,25 +22,21 @@ export default function MyAccount() {
 			initial="initial"
 			animate="animate"
 			variants={smoothOpacity}
-			className="flex flex-col items-start gap-6 mt-5 select-none sm:mt-9 max-w-[1350px] min-h-[100vh] mx-auto pb-10 px-2 xl:px-0"
+			className="container flex flex-col items-start gap-6 mt-5 sm:mt-9 pb-10 px-2 xl:px-0"
 		>
 			<div className="flex flex-col sm:flex-row gap-y-6 items-center justify-between w-full p-3 sm:p-5 rounded-md border bg-primary">
 				<div className="flex flex-col sm:flex-row items-center gap-4">
-					<img
-						src={accountOwner.image || NO_AVATAR}
-						alt="user img"
-						className="w-[100px] h-[100px] sm:w-[140px] sm:h-[140px] rounded-full border object-cover"
-					/>
+					<img src={accountOwner.image || NO_AVATAR} alt="user img" className="w-24 h-24 sm:w-36 sm:h-36 rounded-full border object-cover" />
 					<span className="sm:text-xl">{accountOwner.name}</span>
 				</div>
 				<div className="flex items-center gap-x-6">
 					<div className="flex flex-col items-center">
 						<span className="sm:text-2xl">{accountOwner.followers?.length || 0}</span>
-						<span className="text-sm sm:text-[16px] tracking-wider">Followers</span>
+						<span className="text-sm sm:text-lg tracking-wider">Followers</span>
 					</div>
 					<div className="flex flex-col items-center">
 						<span className="sm:text-2xl">{accountOwner.following?.length || 0}</span>
-						<span className="text-sm sm:text-[16px] tracking-wider">Following</span>
+						<span className="text-sm sm:text-lg tracking-wider">Following</span>
 					</div>
 				</div>
 			</div>
@@ -53,15 +49,13 @@ export default function MyAccount() {
 					{activeTab === "followers" && <FollowerSection />}
 					{activeTab === "following" && <FollowingSection />}
 				</div>
-				<div className="flex-1 rounded-md">
+				<div className="flex-1 rounded-md select-none">
 					<ul className="flex sm:flex-col justify-between sm:gap-2">
 						{MY_ACCOUNT_LINKS.map(({ id, tab, linkName }) => (
 							<li
 								key={id}
 								onClick={() => toggleActiveTab(tab)}
-								className={`rounded-md border cursor-pointer text-sm sm:text-md p-2 sm:p-3 hover:bg-secondary ${
-									activeTab === tab ? "bg-secondary" : "bg-primary"
-								}`}
+								className={`rounded-md border cursor-pointer text-sm sm:text-md p-2 sm:p-3 ${activeTab === tab ? "bg-secondary" : "bg-primary"}`}
 							>
 								{linkName}
 							</li>

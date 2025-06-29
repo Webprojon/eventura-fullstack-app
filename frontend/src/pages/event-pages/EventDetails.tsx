@@ -35,12 +35,12 @@ export default function EventDetails() {
 			initial="initial"
 			animate="animate"
 			variants={smoothOpacity}
-			className="flex flex-col md:flex-row items-center sm:items-start justify-center gap-5 max-w-[1350px] mx-auto mt-5 sm:mt-9 pb-10 px-2 xl:px-0"
+			className="container flex flex-col md:flex-row items-center sm:items-start justify-center gap-5 mt-5 sm:mt-9 pb-10 px-2 xl:px-0"
 		>
 			<div className="flex-3 rounded-md sm:p-5 w-full bg-primary">
 				<div className="relative overflow-hidden border rounded-md">
-					<img src={DEFAULT_BG_IMG} alt="background img" className="w-full h-[30vh] sm:h-[44vh] object-cover" />
-					<div className="flex flex-col gap-y-1 absolute bottom-0 p-4 w-full h-[30vh] sm:h-[44vh] bg-black/75">
+					<img src={DEFAULT_BG_IMG} alt="background img" className="w-full aspect-[3/2] sm:aspect-[3/1] object-cover" />
+					<div className="flex flex-col gap-y-2 absolute bottom-0 p-4 w-full aspect-[3/2] sm:aspect-[3/1] bg-black/75">
 						<span className="font-medium text-[24px]">{eventTitle}</span>
 						<span className="flex gap-x-2 text-[18px] items-center">{formattedDateTime}</span>
 						<span>

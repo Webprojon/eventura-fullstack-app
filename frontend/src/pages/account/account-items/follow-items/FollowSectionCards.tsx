@@ -9,7 +9,7 @@ export default function FollowSectionCards({ items }: { items: FollowType[] | un
 	return (
 		<div className="flex gap-x-4">
 			{items?.map(({ _id, image, name }) => (
-				<Link to={getUserProfileLink(_id)} key={_id} className="flex flex-col gap-y-1 justify-center items-center">
+				<Link to={getUserProfileLink(_id)} key={_id} className="flex flex-col gap-y-2 justify-center items-center">
 					<img src={image || NO_AVATAR} alt="follower img" className="w-11 h-11 border object-cover rounded-full" />
 					<span className="text-sm">{name}</span>
 				</Link>

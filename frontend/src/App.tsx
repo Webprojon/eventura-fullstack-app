@@ -17,11 +17,18 @@ import Footer from "./components/Footer";
 function App() {
 	const pathname = useLocation().pathname;
 	const queryClient = new QueryClient();
+	const protectedRoutes = [
+		{ path: "/", element: <StarterPage /> },
+		{ path: "/sign-in", element: <Login /> },
+		{ path: "/sign-up", element: <Register /> },
+	];
+	const hideNavbarRoutes = ["/", "/sign-in", "/sign-up"];
+	const showFooterRoutes = ["/events"];
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<main className="bg-primary-dark min-h-[100vh] tracking-wide">
-				{!(pathname === "/" || pathname === "/sign-in" || pathname === "/sign-up") && <Navbar />}
+			<main className="bg-primary-dark min-h-screen tracking-wide">
+				{!hideNavbarRoutes.includes(pathname) && <Navbar />}
 				<Routes>
 					<Route path="/events" element={<EventsPage />} />
 					<Route path="/events/:eventId" element={<EventDetails />} />
@@ -29,32 +36,11 @@ function App() {
 					<Route path="/events/update/:id" element={<UpdateEvent />} />
 					<Route path="/account/me" element={<MyAccount />} />
 					<Route path="/profile/user/:id" element={<UserProfile />} />
-					<Route
-						path="/"
-						element={
-							<ProtectedAuthRoute>
-								<StarterPage />
-							</ProtectedAuthRoute>
-						}
-					/>
-					<Route
-						path="/sign-in"
-						element={
-							<ProtectedAuthRoute>
-								<Login />
-							</ProtectedAuthRoute>
-						}
-					/>
-					<Route
-						path="/sign-up"
-						element={
-							<ProtectedAuthRoute>
-								<Register />
-							</ProtectedAuthRoute>
-						}
-					/>
+					{protectedRoutes.map(({ path, element }) => (
+						<Route path={path} element={<ProtectedAuthRoute>{element}</ProtectedAuthRoute>} />
+					))}
 				</Routes>
-				{pathname === "/events" && <Footer />}
+				{showFooterRoutes.includes(pathname) && <Footer />}
 				<Toaster position="bottom-right" />
 				<div className="bg-opacity top-[-33rem]"></div>
 				<div className="bg-opacity bottom-[-34rem]"></div>
