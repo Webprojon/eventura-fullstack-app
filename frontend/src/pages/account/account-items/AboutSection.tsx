@@ -68,7 +68,7 @@ export default function AboutSection() {
 				placeholder="Say something about you..."
 				value={descriptionVal}
 				onChange={(e) => setDescriptionVal(e.target.value)}
-				className="bg-secondary textare-size w-full border p-3 h-32 rounded-md mt-4 small-scroll text-sm tracking-wider leading-6 text-slate-300 outline-none"
+				className="bg-secondary textare-size w-full border p-3 h-26 rounded-md mt-4 small-scroll text-sm tracking-wider leading-6 text-slate-300 outline-none"
 			></textarea>
 			<button onClick={toggleDeleteModal} className="mt-2 py-2 sm:py-1 px-3 font-extralight text-sm cursor-pointer rounded-sm border-1 text-red-500">
 				Delete Account

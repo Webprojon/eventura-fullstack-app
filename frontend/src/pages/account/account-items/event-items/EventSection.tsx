@@ -17,7 +17,7 @@ export default function EventSection() {
 	const pastEvents = ownerEvents?.filter((event) => new Date(event.eventDate) < new Date(today));
 
 	return (
-		<>
+		<div className="sm:h-30">
 			<Heading icon={MdOutlineDateRange} text="Events" />
 			<ul className="flex gap-x-6 text-slate-300 border-b my-4 sm:my-3">
 				{EVENT_SECTION_LINKS.map(({ id, tab, linkName }) => (
@@ -31,6 +31,6 @@ export default function EventSection() {
 				{activeTab === "past-events" && <EventSectionCards events={pastEvents} />}
 				{activeTab === "your-events" && <EventSectionCards events={ownerEvents} />}
 			</>
-		</>
+		</div>
 	);
 }
