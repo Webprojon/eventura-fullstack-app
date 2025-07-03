@@ -67,3 +67,13 @@ type Mode = "login" | "register";
 export interface UseAuthorizationProps {
 	mode: Mode;
 }
+
+export interface AuthFormProps<T> {
+	formData: T;
+	setFormData: React.Dispatch<React.SetStateAction<T>>;
+	errors: Partial<Record<keyof T, string>>;
+	setErrors: React.Dispatch<React.SetStateAction<Partial<Record<keyof T, string>>>>;
+	handleSubmit: (e: React.FormEvent, data: T, setErrors: AuthFormProps<T>["setErrors"]) => void;
+	isPending: boolean;
+	mode: "login" | "register";
+}
