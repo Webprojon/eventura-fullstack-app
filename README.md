@@ -2,22 +2,22 @@
 
 **Eventura** is a full-stack web application that enables users to **create**, **manage**, and **join events** with ease. Built with a focus on clean UI, scalability, and smooth user experience.
 
-> 📌 Ideal for communities, companies, and individuals looking to host or attend events.
+> Ideal for communities, companies, and individuals looking to host or attend events.
 
 ---
 
-## 🚀 Features
+##  Features
 
-- ✅ Full CRUD for events (create, read, update, delete)
-- 🧾 Event categories, descriptions, locations & dates
-- 🔐 JWT-based authentication & role-based access
-- 📱 Responsive design using Tailwind CSS + Framer Motion animations
-- 📦 RESTful API integration between frontend & backend
-- 🌍 Deployment-ready Vercel + Render
+- 1 Full CRUD for events (create, read, update, delete)
+- 2 Event categories, descriptions, locations & dates
+- 3 JWT-based authentication & role-based access
+- 4 Responsive design using Tailwind CSS + Framer Motion animations
+- 5 RESTful API integration between frontend & backend
+- 6 Deployment-ready Vercel + Render
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 ### 🔹 Frontend
 - React.js
@@ -31,9 +31,9 @@
 
 ---
 
-## 🧪 Getting Started
+##  Getting Started
 
-### 📦 1. Clone the repo
+###  1. Clone the repo
 
 ```bash
 git clone https://github.com/Webprojon/eventura-hub.git
